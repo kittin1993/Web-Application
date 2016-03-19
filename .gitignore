@@ -1,0 +1,4 @@
+**/staticfiles
+**/.env
+**/*.pyc
+**/.DS_Store
