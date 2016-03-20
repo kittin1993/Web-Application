@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block navigation %}
+<ul>
+  <li><a href="{% url 'home' %}">Home Page</a></li>
+  <li><a href="{% url 'addplan' %}">Add Plan</a></li>
+  <li><a href="{% url 'addnote' %}">Add Note</a></li>
+  <li><a class="active" >My Schedule</a></li>
+  <li><a href="{% url 'travelnotes' %}">Travel Notes</a></li>
+  <li><a href="{% url 'travelplans' %}">Travel Plans</a></li>
+  <ul class="right">
+    <li><a class="dropdown-toggle" data-toggle="dropdown">{{username}}<span class="caret"></span></a></li>
+  </ul>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="row content">
+    <div class="col-sm-3 sidenav">
+      <h4>My Schedule</h4>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="{% url 'myschedule_plan' %}">Plans</a></li>
+        <li class="active"><a href="{% url 'myschedule_note' %}">Notes</a></li>
+      </ul><br>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search ..">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+      <h4><a href="{% url 'addnote' %}">Add New Note</a></h4>
+      <hr>
+      <table>
+      {% for note in notes %}
+      <tr>
+          <a href="{% url 'seenote' note.id %}">
+            <h4>{{note.note_title}}&nbsp;</h4>
+            <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}</h5>
+            <img src="{{note.title_image}}" width="270px">
+          </a>
+      </tr>
+      {% endfor %}
+    </table>
+      
+      <hr>
+    </div>
+  </div>
+
+
+{% endblock %}

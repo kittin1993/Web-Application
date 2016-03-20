@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Go Travel -- Login</title>
+	<meta charset="utf-8">
+	<meta name= "author" content ="Yumeng Xie">
+
+</head>
+
+<body>
+{% if form.errors %}
+<p style="color:red">
+Incorrect user name and password.
+</p>
+{% endif %}
+
+<p>
+Log in:
+</p>
+<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+<table>
+<tr>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+</tr>
+<tr>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="Login" />
+<a href="{% url 'register' %}">Register</a>
+<input type="hidden" name="next" value="{{ next }}" />
+{% csrf_token %}
+</form>
+
+</body>
+</html>

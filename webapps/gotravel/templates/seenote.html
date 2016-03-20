@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block navigation %}
+<ul>
+  <li><a href="{% url 'home' %}">Home Page</a></li>
+  <li><a href="{% url 'addplan' %}">Add Plan</a></li>
+  <li><a href="{% url 'addnote' %}">Add Note</a></li>
+  <li><a href="{% url 'myschedule_plan' %}">My Schedule</a></li>
+  <li><a href="{% url 'travelnotes' %}">Travel Notes</a></li>
+  <li><a href="{% url 'travelplans' %}">Travel Plans</a></li>
+  <ul class="right">
+    <li><a class="dropdown-toggle" data-toggle="dropdown">{{username}}<span class="caret"></span></a></li>
+  </ul>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="row content">
+    <div class="col-sm-3 sidenav">
+      <hr>
+ <table class="text-center">
+<tr>
+  <td>
+    {% if new_user.profile.image_url %}
+    <img src="{{new_user.profile.image_url}}" width="200px">
+    {% endif %}
+  </td>
+</tr>
+<tr>
+  <td>
+    <strong>{{username}}</strong>
+  </td>
+</tr>
+<tr>
+  <td>Gender: {{username.profile.gender}}</td>
+</tr>
+<tr>
+  <td>Age: {{username.profile.age}}</td>
+</tr>
+<tr>
+  <td>Email: {{username.email}}</td>
+</tr>
+<tr>
+  <td>Bio: {{username.profile.bio}}</td>
+</tr>
+</table>
+    </div>
+
+    <div class="col-sm-9">
+      <h4><small>Note</small></h4>
+      <hr>
+      <h2>{{note.note_title}}</h2>
+      <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}</h5>
+      <p>Food is my passion.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <br><br>
+      
+    </div>
+  </div>
+
+{% endblock %}

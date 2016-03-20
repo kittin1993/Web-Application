@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block navigation %}
+<ul>
+  <li><a class="active" href="{% url 'home' %}">Home Page</a></li>
+  <li><a href="{% url 'addplan' %}">Add Plan</a></li>
+  <li><a href="{% url 'addnote' %}">Add Note</a></li>
+  <li><a href="{% url 'myschedule_note' %}">My Schedule</a></li>
+  <li><a href="{% url 'travelnotes' %}">Travel Notes</a></li>
+  <li><a href="{% url 'travelplans' %}">Travel Plans</a></li>
+  <ul class="right">
+    <li><a href="{% url 'editprofile' %}">{{username}}</a></li>
+  </ul>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class = "row">
+  <div class = "col-sm-4 box1">
+    <p><a href="{% url 'addplan' %}">Add New Plan</a></p>
+  </div>
+  <div class = "col-sm-4 box1">
+    <p><a href="{% url 'addnote' %}">Add New Note</a></p>
+  </div>
+  <div class = "col-sm-4 box1">
+    <p><a href="{% url 'myschedule_note' %}">My Schedule</a></p>
+  </div>
+</div>
+<div class = "row">
+  <div class = "col-sm-6 box1">
+    <h3><a href="{% url 'travelnotes' %}">Travel Notes</a></h3>  
+    <table>
+      {% for note in notes %}
+      <tr>
+          <a href="{% url 'seenote' note.id %}">
+            <h4>{{note.note_title}}&nbsp;</h4>
+            <img src="{{note.title_image}}" width="270px">
+          </a>
+      </tr>
+      {% endfor %}
+    </table>
+</div>
+
+  <div class = "col-sm-6 box1">
+    <h3><a href="{% url 'travelplans' %}">Travel Plans</a></h3>
+    {% for plan in plans %}
+      <div class="box1">
+          <h4><a href="{% url 'seeplan' plan.id %}"> {{plan.plan_title}}</a></h4>
+      </div>
+      {% endfor %}
+  </div>
+
+
+{% endblock %}

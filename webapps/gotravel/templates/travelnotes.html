@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block navigation %}
+<ul>
+  <li><a href="{% url 'editprofile' %}">Edit Profile</a></li>
+  <li><a href="{% url 'home' %}">Home Page</a></li>
+  <li><a href="{% url 'addplan' %}">Add Plan</a></li>
+  <li><a href="{% url 'addnote' %}">Add Note</a></li>
+  <li><a href="{% url 'myschedule_plan' %}">My Schedule</a></li>
+  <li><a class="active" href="{% url 'travelnotes' %}">Travel Notes</a></li>
+  <li><a href="{% url 'travelplans' %}">Travel Plans</a></li>
+  <ul class="right">
+    <li><a class="dropdown-toggle" data-toggle="dropdown">{{username}}<span class="caret"></span></a></li>
+  </ul>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="row content">
+    <div class="col-sm-8 text-left"> 
+      <h2>Travel Notes</h2>
+      <table>
+      {% for note in notes %}
+      <tr>
+          <a href="{% url 'seenote' note.id %}">
+            <h4>{{note.note_title}}&nbsp;</h4>
+            <img src="{{note.title_image}}" width="300px">
+          </a>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+    <div class="col-sm-4 sidenav">
+      <h3>Search</h3>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search ..">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}

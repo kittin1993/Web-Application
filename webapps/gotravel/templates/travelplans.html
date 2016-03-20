@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block navigation %}
+<ul>
+  <li><a href="{% url 'editprofile' %}">Edit Profile</a></li>
+  <li><a href="{% url 'home' %}">Home Page</a></li>
+  <li><a href="{% url 'addplan' %}">Add Plan</a></li>
+  <li><a href="{% url 'addnote' %}">Add Note</a></li>
+  <li><a href="{% url 'myschedule_plan' %}">My Schedule</a></li>
+  <li><a href="{% url 'travelnotes' %}">Travel Notes</a></li>
+  <li><a class="active" href="{% url 'travelplans' %}">Travel Plans</a></li>
+  <ul class="right">
+    <li><a class="dropdown-toggle" data-toggle="dropdown">{{username}}<span class="caret"></span></a></li>
+  </ul>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="row content">
+    <div class="col-sm-8 text-left"> 
+      <h2>Travel Plans</h2>
+      {% for plan in plans %}
+      <div class="box1">
+          <h4><a href="{% url 'seeplan' plan.id %}"> {{plan.plan_title}}</a></h4>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-sm-4 sidenav">
+      <h3>Search</h3>
+      <div class="well">
+        <p>Time</p>
+      </div>
+      <div class="well">
+        <p>Place</p>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}
