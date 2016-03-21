@@ -3,3 +3,4 @@
 **/*.pyc
 **/.DS_Store
 **/config.ini
+**/config_secret.json

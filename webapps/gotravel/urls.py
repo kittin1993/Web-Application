@@ -29,7 +29,8 @@ urlpatterns = [
     url(r'^travelplans', private_views.travelplans, name='travelplans'),
     url(r'^seenote/(\d+)$', private_views.see_note, name='seenote'),
     url(r'^seeplan/(\d+)$', private_views.see_plan, name='seeplan'),
-    #url(r'^get_posts_json', private_views.get_posts_json, name='get_posts_json'),
+    url(r'^get_rests_json', private_views.get_rests_json, name='get_rests_json'),
+    url(r'^get_hotels_json', private_views.get_hotels_json, name='get_hotels_json'),
     url(r'^login$', auth_views.login, {'template_name':'login.html'}, name='login'),
     # Route to logout a user and send them back to the login page
     url(r'^logout$', auth_views.logout_then_login, name='logout'),

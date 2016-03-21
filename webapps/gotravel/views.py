@@ -21,6 +21,7 @@ from django.contrib.auth import login, logout, authenticate
 from gotravel.models import *
 from gotravel.forms import *
 from gotravel.s3 import *
+from gotravel.test_yelp import *
 
 # Create your views here.
 @login_required
@@ -33,28 +34,6 @@ def home(request):
     #print posts
     context={'username':username,'new_user':new_user, 'notes':notes, 'plans':plans}
     return render(request,'homepage.html',context)
-
-@login_required
-def profile(request, author):
-    user = get_object_or_404(User, username=author)
-    new_user = get_object_or_404(User, username=request.user)
-    errors=[]
-    print author
-    try:
-        #pf_user = request.user
-        #print pf_user
-        print author
-        pf_username = User.objects.get(username=author)
-        print pf_username
-        pf_info = User.objects.get(username=author).get_full_name()
-        print "fullname:"+pf_info
-        posts = Post.objects.filter(author=User.objects.get(username=author)).order_by('-time')
-        print  User.objects.all()
-        context = {'pf_username':pf_username,'pf_info':pf_info,'posts':posts,'errors':errors,'new_user':new_user}
-    except ValueError as e:
-        errors.append(e.message)
-        context = {'errors':errors}
-    return render(request, 'profile.html', context)
 
 @login_required
 def add_plan(request):
@@ -78,7 +57,47 @@ def add_plan(request):
     form.save()
     context['new_user'] = new_user
     context['plan'] = plan
+
+    #context['rests'] = restaurants
     return render(request, 'addplan.html', context)
+@login_required
+def get_rests_json(request):
+    restaurants = get_restaurant('pittsburgh')
+    
+    #hotels = get_hotel('pittsburgh')
+    res_dic = []
+    #hot_dic = {}
+    for res in restaurants:
+        new_res={}
+        new_res['url'] = res.url
+        new_res['name'] = res.name
+        new_res['image_url'] = res.image_url
+        new_res['location'] = res.location.address
+        new_res['phone'] = res.phone
+        #print new_res
+        res_dic.append(new_res)
+
+    response_json=json.dumps(res_dic)
+
+    return HttpResponse(response_json, content_type='application/json')
+
+@login_required
+def get_hotels_json(request):
+    hotels = get_hotel('pittsburgh')
+
+    hotel_dic = []
+    for hotel in hotels:
+        new_hotel={}
+        new_hotel['url'] = hotel.url
+        new_hotel['name'] = hotel.name
+        new_hotel['image_url'] = hotel.image_url
+        new_hotel['location'] = hotel.location.address
+        new_hotel['phone'] = hotel.phone
+        hotel_dic.append(new_hotel)
+
+    response_json=json.dumps(hotel_dic)
+
+    return HttpResponse(response_json, content_type='application/json')
 
 @login_required
 def add_note(request):
