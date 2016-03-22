@@ -24,13 +24,19 @@ from gotravel.s3 import *
 from gotravel.test_yelp import *
 
 # Create your views here.
-@login_required
+# @login_required
 def home(request):
-    print request.user
-    username = request.user
+    username = request.user.username
+    if not username:
+        print username
+        notes = Note.objects.all()
+        plans = Plan.objects.all()
+        context={'username': "Visitor",'notes':notes, 'plans':plans}
+        return render(request,'homepage.html',context)
+
     new_user= User.objects.get(username=username)
-    notes = Note.objects.all()
-    plans = Plan.objects.all()
+    notes = Note.objects.all().order_by('-creation_time')
+    plans = Plan.objects.all().order_by('-creation_time')
     #print posts
     context={'username':username,'new_user':new_user, 'notes':notes, 'plans':plans}
     return render(request,'homepage.html',context)
@@ -169,20 +175,32 @@ def myschedule_note(request):
     context={'username':username,'new_user':new_user, 'notes':notes}
     return render(request,'myschedule_note.html',context)
 
-@login_required
+#@login_required
 def travelnotes(request):
-    username = request.user
+    username = request.user.username
+    if not username:
+        print username
+        notes = Note.objects.all().order_by('-creation_time')
+        context={'username': "Visitor",'notes':notes}
+        return render(request,'travelnotes.html',context)
+
     new_user= User.objects.get(username=username)
-    notes = Note.objects.all()
+    notes = Note.objects.all().order_by('-creation_time')
     #print posts
     context={'username':username,'new_user':new_user, 'notes':notes}
     return render(request,'travelnotes.html',context)
 
-@login_required
+#@login_required
 def travelplans(request):
-    username = request.user
+    username = request.user.username
+    if not username:
+        print username
+        plans = Plan.objects.all().order_by('-creation_time')
+        context={'username': "Visitor",'plans':plans}
+        return render(request,'travelplans.html',context)
+
     new_user= User.objects.get(username=username)
-    plans = Plan.objects.all()
+    plans = Plan.objects.all().order_by('-creation_time')
     context={'username':username,'new_user':new_user, 'plans':plans}
     return render(request,'travelplans.html',context)
 

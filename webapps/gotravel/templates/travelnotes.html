@@ -10,7 +10,13 @@
   <li><a class="active" href="{% url 'travelnotes' %}">Travel Notes</a></li>
   <li><a href="{% url 'travelplans' %}">Travel Plans</a></li>
   <ul class="right">
-    <li><a class="dropdown-toggle" data-toggle="dropdown">{{username}}<span class="caret"></span></a></li>
+    <li><a href="{% url 'editprofile' %}">{{username}}</a></li>
+    {% if username == 'Visitor' %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+    {% endif %}
+    {% if username != 'Visitor' %}
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    {% endif %}
   </ul>
 </ul>
 {% endblock %}
