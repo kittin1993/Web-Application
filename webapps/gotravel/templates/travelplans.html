@@ -33,12 +33,20 @@
     </div>
     <div class="col-sm-4 sidenav">
       <h3>Search</h3>
-      <div class="well">
-        <p>Time</p>
-      </div>
-      <div class="well">
-        <p>Place</p>
-      </div>
+      <form enctype="multipart/form-data" method="post" action="{% url 'searchplan' %}">
+      <table>
+        <tr>
+        Time:<input type="date" class="form-control" placeholder="Search by a time" name='time'>
+      </tr>
+      <tr>
+        Place: <input type="text" class="form-control" placeholder="Search by a place" name='place'>
+      </tr>
+      <tr>
+        <input type="submit" value = "search" class="btn btn-default" >
+      <tr>
+      </table>
+      {% csrf_token %}
+      </form>
     </div>
   </div>
   

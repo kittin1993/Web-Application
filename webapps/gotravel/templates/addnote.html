@@ -23,30 +23,46 @@
     </p>
     {% endfor %}
 
+<h3>{{noteid}}</h3>
+
+
 {% if note.note_title %}
 <h3>{{note.note_title}}</h3>
 {% endif %}
 {% if note.title_image %}
 <img src="{{note.title_image}}" width="800px" height="300px">
 {% endif %}
+
+{% if notedetails %}
+{% for notedetail in notedetails %}
+Place: {{notedetail.place}}
+Time: {{notedetail.time}}
+{{notedetail.content}}
+{{notedetail.cost}}
+{% endfor %}
+{% endif %}
+
 <form enctype="multipart/form-data" method="post" action="{% url 'addnote' %}">
-
-<table>
-{% for field in form.visible_fields %}
-<tr>
-  <td>{{field.label_tag}}</td>
-  <td>{{field}}</td>
-  <td style="color: red">{{field.errors}}</td>
-</tr>
-{% endfor %}
-</table>
-
-{% for field in form.hidden_fields %}
-{{field}}
-{% endfor %}
-{% csrf_token %}
-<input type="submit" value="Save">
-</form>
+  <table>
+    {% for field in form.visible_fields %}
+    <tr>
+      <td>{{field.label_tag}}</td>
+      <td>{{field}}</td>
+      <td style="color: red">{{field.errors}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+    {% for field in form.hidden_fields %}
+    {{field}}
+    {% endfor %}
+    {% csrf_token %}
+  </tr>
+  </table>
+  <div id='NoteForm'>
+  </div>
+  <input type="button" value="Add A Day" onClick="addNoteForm('NoteForm')">
+  <input type="submit" value="Save Note">
+</form>   
 <a href="{% url 'home' %}"> <button>Cancel</button></a>
 </div>
 

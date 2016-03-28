@@ -51,7 +51,10 @@
       <hr>
       <h2>{{note.note_title}}</h2>
       <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}</h5>
-      <p>Food is my passion.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      {% for detail in alldetail %}
+      <p>{{detail.place}}  {{detail.time}} Cost: {{detail.cost}}
+      {{detail.cotent}}</p>
+      {% endfor %}
       <br><br>
       
     </div>

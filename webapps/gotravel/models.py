@@ -110,11 +110,13 @@ class Plan(models.Model):
 		return self.__unicode__()
 
 class PlanDetail(models.Model):
-	plan = models.ForeignKey(Plan)
+	plan = models.ForeignKey(Plan,related_name='plandetail')
 	time = models.DateField()
-	state = models.CharField(max_length = 256)
-	county = models.CharField(max_length = 256)
+	place = models.CharField(max_length = 256)
+	#state = models.CharField(max_length = 256)
+	#county = models.CharField(max_length = 256)
 	intro = models.CharField(max_length = 256, blank = True)
+	creation_time = models.DateTimeField()
 
 	def __unicode__(self):
 		return self
@@ -123,8 +125,8 @@ class PlanDetail(models.Model):
 
 class Note(models.Model):
 	owner = models.ForeignKey(User)
-	note_title = models.CharField(max_length = 200, blank = True)
 	creation_time = models.DateTimeField()
+	note_title = models.CharField(max_length = 200, blank = True)
 	title_image = models.CharField(max_length = 256, blank = True, default='https://yumengxemr.s3.amazonaws.com/id-None')
 
 	def __unicode__(self):
@@ -133,13 +135,13 @@ class Note(models.Model):
 		return self.__unicode__()
 
 class NoteDetail(models.Model):
-	note = models.ForeignKey(Note)
-	time = models.DateTimeField()
+	note = models.ForeignKey(Note,related_name='notedetail')
+	time = models.DateField()
 	place = models.CharField(max_length = 256, blank = True)
 	content = models.CharField(max_length = 512, blank = True)
 	picture = models.CharField(max_length = 256, blank = True)
-	video = models.CharField(max_length = 256, blank = True)
 	cost = models.CharField(max_length = 20, blank = True)
+	creation_time = models.DateTimeField()
 	
 	def __unicode__(self):
 		return self

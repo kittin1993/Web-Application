@@ -38,14 +38,16 @@
     </div>
     <div class="col-sm-4 sidenav">
       <h3>Search</h3>
+      <form enctype="multipart/form-data" method="post" action="{% url 'searchnote' %}">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search ..">
+        <input type="text" class="form-control" placeholder="Search by a place" name='keyword'>
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button">
+          <input type="submit" value = "search" class="btn btn-default" >
             <span class="glyphicon glyphicon-search"></span>
-          </button>
         </span>
       </div>
+      {% csrf_token %}
+      </form>
     </div>
   </div>
   

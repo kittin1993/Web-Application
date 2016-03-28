@@ -102,8 +102,8 @@ function reload_hotel(){
 
 }
 
-window.setInterval(reload_rest,5000);
-window.setInterval(reload_hotel,5000);
+window.setInterval(reload_rest,10000);
+window.setInterval(reload_hotel,10000);
 
 function getCSRFToken() {
     var cookies = document.cookie.split(";");

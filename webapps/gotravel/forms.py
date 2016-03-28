@@ -100,11 +100,11 @@ class EditNoteDetailForm(forms.ModelForm):
     
     class Meta:
         model = NoteDetail
-        exclude = (
-            'picture',
-            'video',
-        )
+        fields = ('place','content','cost',)
     
+    time = forms.DateField(widget=forms.SelectDateWidget(
+        empty_label=("Choose Year", "Choose Month", "Choose Day"),
+    ),)
     picture = forms.FileField(label='Upload Picture', required=False)
 
     def clean(self):

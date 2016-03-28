@@ -7,8 +7,10 @@ from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator
 from django.core import serializers
+from django.db.models import Q
 import json,random
 from datetime import datetime
+import datetime as dt
 
 
 # Decorator to use built-in authentication system
@@ -53,7 +55,8 @@ def add_plan(request):
         context['form']=form
         return render(request,'addplan.html', context)
     
-    plan = Plan(owner=new_user, creation_time=datetime.now())
+    creation_time=datetime.now()
+    plan = Plan(owner=new_user, creation_time=creation_time)
     form = EditPlanForm(request.POST, instance=plan)
     context['form']= form 
     
@@ -61,11 +64,27 @@ def add_plan(request):
         return render(request,'addplan.html',context)
     
     form.save()
+
+    print request.POST
+    print request.POST.getlist('place')
+    length = len(request.POST.getlist('place'))
+    print length
+    plan = Plan.objects.get(owner=new_user, creation_time=creation_time)
+    for index in range(length):
+        print index
+        plandetail = PlanDetail(plan=plan, creation_time=datetime.now())
+        plandetail.place = request.POST.getlist('place')[index]
+        plandetail.time = request.POST.getlist('time')[index]
+        plandetail.intro = request.POST.getlist('des')[index]
+        plandetail.save()
+
+    plandetails = PlanDetail.objects.filter(plan=plan)
     context['new_user'] = new_user
     context['plan'] = plan
+    context['plandetails'] = plandetails
+    return redirect(reverse('seeplan',args=(plan.id,)))
 
-    #context['rests'] = restaurants
-    return render(request, 'addplan.html', context)
+    #return render(request, 'seeplan.html', context)
 @login_required
 def get_rests_json(request):
     restaurants = get_restaurant('pittsburgh')
@@ -104,6 +123,28 @@ def get_hotels_json(request):
     response_json=json.dumps(hotel_dic)
 
     return HttpResponse(response_json, content_type='application/json')
+"""
+@login_required
+def add_day(request, noteid):
+    note = Note.objects.get(id=noteid)
+    print dt.date.today()
+    notedetail = NoteDetail(note=note,time=dt.date.today())
+    noted_dic = {}
+    noted_dic['id'] = notedetail.id
+    noted_dic['place'] = notedetail.place
+    noted_dic['time'] = notedetail.time.strftime("%b. %d, %Y")
+    noted_dic['cost'] = notedetail.cost
+    noted_dic['content'] = notedetail.content
+    response_json=json.dumps(noted_dic)
+
+    return HttpResponse(response_json, content_type='application/json')
+
+@login_required
+def add_detail(request, noteid):
+    context={}
+    print request
+    return render(request, 'addnote.html', context)
+"""
 
 @login_required
 def add_note(request):
@@ -111,31 +152,67 @@ def add_note(request):
     username = request.user
     context['username']= username
     new_user = User.objects.get(username=username)
+    #note = Note(owner=new_user, creation_time=datetime.now())
+    #note.save()
 
     if request.method == 'GET':
         form = EditNoteForm()
-        print "edit note form"
+        #print note.id
         context['form']=form
+        #context['noteid']=note.id
         return render(request,'addnote.html', context)
     
-    note = Note(owner=new_user, creation_time=datetime.now())
-    print note.creation_time
+    creation_time=datetime.now()
+    note = Note(owner=new_user, creation_time=creation_time)
     form = EditNoteForm(request.POST, request.FILES, instance=note)
     context['form']= form 
     
     if not form.is_valid():
         return render(request,'addnote.html',context)
-
-    if form.cleaned_data['title_image']:
-        print "note id"
-        image = s3_upload(form.cleaned_data['title_image'],random.random())
-        note.title_image = image
     
     form.save()
+    
+    print request.POST
+    print request.POST.getlist('place')
+    length = len(request.POST.getlist('place'))
+    print length
+    note = Note.objects.get(owner=new_user, creation_time=creation_time)
+    for index in range(length):
+        print index
+        notedetail = NoteDetail(note=note, creation_time=datetime.now())
+        notedetail.place = request.POST.getlist('place')[index]
+        notedetail.time = request.POST.getlist('time')[index]
+        notedetail.content = request.POST.getlist('content')[index]
+        notedetail.cost = request.POST.getlist('cost')[index]
+        notedetail.save()
+
+    notedetails = NoteDetail.objects.filter(note=note)
     context['new_user'] = new_user
     context['note'] = note
-    return render(request, 'addnote.html', context)
+    context['notedetails'] = notedetails
 
+    return redirect(reverse('seenote',args=(note.id,)))
+    #return render(request, 'addnote.html', context)
+"""
+@login_required
+def add_title(request, noteid):
+    context={}
+    note = Note.objects.get(id=noteid)
+    note.note_title=request['notetitle']
+    print request
+    return render(request, 'addnote.html', context)
+@login_required
+def add_note(request):
+    context = {}
+    username = request.user
+    context['username']= username
+    new_user = User.objects.get(username=username)
+    creation_time = datetime.now()
+    note = Note(owner=new_user,note_title="Edit Title Here",creation_time=creation_time)
+    note.save()
+    context['note'] = note
+    return render(request,'addnote.html', context)
+"""
 
 @login_required
 def see_note(request, id):
@@ -143,7 +220,12 @@ def see_note(request, id):
     new_user= User.objects.get(username=username)
     user_profile = Profile.objects.get(owner=new_user)
     note = Note.objects.get(id=id)
-    #print posts
+
+    if NoteDetail.objects.filter(note=note).exists():
+        alldetail = NoteDetail.objects.filter(note=note)
+        context={'username':username,'new_user':new_user,'user_profile':user_profile,'note':note, 'alldetail':alldetail}
+        return render(request,'seenote.html',context)
+
     context={'username':username,'new_user':new_user,'user_profile':user_profile,'note':note}
     return render(request,'seenote.html',context)
 
@@ -189,6 +271,35 @@ def travelnotes(request):
     #print posts
     context={'username':username,'new_user':new_user, 'notes':notes}
     return render(request,'travelnotes.html',context)
+
+@login_required
+def search_note(request):
+    username = request.user.username
+    new_user = User.objects.get(username=username)
+    keyword = request.POST['keyword']
+    result = []
+    notes = Note.objects.all()
+    for note in notes:
+        if note.notedetail.filter(Q(content__icontains=keyword)|Q(place__icontains=keyword)).exists():
+            result.append(note)
+    #print posts
+    context={'username':username,'new_user':new_user, 'result':result}
+    return render(request,'notesresult.html',context)
+
+@login_required
+def search_plan(request):
+    username = request.user.username
+    new_user = User.objects.get(username=username)
+    place = request.POST['place']
+    time = request.POST['time']
+    result = []
+    plans = Plan.objects.all()
+    for plan in plans:
+        if plan.plandetail.filter(place=place,time=time).exists():
+            result.append(plan)
+    #print posts
+    context={'username':username,'new_user':new_user, 'result':result}
+    return render(request,'plansresult.html',context)
 
 #@login_required
 def travelplans(request):
