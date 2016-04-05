@@ -38,11 +38,18 @@
       <table>
       {% for note in notes %}
       <tr>
+        <td>
           <a href="{% url 'seenote' note.id %}">
             <h4>{{note.note_title}}&nbsp;</h4>
             <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}</h5>
             <img src="{{note.title_image}}" width="270px">
           </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button><a href="{% url 'deletenote' note.id %}">Delete</a></button>
+        </td>
       </tr>
       {% endfor %}
     </table>

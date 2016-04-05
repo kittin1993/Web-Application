@@ -47,6 +47,9 @@
     </div>
 
     <div class="col-sm-9">
+       {% if note.title_image %}
+       <img src="{{note.title_image}}" width="200px">
+      {% endif %}
       <h4><small>Note</small></h4>
       <hr>
       <h2>{{note.note_title}}</h2>
@@ -54,6 +57,9 @@
       {% for detail in alldetail %}
       <p>{{detail.place}}  {{detail.time}} Cost: {{detail.cost}}
       {{detail.cotent}}</p>
+      {% for image in detail.noteimage.all %}
+      <img src="{{image.picture}}" width="200px">
+      {% endfor %}
       {% endfor %}
       <br><br>
       

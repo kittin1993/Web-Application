@@ -39,7 +39,9 @@
       <div class="box1">
           <h4><a href="{% url 'seeplan' plan.id %}"> {{plan.plan_title}}</a></h4>
           <h5><span class="glyphicon glyphicon-time"></span> {{plan.creation_time}}</h5>
+          <button><a href="{% url 'deleteplan' plan.id %}">Delete</a></button>
       </div>
+        
       {% endfor %}
       <hr>
     </div>

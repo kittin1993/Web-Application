@@ -1,0 +1,20 @@
+
+
+
+  <form enctype="multipart/form-data" method="post" action="{% url 'addnote' %}">
+  <table>
+    <tr>
+      <td>Note Title</td>
+      <td><input type="text" name="notetitle"></td>
+    </tr>
+    <tr>
+      <td>Title Image</td>
+      <td><input type="file" name="titleimage"></td>
+    </tr>
+  </table>
+  {% csrf_token %}
+<input type="submit" value="Save Title">
+</form>
+
+
+<textarea name='comment' form='nform'>Easy! You should check out MoxieManager!</textarea>

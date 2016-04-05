@@ -25,7 +25,6 @@
 
 <h3>{{noteid}}</h3>
 
-
 {% if note.note_title %}
 <h3>{{note.note_title}}</h3>
 {% endif %}
@@ -42,7 +41,7 @@ Time: {{notedetail.time}}
 {% endfor %}
 {% endif %}
 
-<form enctype="multipart/form-data" method="post" action="{% url 'addnote' %}">
+<form id = "nform" enctype="multipart/form-data" method="post" action="{% url 'addnote' %}">
   <table>
     {% for field in form.visible_fields %}
     <tr>
@@ -60,17 +59,33 @@ Time: {{notedetail.time}}
   </table>
   <div id='NoteForm'>
   </div>
-  <input type="button" value="Add A Day" onClick="addNoteForm('NoteForm')">
+  <input type="button" value="Add A Day" onClick="addNoteForm('NoteForm','text_area')">
   <input type="submit" value="Save Note">
 </form>   
 <a href="{% url 'home' %}"> <button>Cancel</button></a>
+
+
 </div>
 
-  <div class = "col-sm-4 box1">
-    <p>Save</p>
-    <hr>
-    <p>Cancel</p>
-  </div>
-</div>
+
+
+<script>
+tinymce.init({ 
+  selector: 'textarea',
+  height: 300,
+  width:800,
+  plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table contextmenu paste code'
+  ],
+  toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+  content_css: [
+    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+    '//www.tinymce.com/css/codepen.min.css'
+  ]
+});
+</script>
+
 
 {% endblock %}

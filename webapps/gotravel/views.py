@@ -169,11 +169,17 @@ def add_note(request):
     
     if not form.is_valid():
         return render(request,'addnote.html',context)
+
+    if form.cleaned_data['title_image']:
+        url = s3_upload(form.cleaned_data['title_image'], random.random())
+        note.title_image= url
     
     form.save()
     
     print request.POST
+    
     print request.POST.getlist('place')
+    print request.FILES.getlist('picture0')
     length = len(request.POST.getlist('place'))
     print length
     note = Note.objects.get(owner=new_user, creation_time=creation_time)
@@ -185,6 +191,13 @@ def add_note(request):
         notedetail.content = request.POST.getlist('content')[index]
         notedetail.cost = request.POST.getlist('cost')[index]
         notedetail.save()
+        pic_name="picture"+str(index)
+        print request.FILES.getlist(pic_name)
+        for num in range(len(request.FILES.getlist(pic_name))):
+            noteimage= Noteimage(notedetail=notedetail,creation_time=datetime.now())
+            image_url = s3_upload(request.FILES.getlist(pic_name)[num], random.random())
+            noteimage.picture=image_url
+            noteimage.save()
 
     notedetails = NoteDetail.objects.filter(note=note)
     context['new_user'] = new_user
@@ -228,6 +241,46 @@ def see_note(request, id):
 
     context={'username':username,'new_user':new_user,'user_profile':user_profile,'note':note}
     return render(request,'seenote.html',context)
+
+@login_required
+def delete_note(request, id):
+    username = request.user
+    new_user= User.objects.get(username=username)
+    user_profile = Profile.objects.get(owner=new_user)
+    note = Note.objects.get(id=id)
+
+    if NoteDetail.objects.filter(note=note).exists():
+        alldetail = NoteDetail.objects.filter(note=note)
+        for detail in alldetail:
+            if Noteimage.objects.filter(notedetail=detail).exists():
+                allimage = Noteimage.objects.filter(notedetail=detail)
+                for image in allimage:
+                    image.delete()
+            detail.delete() 
+    note.delete()   
+
+    notes = Note.objects.filter(owner=new_user)
+    #print posts
+    context={'username':username,'new_user':new_user, 'notes':notes}
+    return render(request,'myschedule_note.html',context)
+
+@login_required
+def delete_plan(request, id):
+    username = request.user
+    new_user= User.objects.get(username=username)
+    user_profile = Profile.objects.get(owner=new_user)
+    plan = Plan.objects.get(id=id)
+
+    if PlanDetail.objects.filter(plan=plan).exists():
+        alldetail = PlanDetail.objects.filter(plan=plan)
+        for detail in alldetail:
+            detail.delete() 
+    plan.delete()   
+    
+    plans = Plan.objects.filter(owner=new_user)
+    #print posts
+    context={'username':username,'new_user':new_user, 'plans':plans}
+    return render(request,'myschedule_plan.html',context)
 
 @login_required
 def see_plan(request, id):

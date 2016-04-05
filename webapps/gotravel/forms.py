@@ -3,6 +3,7 @@ from models import *
 from django.contrib.auth.models import User
 from django.core.validators import validate_email, RegexValidator
 from gotravel.choice import *
+from multiupload.fields import MultiFileField
 
 
 class RegistrationForm(forms.Form):
@@ -106,6 +107,8 @@ class EditNoteDetailForm(forms.ModelForm):
         empty_label=("Choose Year", "Choose Month", "Choose Day"),
     ),)
     picture = forms.FileField(label='Upload Picture', required=False)
+    multiple = MultiFileField(min_num=1, max_num=3, max_file_size=1024*1024*5)
+
 
     def clean(self):
         # Calls our parent (forms.Form) .clean function, gets a dictionary

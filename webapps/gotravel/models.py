@@ -139,7 +139,7 @@ class NoteDetail(models.Model):
 	time = models.DateField()
 	place = models.CharField(max_length = 256, blank = True)
 	content = models.CharField(max_length = 512, blank = True)
-	picture = models.CharField(max_length = 256, blank = True)
+	#picture = models.CharField(max_length = 256, blank = True)
 	cost = models.CharField(max_length = 20, blank = True)
 	creation_time = models.DateTimeField()
 	
@@ -147,5 +147,17 @@ class NoteDetail(models.Model):
 		return self
 	def __str__(self):
 		return self.__unicode__() 
+
+class Noteimage(models.Model):
+	notedetail = models.ForeignKey(NoteDetail,related_name='noteimage')
+	picture = models.CharField(max_length = 256, blank = True)
+	creation_time = models.DateTimeField()
+	
+	def __unicode__(self):
+		return self
+	def __str__(self):
+		return self.__unicode__() 
+
+
 
 
