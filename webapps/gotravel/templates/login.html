@@ -1,13 +1,16 @@
+{% load staticfiles %}
 <!DOCTYPE HTML>
 <html>
 <head>
 	<title>Go Travel -- Login</title>
 	<meta charset="utf-8">
 	<meta name= "author" content ="Yumeng Xie">
+	<link rel="stylesheet" type="text/css" href="{% static "css/gotravel.css"%}">
 
 </head>
 
 <body>
+<div id="popupContact">
 {% if form.errors %}
 <p style="color:red">
 Incorrect email and password.
@@ -20,20 +23,23 @@ Log in:
 <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 <table>
 <tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
+    <td width = "150px">{{ form.username.label_tag }}</td>
+    <td width = "150px">{{ form.username }}</td>
 </tr>
 <tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
+    <td width = "150px">{{ form.password.label_tag }}</td>
+    <td width = "150px">{{ form.password }}</td>
+</tr>
+<tr>
+    <td width = "150px"><input type="submit" id="signin" value="Sign in" /></td>
+    <td width = "150px"><a href="{% url 'register' %}" id="signup">Sign up</a></td>
 </tr>
 </table>
 
-<input type="submit" value="Login" />
-<a href="{% url 'register' %}">Register</a>
 <input type="hidden" name="next" value="{{ next }}" />
 {% csrf_token %}
+<a href="{% url 'register' %}" >Forget Password?</a>
 </form>
-
+</div>
 </body>
 </html>

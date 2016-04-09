@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Show Boundary</title>
+    <style type="text/css">
+      body {
+        margin: 0;
+        border: 0;
+        overflow: hidden;
+      }
+      #map_canvas {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+    </style>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM"></script>
+    <script type="text/javascript" src="/static/js/USA_State.json"></script>
+    <script type="text/javascript" src="/static/js/USA_County.json"></script>
+    <script type="text/javascript" src="/static/js/mapProcess.js"></script>
+  </head>
+  
+  <body>
+    <div>
+      County: <input type="text" id="county">
+      State: <input type="text" id="state">
+      <select name="places" id="destination">
+        <option value="museum">Museum</option>
+        <option value="restrant">Restrant</option>
+        <option value="zoo">Zoo</option>
+      </select>
+      <button id="submit" value="Search" onclick="findPlace()">
+    </div>
+    <div id="map_canvas"></div>
+    
+  </body>
+
+</html>

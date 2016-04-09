@@ -17,7 +17,7 @@
 {% block content %}
 <div class = "row">
   <div class = "col-sm-8 box1">
-    <p>Map</p>
+    <a href="{% url 'map' %}"><p>Map</p></a>
   </div>
   <div class = "col-sm-4 box1">
     {% for error in form.non_field_errors %}
@@ -42,6 +42,7 @@
      <div id='PlanForm'>
      </div>
      <input type="button" value="Add A Day" onClick="addPlanForm('PlanForm')">
+     <input type="button" value="Delete A Day" onClick="deletePlanForm('PlanForm')">
      <input type="submit" value="Save">
    </form>
   </div>

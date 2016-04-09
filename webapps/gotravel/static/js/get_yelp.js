@@ -19,7 +19,7 @@ function reload_rest(){
             list.removeChild(list.firstChild);
         }
 
-        console.log(json.length);
+        //console.log(json.length);
         for (var i = 0; i<json.length; i++) {
         // Extracts the item id and text from the response
         var rest_url = json[i]["url"];
@@ -71,7 +71,7 @@ function reload_hotel(){
             list.removeChild(list.firstChild);
         }
 
-        console.log(json.length);
+        //console.log(json.length);
         for (var i = 0; i<json.length; i++) {
         // Extracts the item id and text from the response
         var hotel_url = json[i]["url"];
@@ -102,8 +102,8 @@ function reload_hotel(){
 
 }
 
-window.setInterval(reload_rest,10000);
-window.setInterval(reload_hotel,10000);
+window.setInterval(reload_rest,100000);
+window.setInterval(reload_hotel,100000);
 
 function getCSRFToken() {
     var cookies = document.cookie.split(";");

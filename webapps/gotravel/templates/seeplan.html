@@ -43,18 +43,59 @@
 <tr>
   <td>Bio: {{username.profile.bio}}</td>
 </tr>
-</table>
-    </div>
+<tr>
+  <td>
+    <button id="pop" onclick="div_show()" class="ui-btn ui-btn-inline ui-corner-all ui-icon-check ui-btn-icon-left">Invite</button>
+</td>
+</tr>
+ </table>
+</div>
 
     <div class="col-sm-9">
       <h4><small>Plan</small></h4>
       <hr>
-      <h2>{{plan.plan_title}}</h2>
+      <h1>{{plan.plan_title}}</h1>
       <h5><span class="glyphicon glyphicon-time"></span>{{plan.creation_time}}</h5>
+       <table>
+        <tr>
+          <td>
+           <button id="like" onClick="addplike({{plan.id}})"></button>
+         </td>
+         <td>
+          <div id="likes">
+         &nbsp;{{plan.likes}} &nbsp;
+       </div>
+         </td>
+         <td><button id="dislike" onClick="addpdislike({{plan.id}})"></button>
+         </td>
+         <td>
+          <div id="dislikes">
+         &nbsp;{{plan.dislikes}} &nbsp;
+         </div>
+         </td>
+       </tr>
+     </table>
       <p>My plan to new york.</p>
       <br><br>
       
-    </div>
-  </div>
+<div id="abc">
+<!-- Popup Div Starts Here -->
+<div id="popupContact">
+<!-- Contact Us Form -->
+<form action="{% url 'invite' plan.id %}" id="form" method="post" name="form">
+<img id="close" src="/static/images/31.png" onclick ="div_hide()">
+<h1>Travel Together</h1>
+<hr>
+<input id="name" name="name" placeholder="Your Name" type="text">
+<input id="email" name="email" placeholder="Your Email" type="text">
+<textarea id="msg" name="message" placeholder="Message"></textarea>
+<!-- <input id="submit" type="submit" value="Save">-->
+<a href="javascript:%20check_empty()" id="submit">Send</a> 
+{% csrf_token %}
+</form>
+</div>
+</div>
 
+   </div>
+  </div>
 {% endblock %}

@@ -24,7 +24,7 @@
 {% block content %}
 <div class="row content">
     <div class="col-sm-8 text-left"> 
-      <h2>Travel Notes</h2>
+      <h1>Travel Notes</h1>
       <table>
       {% for note in result %}
       <tr>
@@ -39,12 +39,16 @@
     <div class="col-sm-4 sidenav">
       <h3>Search</h3>
       <form enctype="multipart/form-data" method="post" action="{% url 'searchnote' %}">
-      <div class="input-group">  
-        <input type="text" class="form-control" placeholder="Search .." name='keyword'>
-        <span class="input-group-btn">
-          <input type="submit" value="search" class="btn btn-default" >
-            <span class="glyphicon glyphicon-search"></span>
-        </span>   
+      <div class="input-group">
+        <label> Keyword </label>
+        <input type="text" class="form-control" placeholder="Search by a keyword" name='keyword'>
+        <label>Order By</label>
+        <select name="order">
+        <option value="0">Time</option>
+        <option value="1">Evaluation</option>
+        <option value="2">Cost</option>
+        </select>
+          <input type="submit" value = "search" class="btn btn-default" >
       </div>
       {% csrf_token %}
        </form>

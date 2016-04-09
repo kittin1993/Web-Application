@@ -47,12 +47,32 @@
     </div>
 
     <div class="col-sm-9">
-       {% if note.title_image %}
-       <img src="{{note.title_image}}" width="200px">
-      {% endif %}
-      <h4><small>Note</small></h4>
+      <div class="image">
+      {% if note.title_image %}
+      <img src="{{note.title_image}}" width="800px" height="200px">
+      <h2><span>{{note.note_title}}</span></h2>
+       {% endif %}
+      </div>
+      <table>
+        <tr>
+          <td>
+           <button id="like" onClick="addlike({{note.id}})"></button>
+         </td>
+         <td>
+          <div id="likes">
+         &nbsp;{{note.likes}} &nbsp;
+       </div>
+         </td>
+         <td><button id="dislike" onClick="adddislike({{note.id}})"></button>
+         </td>
+         <td>
+          <div id="dislikes">
+         &nbsp;{{note.dislikes}} &nbsp;
+         </div>
+         </td>
+       </tr>
+     </table>
       <hr>
-      <h2>{{note.note_title}}</h2>
       <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}</h5>
       {% for detail in alldetail %}
       <p>{{detail.place}}  {{detail.time}} Cost: {{detail.cost}}

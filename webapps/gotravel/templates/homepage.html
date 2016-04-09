@@ -12,6 +12,7 @@
     <li><a href="{% url 'editprofile' %}">{{username}}</a></li>
     {% if username == 'Visitor' %}
     <li><a href="{% url 'login' %}">Login</a></li>
+    <!--<li><a href="#mypopup" data-rel="popup">Login</a></li>-->
     {% endif %}
     {% if username != 'Visitor' %}
     <li><a href="{% url 'logout' %}">Logout</a></li>
@@ -21,6 +22,7 @@
 {% endblock %}
 
 {% block content %}
+
 <div class = "row">
   <div class = "col-sm-4 box1">
     <p><a href="{% url 'addplan' %}">Add New Plan</a></p>
@@ -36,14 +38,16 @@
   <div class = "col-sm-6 box1">
     <h3><a href="{% url 'travelnotes' %}">Travel Notes</a></h3>  
     <table>
-      {% for note in notes %}
       <tr>
+      {% for note in notes %}
+        <div>
           <a href="{% url 'seenote' note.id %}">
             <h4>{{note.note_title}}&nbsp;</h4>
             <img src="{{note.title_image}}" width="270px">
           </a>
-      </tr>
+        </div>
       {% endfor %}
+      </tr>
     </table>
 </div>
 
@@ -56,5 +60,18 @@
       {% endfor %}
   </div>
 
+<div data-role="popup" id="mypopup" data-position-to="window" data-overlay-theme="b">
+      <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+       <h1>Login information</h1>
+        <div>
+          <input type="text" name="user" id="usrnm" placeholder="Username">
+          <input type="password" name="passw" id="pswd" placeholder="Password">
+          <label for="log">Keep me logged in</label>
+          <input type="checkbox" name="login" id="log" value="1" data-mini="true">
+          <input id="login" type="submit" value="Log in">
+        </div>
+        {% csrf_token %}
+      </form>
+  </div>
 
 {% endblock %}

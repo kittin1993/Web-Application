@@ -9,14 +9,25 @@
   <li><a href="{% url 'travelnotes' %}">Travel Notes</a></li>
   <li><a href="{% url 'travelplans' %}">Travel Plans</a></li>
   <ul class="right">
+     <div class="btn-group">
     <li><a class="dropdown-toggle" data-toggle="dropdown">{{username}}<span class="caret"></span></a></li>
+    <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+    </div>
   </ul>
 </ul>
 {% endblock %}
 
 {% block content %}
 <div class = "row">
-  <div class = "col-sm-8 box1">
+  <div class = "col-sm-3">
+  </div>
+  <div class = "col-sm-9">
     {% for error in form.non_field_errors %}
     <p style="color: red">
       {{ error }}
@@ -40,8 +51,8 @@ Time: {{notedetail.time}}
 {{notedetail.cost}}
 {% endfor %}
 {% endif %}
-
-<form id = "nform" enctype="multipart/form-data" method="post" action="{% url 'addnote' %}">
+</div>
+  <!--
   <table>
     {% for field in form.visible_fields %}
     <tr>
@@ -60,32 +71,75 @@ Time: {{notedetail.time}}
   <div id='NoteForm'>
   </div>
   <input type="button" value="Add A Day" onClick="addNoteForm('NoteForm','text_area')">
-  <input type="submit" value="Save Note">
-</form>   
-<a href="{% url 'home' %}"> <button>Cancel</button></a>
+  <input type="button" value="Delete A Day" onClick="deleteNoteForm('NoteForm','text_area')">-->
+  
+<div class = "row">
 
+ 
+    <div class = "col-sm-1">
+    <div class = "timeline-minus">
+     <p class="glyphicon glyphicon-minus" onClick="deleteNoteForm('NoteForm','text_area')"></p>
+   </div>
+       <hr>
+       <div class = "timeline-plus">
+      <p class="glyphicon glyphicon-plus" onClick="addNoteForm('NoteForm','text_area')"></p>
+    </div>
+  </div>
+  
 
+<div class = "col-sm-11">
+
+<form id = "nform" enctype="multipart/form-data" method="post" action="{% url 'addnote' %}">    
+    
+    <ul id = "timeline" class="timeline">
+        <li class="timeline-inverted">
+          <div class="timeline-badge1 danger"><i class="glyphicon glyphicon-plane"></i></div>
+          <div class="timeline-panel">
+
+              <table>
+                {% for field in form.visible_fields %}
+                <tr >
+                  <td>{{field.label_tag}}</td>
+                  <td>{{field}}</td>
+                  <td style="color: red">{{field.errors}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                  {% for field in form.hidden_fields %}
+                  {{field}}
+                  {% endfor %}
+                </tr>
+              </table>
+          </div>
+        </li>
+        <li class="timeline-inverted">
+          <div class="timeline-badge info"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+            </div>
+            <div class="timeline-body">
+              <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+              <hr>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                  <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li> 
+    </ul>
+<input id="notesubmit" type="submit" value="Save Note">
+{% csrf_token %}
+</form>
 </div>
-
-
-
-<script>
-tinymce.init({ 
-  selector: 'textarea',
-  height: 300,
-  width:800,
-  plugins: [
-    'advlist autolink lists link image charmap print preview anchor',
-    'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table contextmenu paste code'
-  ],
-  toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-  content_css: [
-    '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
-    '//www.tinymce.com/css/codepen.min.css'
-  ]
-});
-</script>
-
-
+ 
 {% endblock %}

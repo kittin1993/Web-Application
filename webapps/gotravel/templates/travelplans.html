@@ -24,7 +24,7 @@
 {% block content %}
 <div class="row content">
     <div class="col-sm-8 text-left"> 
-      <h2>Travel Plans</h2>
+      <h1>Travel Plans</h1>
       {% for plan in plans %}
       <div class="box1">
           <h4><a href="{% url 'seeplan' plan.id %}"> {{plan.plan_title}}</a></h4>

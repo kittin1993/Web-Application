@@ -37,8 +37,8 @@ def home(request):
         return render(request,'homepage.html',context)
 
     new_user= User.objects.get(username=username)
-    notes = Note.objects.all().order_by('-creation_time')
-    plans = Plan.objects.all().order_by('-creation_time')
+    notes = Note.objects.all().order_by('-likes')[:6]
+    plans = Plan.objects.all().order_by('-likes')[:12]
     #print posts
     context={'username':username,'new_user':new_user, 'notes':notes, 'plans':plans}
     return render(request,'homepage.html',context)
@@ -157,11 +157,10 @@ def add_note(request):
 
     if request.method == 'GET':
         form = EditNoteForm()
-        #print note.id
         context['form']=form
-        #context['noteid']=note.id
         return render(request,'addnote.html', context)
     
+    print request.FILES['title_image']
     creation_time=datetime.now()
     note = Note(owner=new_user, creation_time=creation_time)
     form = EditNoteForm(request.POST, request.FILES, instance=note)
@@ -171,13 +170,13 @@ def add_note(request):
         return render(request,'addnote.html',context)
 
     if form.cleaned_data['title_image']:
+        print "have image"
         url = s3_upload(form.cleaned_data['title_image'], random.random())
         note.title_image= url
     
     form.save()
     
     print request.POST
-    
     print request.POST.getlist('place')
     print request.FILES.getlist('picture0')
     length = len(request.POST.getlist('place'))
@@ -226,6 +225,14 @@ def add_note(request):
     context['note'] = note
     return render(request,'addnote.html', context)
 """
+@login_required
+def map(request):
+    username = request.user
+    new_user= User.objects.get(username=username)
+    user_profile = Profile.objects.get(owner=new_user)
+
+    context={'username':username,'new_user':new_user,'user_profile':user_profile}
+    return render(request,'googleboundary.html',context)
 
 @login_required
 def see_note(request, id):
@@ -241,6 +248,54 @@ def see_note(request, id):
 
     context={'username':username,'new_user':new_user,'user_profile':user_profile,'note':note}
     return render(request,'seenote.html',context)
+
+@login_required
+def add_likes(request, id):
+
+    note=Note.objects.get(id=id)
+    note.likes = note.likes+1
+    note.save()
+    context={}
+    context['likes']=note.likes
+    response_json=json.dumps(context)
+
+    return HttpResponse(response_json, content_type='application/json')
+
+@login_required
+def add_dislikes(request, id):
+
+    note=Note.objects.get(id=id)
+    note.dislikes = note.dislikes+1
+    note.save()
+    context={}
+    context['dislikes']=note.dislikes
+    response_json=json.dumps(context)
+
+    return HttpResponse(response_json, content_type='application/json')
+
+@login_required
+def add_plikes(request, id):
+
+    plan=Plan.objects.get(id=id)
+    plan.likes = plan.likes+1
+    plan.save()
+    context={}
+    context['likes']=plan.likes
+    response_json=json.dumps(context)
+
+    return HttpResponse(response_json, content_type='application/json')
+
+@login_required
+def add_pdislikes(request, id):
+
+    plan=Plan.objects.get(id=id)
+    plan.dislikes = plan.dislikes+1
+    plan.save()
+    context={}
+    context['dislikes']=plan.dislikes
+    response_json=json.dumps(context)
+
+    return HttpResponse(response_json, content_type='application/json')
 
 @login_required
 def delete_note(request, id):
@@ -293,6 +348,31 @@ def see_plan(request, id):
     return render(request,'seeplan.html',context)
 
 @login_required
+def invite(request, id):
+    print request.POST
+    sender_name = request.POST['name']
+    sender_email = request.POST['email']
+    sender_message = request.POST['message']
+    username = request.user
+    new_user= User.objects.get(username=username)
+    user_profile = Profile.objects.get(owner=new_user)
+    plan = Plan.objects.get(id=id)
+    receiver = plan.owner
+    receiver_name = receiver.username
+    receiver_email = receiver.email
+
+    email_body = sender_message+"\n\nMy name:"+sender_name+"\nMy email:"+sender_email
+    
+    subject = "[From GoTravel]Hi,"+receiver_name+"! Someone wants to invite you to travel together"
+    send_mail(subject=subject,
+              message= email_body,
+              from_email="yumengx@andrew.cmu.edu",
+              recipient_list=[receiver_email])
+    #print posts
+    context={'username':username,'new_user':new_user, 'user_profile':user_profile,'plan':plan}
+    return render(request,'seeplan.html',context)
+
+@login_required
 def myschedule_plan(request):
     username = request.user
     new_user= User.objects.get(username=username)
@@ -327,14 +407,27 @@ def travelnotes(request):
 
 @login_required
 def search_note(request):
+
     username = request.user.username
     new_user = User.objects.get(username=username)
+    print request.POST
     keyword = request.POST['keyword']
+    order = request.POST['order']
     result = []
-    notes = Note.objects.all()
+
+    if order==2:
+        notes = Note.objects.all().order_by("likes")
+    elif order ==1:
+        notes = Note.objects.all().order_by("total_cost")
+    else:
+        notes = Note.objects.all().order_by("-creation_time")
+
     for note in notes:
-        if note.notedetail.filter(Q(content__icontains=keyword)|Q(place__icontains=keyword)).exists():
+        if keyword.lower() in note.note_title.lower():
             result.append(note)
+        else:
+            if note.notedetail.filter(Q(content__icontains=keyword)|Q(place__icontains=keyword)).exists():
+                result.append(note)
     #print posts
     context={'username':username,'new_user':new_user, 'result':result}
     return render(request,'notesresult.html',context)

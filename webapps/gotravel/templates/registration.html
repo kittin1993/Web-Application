@@ -1,12 +1,15 @@
+{% load staticfiles %}
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
   <meta name= "author" content ="Yumeng Xie">
   <title>Socialnetwork-- Register</title>
+  <link rel="stylesheet" type="text/css" href="{% static "css/gotravel.css"%}">
 </head>
 
 <body>
+	<div id='popupContact'>
 {% for error in form.non_field_errors %}
 <p style="color: red">
 {{ error }}
@@ -14,7 +17,7 @@
 {% endfor %}
 
 <p>
-Register:
+Create a new account:
 </p>
 <form method="post" action="{% url 'register' %}">
 <table>
@@ -30,9 +33,9 @@ Register:
 {{field}}
 {% endfor %}
 {% csrf_token %}
-<input type="submit" value="Register" />
+<input type="submit" id="submit" value="Register" />
 </form>
-
+</div>
 </body>
 </html>
 

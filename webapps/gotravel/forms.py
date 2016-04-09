@@ -3,8 +3,10 @@ from models import *
 from django.contrib.auth.models import User
 from django.core.validators import validate_email, RegexValidator
 from gotravel.choice import *
-from multiupload.fields import MultiFileField
+#from multiupload.fields import MultiFileField
 
+#class PasswordForgotForm(forms.Form):
+   # email_or_username = forms.CharField(label=("Email Or Username"), max_length=254)
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length = 30, label = 'Username', 
@@ -88,7 +90,7 @@ class EditNoteForm(forms.ModelForm):
     
     class Meta:
         model = Note
-        fields = ('note_title',)
+        fields = ('note_title','total_cost')
     
     title_image = forms.FileField(label='Add a title image', required=False)
 
@@ -107,8 +109,7 @@ class EditNoteDetailForm(forms.ModelForm):
         empty_label=("Choose Year", "Choose Month", "Choose Day"),
     ),)
     picture = forms.FileField(label='Upload Picture', required=False)
-    multiple = MultiFileField(min_num=1, max_num=3, max_file_size=1024*1024*5)
-
+    #multiple = MultiFileField(min_num=1, max_num=3, max_file_size=1024*1024*5)
 
     def clean(self):
         # Calls our parent (forms.Form) .clean function, gets a dictionary
