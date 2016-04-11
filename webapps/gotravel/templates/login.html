@@ -30,15 +30,15 @@ Log in:
     <td width = "150px">{{ form.password.label_tag }}</td>
     <td width = "150px">{{ form.password }}</td>
 </tr>
-<tr>
-    <td width = "150px"><input type="submit" id="signin" value="Sign in" /></td>
-    <td width = "150px"><a href="{% url 'register' %}" id="signup">Sign up</a></td>
-</tr>
 </table>
-
+<input type="submit" id="signin" value="Sign in" /></td>
 <input type="hidden" name="next" value="{{ next }}" />
 {% csrf_token %}
-<a href="{% url 'register' %}" >Forget Password?</a>
+<br>
+<a href="{% url 'password_reset' %}" >Forgot your Password?</a>
+<div id = "signup">
+<a href="{% url 'register' %}" >Sign up</a>
+</div>
 </form>
 </div>
 </body>

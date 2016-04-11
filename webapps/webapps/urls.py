@@ -18,7 +18,7 @@ from gotravel import views
 from django.contrib import admin
 
 urlpatterns = [
-    #url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^gotravel/', include('gotravel.urls')),
     url(r'^$', views.home),
 ]

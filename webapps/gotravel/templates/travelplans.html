@@ -36,13 +36,23 @@
       <form enctype="multipart/form-data" method="post" action="{% url 'searchplan' %}">
       <table>
         <tr>
-        Time:<input type="date" class="form-control" placeholder="Search by a time" name='time'>
+          <td>
+        Time &nbsp;&nbsp;
+      </td>
+      <td><input type="date" class="form-control" placeholder="Search by a time" name='time'>
+      </td>
       </tr>
       <tr>
-        Place: <input type="text" class="form-control" placeholder="Search by a place" name='place'>
+        <td>
+        Place &nbsp;&nbsp;
+      </td>
+      <td><input type="text" class="form-control" placeholder="Search by a place" name='place'>
+      </td>
       </tr>
       <tr>
-        <input type="submit" value = "search" class="btn btn-default" >
+        <td colspan="2">
+        <input id="submit" type="submit" value = "search">
+      </td>
       <tr>
       </table>
       {% csrf_token %}

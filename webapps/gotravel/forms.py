@@ -92,7 +92,7 @@ class EditNoteForm(forms.ModelForm):
         model = Note
         fields = ('note_title','total_cost')
     
-    title_image = forms.FileField(label='Add a title image', required=False)
+    title_image = forms.FileField(label='Add a title image', required = False)
 
     def clean(self):
         cleaned_data = super(EditNoteForm, self).clean()

@@ -13,7 +13,7 @@ function addNoteForm(Name1,Name2){
 
           var newli = document.createElement('li');
           newli.className='timeline-inverted';
-          newli.innerHTML = "<div class=\"timeline-badge warning\"><i class=\"glyphicon glyphicon-calendar\"></i></div><div class='timeline-panel'><div class='timeline-body'><table><tr><td>Time: </td><td><input type=\"date\" name='time'></td></tr><tr><td>Place: </td><td><input type='text' name='place'></td></tr><tr><td>Content: </td><td><textarea id='msg' name='content'></textarea></td></tr><tr><td>Cost: </td><td><input type='text' name='cost'></td></tr><tr><td>Upload Pictures: </td><td><input type='file' name=\"picture"+num+"\" multiple></td></tr></table></div></div>";
+          newli.innerHTML = "<div class=\"timeline-badge warning\"><i class=\"glyphicon glyphicon-calendar\"></i></div><div class='timeline-panel'><div class='timeline-body'><table><tr><td>Time: </td><td><input type=\"date\" id='note_item' name='time'></td></tr><tr><td>Place: </td><td><input type='text' id='note_item' name='place'></td></tr><tr><td>Content: </td><td><textarea id='ctt' name='content'></textarea></td></tr><tr><td>Cost: </td><td><input type='text' id='note_item' name='cost'></td></tr><tr><td>Upload Pictures: </td><td><input type='file' name=\"picture"+num+"\" multiple></td></tr></table></div></div>";
           console.log("picture"+num);
           document.getElementById('timeline').appendChild(newli);
                   

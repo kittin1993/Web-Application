@@ -218,3 +218,5 @@ EMAIL_PORT = config.get('Email', 'Port')
 EMAIL_HOST_USER = config.get('Email', 'User')
 EMAIL_HOST_PASSWORD = config.get('Email', 'Password')
 EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = "yumengx@andrew.cmu.edu"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

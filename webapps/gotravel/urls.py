@@ -44,6 +44,12 @@ urlpatterns = [
     url(r'^deleteplan/(\d+)$', private_views.delete_plan, name='deleteplan'),
     url(r'^get_rests_json', private_views.get_rests_json, name='get_rests_json'),
     url(r'^get_hotels_json', private_views.get_hotels_json, name='get_hotels_json'),
+    url(r'^password_reset$', auth_views.password_reset, {'template_name':'password_reset.html'}, name='password_reset'),
+    url(r'^password_reset_done$', auth_views.password_reset_done, {'template_name':'password_reset_done.html'}, name='password_reset_done'),
+    #url(r'^forgotpass', private_views.forgot_pass, name='forgotpass'),
+    url(r'^resetconfirm/(?P<uidb64>[a-zA-Z0-9_@\+\-]+)/(?P<token>[a-z0-9\-]+)$',
+        auth_views.password_reset_confirm, {'template_name':'password_reset_confirm.html'},name='password_reset_confirm'),
+    url(r'^password_reset_complete$', auth_views.password_reset_complete, {'template_name':'password_reset_complete.html'}, name='password_reset_complete'),
     url(r'^login$', auth_views.login, {'template_name':'login.html'}, name='login'),
     # Route to logout a user and send them back to the login page
     url(r'^logout$', auth_views.logout_then_login, name='logout'),

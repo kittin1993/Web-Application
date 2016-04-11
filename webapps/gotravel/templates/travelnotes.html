@@ -29,8 +29,12 @@
       {% for note in notes %}
       <tr>
           <a href="{% url 'seenote' note.id %}">
-            <h4>{{note.note_title}}&nbsp;</h4>
-            <img src="{{note.title_image}}" width="300px">
+            <div class="imgWrap">
+              <img src="{{note.title_image}}" width="300px" alt="polaroid" />
+              <p class="imgDescription">{{note.note_title}}&nbsp;</p>
+            </div>
+            <!--<h4>{{note.note_title}}&nbsp;</h4>
+            <img src="{{note.title_image}}" width="300px">-->
           </a>
       </tr>
       {% endfor %}
@@ -39,17 +43,29 @@
     <div class="col-sm-4 sidenav">
       <h3>Search</h3>
       <form id="searchform" enctype="multipart/form-data" method="post" action="{% url 'searchnote' %}">
+        <table>
+        <tr>
+          <td valign="bottom">Keyword &nbsp;&nbsp; </td>
+        <td ><input type="text" class="form-control" placeholder="Your keyword" name='keyword'></td>
+      </tr>
       <div class="input-group">
-        <label> Keyword </label>
-        <input type="text" class="form-control" placeholder="Search by a keyword" name='keyword'>
-        <label>Order By</label>
-        <select name="order" form="searchform">
+      <tr>
+        <td valign="bottom">Order By &nbsp;&nbsp;</td>
+        <td>
+        <select id="select" name="order" form="searchform">
         <!--<option value="0" disabled selected hidden>Please Choose...</option>-->
         <option value="0">Time</option>
         <option value="1">Evaluation</option>
         <option value="2">Cost</option>
         </select>
-          <input type="submit" value = "search" class="btn btn-default" >
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+          <input id = "submit" type="submit" value = "search" >
+        </td>
+      </tr>
+        </table>
       </div>
       {% csrf_token %}
       </form>
