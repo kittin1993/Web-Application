@@ -21,19 +21,41 @@
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="{% url 'myschedule_plan' %}">Plans</a></li>
         <li><a href="{% url 'myschedule_note' %}">Notes</a></li>
+        <li><a href="{% url 'myschedule_favorite' %}">Favorite</a></li>
       </ul><br>
     </div>
 
     <div class="col-sm-9">
-      <h4><a href="{% url 'addplan' %}">Add New Plan</a></h4>
+      <hr>
+      <h4><a href="{% url 'addplan' %}"> <div class="link_black">Add New Plan</div></a></h4>
       <hr>
       {% for plan in plans %}
-      <div class="box1">
-          <h4><a href="{% url 'seeplan' plan.id %}"> {{plan.plan_title}}</a></h4>
+      <table>
+        <tr>
+          <td width ='700px' >
+            <div class="box1">
+          <h4><a href="{% url 'seeplan' plan.id %}"><div class="link_black"> {{plan.plan_title}}</div></a></h4>
           <h5><span class="glyphicon glyphicon-time"></span> {{plan.creation_time}}</h5>
-          <button><a href="{% url 'deleteplan' plan.id %}">Delete</a></button>
-      </div>
-        
+        </div>
+      </td>
+      <td>
+      <button id="plan_link"><a href="{% url 'editplan' plan.id %}">
+            <div class="link">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </div>
+          </a></button>
+        </td>
+          <td>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button id="plan_link"><a href="{% url 'deleteplan' plan.id %}">
+            <div class="link">
+            <span class="glyphicon glyphicon-trash"></span>
+          </div>
+          </a></button>
+        </td>
+        </tr>
+      </table>
+
       {% endfor %}
       <hr>
     </div>

@@ -10,6 +10,7 @@ from django.core import serializers
 from django.db.models import Q
 import json,random
 from datetime import datetime
+from datetime import date
 import datetime as dt
 from django.contrib.auth.views import password_reset, password_reset_confirm
 
@@ -21,6 +22,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 
+from django.forms import formset_factory
 from gotravel.models import *
 from gotravel.forms import *
 from gotravel.s3 import *
@@ -237,18 +239,24 @@ def map(request):
 
 @login_required
 def see_note(request, id):
-	username = request.user
-	new_user= User.objects.get(username=username)
-	user_profile = Profile.objects.get(owner=new_user)
-	note = Note.objects.get(id=id)
+	try:
+		username = request.user
+		new_user= User.objects.get(username=username)
+		user_profile = Profile.objects.get(owner=new_user)
+		note = Note.objects.get(id=id)
 
-	if NoteDetail.objects.filter(note=note).exists():
-		alldetail = NoteDetail.objects.filter(note=note)
-		context={'username':username,'new_user':new_user,'user_profile':user_profile,'note':note, 'alldetail':alldetail}
+		if NoteDetail.objects.filter(note=note).exists():
+			alldetail = NoteDetail.objects.filter(note=note)
+			context={'username':username,'new_user':new_user,'user_profile':user_profile,'note':note, 'alldetail':alldetail}
+			return render(request,'seenote.html',context)
+
+		context={'username':username,'new_user':new_user,'user_profile':user_profile,'note':note}
 		return render(request,'seenote.html',context)
-
-	context={'username':username,'new_user':new_user,'user_profile':user_profile,'note':note}
-	return render(request,'seenote.html',context)
+	except Note.DoesNotExist:
+		new_user= User.objects.get(username=request.user)
+		notes = Note.objects.all()
+		context = { 'message': 'Note with id={0} does not exist'.format(id), 'notes':notes,'new_user':new_user }
+		return render(request, 'travelnotes.html', context)
 
 @login_required
 def add_likes(request, id):
@@ -270,6 +278,44 @@ def add_dislikes(request, id):
 	note.save()
 	context={}
 	context['dislikes']=note.dislikes
+	response_json=json.dumps(context)
+
+	return HttpResponse(response_json, content_type='application/json')
+
+@login_required
+def add_favorite(request, id):
+	context = {}
+	note = get_object_or_404(Note, id=id)
+	user = get_object_or_404(User, username=request.user)
+	print "return note"
+	#note.followers.add(user)
+	if not Note.objects.filter(id=id, n_f=user.profile).exists():
+		note.followers = note.followers+1
+		note.save()
+		user.profile.N_favorite.add(note)
+	
+	num = note.followers
+	print num
+	context['num'] = num
+	response_json=json.dumps(context)
+
+	return HttpResponse(response_json, content_type='application/json')
+
+@login_required
+def add_pfavorite(request, id):
+	context = {}
+	plan = get_object_or_404(Plan, id=id)
+	user = get_object_or_404(User, username=request.user)
+	print "return note"
+	#note.followers.add(user)
+	if not Plan.objects.filter(id=id, p_f=user.profile).exists():
+		plan.followers = plan.followers+1
+		plan.save()
+		user.profile.P_favorite.add(plan)
+	
+	num = plan.followers
+	print num
+	context['num'] = num
 	response_json=json.dumps(context)
 
 	return HttpResponse(response_json, content_type='application/json')
@@ -321,6 +367,206 @@ def delete_note(request, id):
 	return render(request,'myschedule_note.html',context)
 
 @login_required
+def edit_note(request, id):
+	try:
+		alldetails=[]
+		if request.method == 'GET':
+			print "get"
+			note = Note.objects.get(id=id)
+			noteform = EditNoteForm(instance=note)
+			detailforms=[]
+			#DetailFormSet = formset_factory(EditNoteDetailForm)
+			
+			num = 0
+			if NoteDetail.objects.filter(note=note).exists():
+				alldetail = NoteDetail.objects.filter(note=note)
+				for detail in alldetail:
+					detail_set = {}
+					detail_set['detail']=detail
+					detail_set['time'] = datetime.strptime(str(detail.time),"%Y-%m-%d")
+					print detail_set['time']
+					detail_set['num']=num
+					alldetails.append(detail_set)
+					num=num+1
+				#for detail in alldetail:
+				#	print "test"
+				#	detailform = EditNoteDetailForm(instance=detail)
+				#	detailforms.append(detailform)
+				#	print detailform
+
+			context = { 'note': note, 'noteform': noteform, 'alldetails':alldetails ,'detailforms':detailforms}
+			return render(request, 'edit_note.html', context)
+	
+		#entry = Entry.objects.select_for_update().get(id=id)
+		#db_update_time = entry.update_time  # Copy timestamp to check after form is bound
+		print request.POST.getlist('place')
+		note = Note.objects.get(id=id)
+		detailforms = []
+		noteform = EditNoteForm(request.POST,request.FILES,instance=note)
+		if not noteform.is_valid():
+			num = 0
+			if NoteDetail.objects.filter(note=note).exists():
+				alldetail = NoteDetail.objects.filter(note=note)
+				for detail in alldetail:
+					detail_set = {}
+					detail_set['detail']=detail
+					detail_set['time'] = datetime.strptime(detail.time, "%Y-%m-%d")
+					print detail_set['time']
+					detail_set['num']=num
+					alldetails.append(detail_set)
+					num=num+1
+			context = { 'note': note, 'noteform': noteform, 'alldetails':alldetails}
+			return render(request, 'edit_note.html', context)
+
+		noteform.save()
+
+		if NoteDetail.objects.filter(note=note).exists():
+			alldetail = NoteDetail.objects.filter(note=note)
+			for detail in alldetail:
+				if Noteimage.objects.filter(notedetail=detail).exists():
+					allimage = Noteimage.objects.filter(notedetail=detail)
+					for image in allimage:
+						image.delete()
+				detail.delete() 
+
+		print request.POST
+		print request.POST.getlist('place')
+		print request.FILES.getlist('picture0')
+		length = len(request.POST.getlist('place'))
+		print length
+		for index in range(length):
+			print index
+			notedetail = NoteDetail(note=note, creation_time=datetime.now())
+			notedetail.place = request.POST.getlist('place')[index]
+			if not request.POST.getlist('time')[index]:
+				notedetail.time = datetime.now()
+			else:
+				notedetail.time = request.POST.getlist('time')[index]
+			notedetail.content = request.POST.getlist('content')[index]
+			notedetail.cost = request.POST.getlist('cost')[index]
+			notedetail.save()
+			pic_name="picture"+str(index)
+			print request.FILES.getlist(pic_name)
+			for number in range(len(request.FILES.getlist(pic_name))):
+				noteimage= Noteimage(notedetail=notedetail,creation_time=datetime.now())
+				image_url = s3_upload(request.FILES.getlist(pic_name)[number], random.random())
+				noteimage.picture=image_url
+				noteimage.save()
+
+		# form = EditForm(instance=entry)
+		context = {
+			'message': 'note updated.',
+			'note':   note,
+			'noteform':   noteform,
+		}
+		return redirect(reverse('seenote',args=(note.id,)))
+	except Note.DoesNotExist:
+		new_user= User.objects.get(username=request.user)
+		notes = Note.objects.filter(owner=new_user)
+		context = { 'message': 'Note with id={0} does not exist'.format(id), 'notes':notes,'new_user':new_user }
+		return render(request, 'myschedule_note.html', context)
+
+@login_required
+def edit_plan(request, id):
+	try:
+		alldetails=[]
+		if request.method == 'GET':
+			print "get"
+			note = Note.objects.get(id=id)
+			noteform = EditNoteForm(instance=note)
+			detailforms=[]
+			#DetailFormSet = formset_factory(EditNoteDetailForm)
+			
+			num = 0
+			if NoteDetail.objects.filter(note=note).exists():
+				alldetail = NoteDetail.objects.filter(note=note)
+				for detail in alldetail:
+					detail_set = {}
+					detail_set['detail']=detail
+					detail_set['time'] = datetime.strptime(str(detail.time),"%Y-%m-%d")
+					print detail_set['time']
+					detail_set['num']=num
+					alldetails.append(detail_set)
+					num=num+1
+				#for detail in alldetail:
+				#	print "test"
+				#	detailform = EditNoteDetailForm(instance=detail)
+				#	detailforms.append(detailform)
+				#	print detailform
+
+			context = { 'note': note, 'noteform': noteform, 'alldetails':alldetails ,'detailforms':detailforms}
+			return render(request, 'edit_note.html', context)
+	
+		#entry = Entry.objects.select_for_update().get(id=id)
+		#db_update_time = entry.update_time  # Copy timestamp to check after form is bound
+		print request.POST.getlist('place')
+		note = Note.objects.get(id=id)
+		detailforms = []
+		noteform = EditNoteForm(request.POST,request.FILES,instance=note)
+		if not noteform.is_valid():
+			num = 0
+			if NoteDetail.objects.filter(note=note).exists():
+				alldetail = NoteDetail.objects.filter(note=note)
+				for detail in alldetail:
+					detail_set = {}
+					detail_set['detail']=detail
+					detail_set['time'] = datetime.strptime(detail.time, "%Y-%m-%d")
+					print detail_set['time']
+					detail_set['num']=num
+					alldetails.append(detail_set)
+					num=num+1
+			context = { 'note': note, 'noteform': noteform, 'alldetails':alldetails}
+			return render(request, 'edit_note.html', context)
+
+		noteform.save()
+
+		if NoteDetail.objects.filter(note=note).exists():
+			alldetail = NoteDetail.objects.filter(note=note)
+			for detail in alldetail:
+				if Noteimage.objects.filter(notedetail=detail).exists():
+					allimage = Noteimage.objects.filter(notedetail=detail)
+					for image in allimage:
+						image.delete()
+				detail.delete() 
+
+		print request.POST
+		print request.POST.getlist('place')
+		print request.FILES.getlist('picture0')
+		length = len(request.POST.getlist('place'))
+		print length
+		for index in range(length):
+			print index
+			notedetail = NoteDetail(note=note, creation_time=datetime.now())
+			notedetail.place = request.POST.getlist('place')[index]
+			if not request.POST.getlist('time')[index]:
+				notedetail.time = datetime.now()
+			else:
+				notedetail.time = request.POST.getlist('time')[index]
+			notedetail.content = request.POST.getlist('content')[index]
+			notedetail.cost = request.POST.getlist('cost')[index]
+			notedetail.save()
+			pic_name="picture"+str(index)
+			print request.FILES.getlist(pic_name)
+			for number in range(len(request.FILES.getlist(pic_name))):
+				noteimage= Noteimage(notedetail=notedetail,creation_time=datetime.now())
+				image_url = s3_upload(request.FILES.getlist(pic_name)[number], random.random())
+				noteimage.picture=image_url
+				noteimage.save()
+
+		# form = EditForm(instance=entry)
+		context = {
+			'message': 'note updated.',
+			'note':   note,
+			'noteform':   noteform,
+		}
+		return redirect(reverse('seenote',args=(note.id,)))
+	except Plan.DoesNotExist:
+		new_user= User.objects.get(username=request.user)
+		plans = Plan.objects.filter(owner=new_user)
+		context = { 'message': 'Note with id={0} does not exist'.format(id), 'plans':plans,'new_user':new_user }
+		return render(request, 'myschedule_plan.html', context)
+
+@login_required
 def delete_plan(request, id):
 	username = request.user
 	new_user= User.objects.get(username=username)
@@ -340,13 +586,19 @@ def delete_plan(request, id):
 
 @login_required
 def see_plan(request, id):
-	username = request.user
-	new_user= User.objects.get(username=username)
-	user_profile = Profile.objects.get(owner=new_user)
-	plan = Plan.objects.get(id=id)
-	#print posts
-	context={'username':username,'new_user':new_user, 'user_profile':user_profile,'plan':plan}
-	return render(request,'seeplan.html',context)
+	try:
+		username = request.user
+		new_user= User.objects.get(username=username)
+		user_profile = Profile.objects.get(owner=new_user)
+		plan = Plan.objects.get(id=id)
+		#print posts
+		context={'username':username,'new_user':new_user, 'user_profile':user_profile,'plan':plan}
+		return render(request,'seeplan.html',context)
+	except Plan.DoesNotExist:
+		new_user= User.objects.get(username=request.user)
+		plans = Plan.objects.all()
+		context = { 'message': 'Plan with id={0} does not exist'.format(id), 'plans':plans,'new_user':new_user }
+		return render(request, 'travelplans.html', context)
 
 @login_required
 def invite(request, id):
@@ -390,6 +642,16 @@ def myschedule_note(request):
 	#print posts
 	context={'username':username,'new_user':new_user, 'notes':notes}
 	return render(request,'myschedule_note.html',context)
+
+@login_required
+def myschedule_favorite(request):
+	username = request.user
+	new_user= User.objects.get(username=username)
+	notes = Note.objects.filter(n_f=new_user.profile)
+	plans = Plan.objects.filter(p_f=new_user.profile)
+	#print posts
+	context={'username':username,'new_user':new_user, 'notes':notes, 'plans':plans}
+	return render(request,'myschedule_favorite.html',context)
 
 #@login_required
 def travelnotes(request):

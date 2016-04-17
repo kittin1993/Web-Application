@@ -13,10 +13,19 @@ function addNoteForm(Name1,Name2){
 
           var newli = document.createElement('li');
           newli.className='timeline-inverted';
-          newli.innerHTML = "<div class=\"timeline-badge warning\"><i class=\"glyphicon glyphicon-calendar\"></i></div><div class='timeline-panel'><div class='timeline-body'><table><tr><td>Time: </td><td><input type=\"date\" id='note_item' name='time'></td></tr><tr><td>Place: </td><td><input type='text' id='note_item' name='place'></td></tr><tr><td>Content: </td><td><textarea id='ctt' name='content'></textarea></td></tr><tr><td>Cost: </td><td><input type='text' id='note_item' name='cost'></td></tr><tr><td>Upload Pictures: </td><td><input type='file' name=\"picture"+num+"\" multiple></td></tr></table></div></div>";
+          newli.innerHTML = "<div class=\"timeline-badge warning\"><i class=\"glyphicon glyphicon-calendar\"></i></div><div class='timeline-panel'><div class='timeline-body'><table><tr><td>Time: </td><td><input type=\"date\" id='new_date"+num+"' name='time'></td></tr><tr><td>Place: </td><td><input type='text' id='note_item' name='place'></td></tr><tr><td>Content: </td><td><textarea id='ctt' name='content'></textarea></td></tr><tr><td>Cost: </td><td><input type='text' id='note_item' name='cost'></td></tr><tr><td>Upload Pictures: </td><td><input type='file' name=\"picture"+num+"\" multiple></td></tr></table></div></div>";
           console.log("picture"+num);
           document.getElementById('timeline').appendChild(newli);
-                  
+          
+
+          var date = new Date();
+          var day = date.getDate();
+          var month = date.getMonth() + 1;
+          var year = date.getFullYear();
+          if (month < 10) month = "0" + month;
+          if (day < 10) day = "0" + day;
+          var today = year + "-" + month + "-" + day;       
+          document.getElementById("new_date"+num).value = today;       
           
           //var newtext = document.createElement('p'+num);
           //newtext.innerHTML = "<textarea name='comment' form='nform'>Easy! You should check out MoxieManager!</textarea>";
@@ -64,7 +73,7 @@ function addPlanForm(Name){
      }
      else {
           var newtable = document.createElement('table');
-          newtable.innerHTML = "<table><tr><td>Place: </td><td><input type='text' name='place'></td></tr><tr><td>Time: </td><td><input type='date' name='time'></td></tr><tr><td>Description: </td><td><input type='text' name='des'></td></tr></table>";
+          newtable.innerHTML = "<table><tr><td>Place: </td><td><input type='text' name='place'></td></tr><tr><td>Time: </td><td><input type='date' id='new_date' name='time'></td></tr><tr><td>Description: </td><td><input type='text' name='des'></td></tr></table>";
           document.getElementById(Name).appendChild(newtable);
           num++;
      }

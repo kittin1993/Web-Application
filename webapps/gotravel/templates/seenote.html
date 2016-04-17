@@ -45,7 +45,6 @@
 </tr>
 </table>
     </div>
-
     <div class="col-sm-9">
       <div class="image">
       {% if note.title_image %}
@@ -53,36 +52,61 @@
       <h2><span>{{note.note_title}}</span></h2>
        {% endif %}
       </div>
+       <br>
+       <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}</h5>
+        <div id='note_table'>
       <table>
         <tr>
           <td>
-           <button id="like" onClick="addlike({{note.id}})"></button>
+           <button id="like" onClick="addlike({{note.id}})">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+          </button>
          </td>
          <td>
           <div id="likes">
          &nbsp;{{note.likes}} &nbsp;
        </div>
          </td>
-         <td><button id="dislike" onClick="adddislike({{note.id}})"></button>
+         <td><button id="dislike" onClick="adddislike({{note.id}})">
+         <span class="glyphicon glyphicon-thumbs-down"></span>
+       </button>
          </td>
          <td>
           <div id="dislikes">
          &nbsp;{{note.dislikes}} &nbsp;
          </div>
          </td>
+         <td><button id="favorite" onClick="addfavorite({{note.id}})">
+         <span class="glyphicon glyphicon-heart"></span>
+       </button>
+         </td>
+         <td>
+          <div id="favorites">
+         &nbsp;{{note.followers}} &nbsp;
+         </div>
+         </td>
        </tr>
      </table>
+   </div>
+
       <hr>
-      <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}</h5>
       {% for detail in alldetail %}
-      <p>{{detail.place}}  {{detail.time}} Cost: {{detail.cost}}
-      {{detail.cotent}}</p>
-      {% for image in detail.noteimage.all %}
-      <img src="{{image.picture}}" width="200px">
+      <p><span class="day"> {{detail.time}} </span></p>
+      <br><br><br>
+      <div id="note_content">
+        <p> <span class="note_place"> Place: &nbsp;{{detail.place}} </span><span class="note_cost"> Cost:&nbsp; {{detail.cost}}</span></p>
+        <br>
+        <p class="note_content"><br>{{detail.content}}
+        </p>
+          {% for image in detail.noteimage.all %}
+          <br>
+          <img class="note_image" src="{{image.picture}}" width="500px">
+          {% endfor %}
+
+       <hr>
       {% endfor %}
-      {% endfor %}
-      <br><br>
-      
+      <br>
+      </div>
     </div>
   </div>
 

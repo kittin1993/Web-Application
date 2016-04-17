@@ -1,23 +1,58 @@
-{% load staticfiles %}
-<!DOCTYPE HTML>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name= "author" content ="Yumeng Xie">
-  <title>edit profile</title>
-  <link rel="stylesheet" type="text/css" href="{% static "css/gotravel.css"%}">
-</head>
+{% extends "base.html" %}
 
-<body class='bg'>
-<p class = 'navigation'>
+{% block navigation %}
 <ul>
-  <li><a class="active" href="{% url 'editprofile' %}">Edit Profile</a></li>
-  <li><a href="{% url 'home' %}">Home Page</a></li>
+  <li><a class="active" href="{% url 'home' %}">Home Page</a></li>
+  <li><a href="{% url 'addplan' %}">Add Plan</a></li>
+  <li><a href="{% url 'addnote' %}">Add Note</a></li>
+  <li><a href="{% url 'myschedule_note' %}">My Schedule</a></li>
+  <li><a href="{% url 'travelnotes' %}">Travel Notes</a></li>
+  <li><a href="{% url 'travelplans' %}">Travel Plans</a></li>
   <ul class="right">
+    <li><a href="{% url 'editprofile' %}">{{username}}</a></li>
+    {% if username == 'Visitor' %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+    <!--<li><a href="#mypopup" data-rel="popup">Login</a></li>-->
+    {% endif %}
+    {% if username != 'Visitor' %}
     <li><a href="{% url 'logout' %}">Logout</a></li>
+    {% endif %}
   </ul>
 </ul>
-</p>
+{% endblock %}
+
+{% block content %}
+<div class="col-sm-3 side">
+      <hr>
+ <table class="text-center">
+<tr>
+  <td>
+{% if user_profile.image_url %}
+<img src="{{user_profile.image_url}}" width="200px">
+{% endif %}
+  </td>
+</tr>
+<tr>
+  <td>
+    <strong>{{username}}</strong>
+  </td>
+</tr>
+<tr>
+  <td>Gender: {{user_profile.gender}}</td>
+</tr>
+<tr>
+  <td>Age: {{user_profile.age}}</td>
+</tr>
+<tr>
+  <td>Email: {{user_profile.email}}</td>
+</tr>
+<tr>
+  <td>Bio: {{user_profile.bio}}</td>
+</tr>
+</table>
+    </div>
+
+<div class="col-sm-9">
 
 {% for error in form.non_field_errors %}
 <p style="color: red">
@@ -25,32 +60,33 @@
 </p>
 {% endfor %}
 
-<div class = "center">
 
-{% if user_profile.image_url %}
-<img src="{{user_profile.image_url}}" width="200px">
-{% endif %}
+
 <form enctype="multipart/form-data" method="post" action="{% url 'editprofile' %}">
 
 <table>
 {% for field in form.visible_fields %}
 <tr>
-  <td>{{field.label_tag}}</td>
-  <td>{{field}}</td>
+  <td width='250px'>{{field.label_tag}}</td>
+  <td align='center'>{{field}}</td>
   <td style="color: red">{{field.errors}}</td>
 </tr>
 {% endfor %}
-</table>
-
 {% for field in form.hidden_fields %}
 {{field}}
 {% endfor %}
 {% csrf_token %}
-<input type="submit" value="Save" />
-
+<tr>
+  <td align="right">
+    <input id="profile" type="submit" value="Save" />
+  </td>
+  <td align='center'>
+   <button id="profile"><a href="{% url 'home' %}">
+   <div class='link'> Cancel </div></a></button>
+  </td>
+</tr>
+</table>
 </form>
-<a href="{% url 'home' %}"> <button>Cancel</button></a>
 </div>
 
-</body>
-</html>
+{% endblock %}

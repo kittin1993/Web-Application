@@ -59,18 +59,31 @@
        <table>
         <tr>
           <td>
-           <button id="like" onClick="addplike({{plan.id}})"></button>
+           <button id="like" onClick="addplike({{plan.id}})">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+          </button>
          </td>
          <td>
           <div id="likes">
          &nbsp;{{plan.likes}} &nbsp;
        </div>
          </td>
-         <td><button id="dislike" onClick="addpdislike({{plan.id}})"></button>
+         <td><button id="dislike" onClick="addpdislike({{plan.id}})">
+         <span class="glyphicon glyphicon-thumbs-down"></span>
+       </button>
          </td>
          <td>
           <div id="dislikes">
          &nbsp;{{plan.dislikes}} &nbsp;
+         </div>
+         </td>
+         <td><button id="favorite" onClick="addpfavorite({{plan.id}})">
+         <span class="glyphicon glyphicon-heart"></span>
+       </button>
+         </td>
+         <td>
+          <div id="favorites">
+         &nbsp;{{plan.followers}} &nbsp;
          </div>
          </td>
        </tr>

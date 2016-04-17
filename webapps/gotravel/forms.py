@@ -100,14 +100,16 @@ class EditNoteForm(forms.ModelForm):
         return cleaned_data
 
 class EditNoteDetailForm(forms.ModelForm):
-    
+
+    time = forms.DateField(widget=forms.SelectDateWidget(
+        empty_label=("Choose Year", "Choose Month", "Choose Day"),
+    ),)
+
     class Meta:
         model = NoteDetail
         fields = ('place','content','cost',)
     
-    time = forms.DateField(widget=forms.SelectDateWidget(
-        empty_label=("Choose Year", "Choose Month", "Choose Day"),
-    ),)
+    
     picture = forms.FileField(label='Upload Picture', required=False)
     #multiple = MultiFileField(min_num=1, max_num=3, max_file_size=1024*1024*5)
 

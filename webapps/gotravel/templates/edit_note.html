@@ -4,7 +4,8 @@
 <ul>
   <li><a href="{% url 'home' %}">Home Page</a></li>
   <li><a href="{% url 'addplan' %}">Add Plan</a></li>
-  <li><a class="active" href="{% url 'addnote' %}">Add Note</a></li>
+  <li><a href="{% url 'addnote' %}">Add Note</a></li>
+  <li><a class="active" href="#">Edit Note</a></li>
   <li><a href="{% url 'myschedule_plan' %}">My Schedule</a></li>
   <li><a href="{% url 'travelnotes' %}">Travel Notes</a></li>
   <li><a href="{% url 'travelplans' %}">Travel Plans</a></li>
@@ -35,13 +36,6 @@
     {% endfor %}
 
 <h3>{{noteid}}</h3>
-
-{% if note.note_title %}
-<h3>{{note.note_title}}</h3>
-{% endif %}
-{% if note.title_image %}
-<img src="{{note.title_image}}" width="800px" height="300px">
-{% endif %}
 
 {% if notedetails %}
 {% for notedetail in notedetails %}
@@ -89,7 +83,7 @@ Time: {{notedetail.time}}
 
 <div class = "col-sm-11">
 
-<form id = "nform" enctype="multipart/form-data" method="post" action="{% url 'addnote' %}">    
+<form id = "nform" enctype="multipart/form-data" method="post" action="{% url 'editnote' note.id %}">    
     
     <ul id = "timeline" class="timeline">
         <li class="timeline-inverted">
@@ -97,7 +91,7 @@ Time: {{notedetail.time}}
           <div class="timeline-panel">
 
               <table>
-                {% for field in form.visible_fields %}
+                {% for field in noteform.visible_fields %}
                 <tr >
                   <td>{{field.label_tag}}</td>
                   <td>{{field}}</td>
@@ -105,7 +99,7 @@ Time: {{notedetail.time}}
                 </tr>
                 {% endfor %}
                 <tr>
-                  {% for field in form.hidden_fields %}
+                  {% for field in noteform.hidden_fields %}
                   {{field}}
                   {% endfor %}
                 </tr>
@@ -124,6 +118,7 @@ Time: {{notedetail.time}}
                 <input type="checkbox" name="food" value="Food" > Food &nbsp;
                 <input type="checkbox" name="honeymoon" value="honeymoon" > Honeymoon &nbsp;
                 <input type="checkbox" name="self-driving" value="self-driving" > Self-Driving <br>
+
               </p>
               <hr>
               <div class="btn-group">
@@ -141,13 +136,33 @@ Time: {{notedetail.time}}
             </div>
           </div>
         </li> 
+        {% if alldetails %}
+        {% for detail_set in alldetails %}
+        <li class = "timeline-inverted">
+          <div class="timeline-badge warning">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </div>
+          <div class='timeline-panel'>
+            <div class='timeline-body'>
+              <table><tr><td>Time: </td><td><input type="date" id='new_date{{detail_set.num}}' name='time' value='{{detail_set.time}}'></td></tr>
+                <tr><td>Place: </td><td><input type='text' id='note_item' name='place' value='{{detail_set.detail.place}}'></td></tr>
+                <tr><td>Content: </td><td><textarea id='ctt' name='content'>{{detail_set.detail.content}}</textarea></td></tr>
+                <tr><td>Cost: </td><td><input type='text' id='note_item' name='cost' value ='{{detail_set.detail.cost}}'></td></tr>
+                <tr><td>Upload Pictures: </td><td><input type='file' name="picture{{detail_set.num}}" multiple></td></tr>
+              </table>
+
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+        {% endif %}
     </ul>
-<input id="notesubmit" type="submit" value="Save Note">
-<!--<button id="submit" onclick="validate_form()"> Save Note</button>-->
+<!--<input id="notesubmit" type="submit" value="Save Note">-->
+<a href="javascript:%20validate_form()" id="submit">Save Note</a>
+<!--<button id="submit_button" onclick="validate_form()"> Save Note</button>-->
 {% csrf_token %}
 </form>
 </div>
  
 {% endblock %}
-
 

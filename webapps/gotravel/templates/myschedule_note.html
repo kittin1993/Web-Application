@@ -21,27 +21,55 @@
       <ul class="nav nav-pills nav-stacked">
         <li><a href="{% url 'myschedule_plan' %}">Plans</a></li>
         <li class="active"><a href="{% url 'myschedule_note' %}">Notes</a></li>
+        <li><a href="{% url 'myschedule_favorite' %}">Favorite</a></li>
       </ul><br>
       
     </div>
 
     <div class="col-sm-9">
-      <h4><a href="{% url 'addnote' %}">Add New Note</a></h4>
+      {% if message %}
+      <p style="color: red">
+      {{message}}
+    </p>
+      {% endif %}
+      <hr>
+      <h4><a href="{% url 'addnote' %}"><div class="link_black">Add New Note</div></a></h4>
       <hr>
       <table>
       {% for note in notes %}
+      
       <tr>
         <td>
-          <a href="{% url 'seenote' note.id %}">
+        <a href="{% url 'seenote' note.id %}"> 
+        <div class="link_black">  
             <h4>{{note.note_title}}&nbsp;</h4>
             <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}</h5>
-            <img src="{{note.title_image}}" width="270px">
-          </a>
-        </td>
+          </div>
+            </a>
+          </td>
+          <tr>
+            <td rowspan='2'>
+              <a href="{% url 'seenote' note.id %}"> 
+            <img src="{{note.title_image}}" width="600px" height="250px">  
+         </a>
+        </td> 
+        <td>
+          &nbsp;&nbsp;&nbsp;
+          <button id="link"><a href="{% url 'deletenote' note.id %}">
+            <div class="link">
+            <span class="glyphicon glyphicon-trash"></span>
+          </div>
+          </a></button>
+        </td> 
       </tr>
       <tr>
         <td>
-          <button><a href="{% url 'deletenote' note.id %}">Delete</a></button>
+          &nbsp;&nbsp;&nbsp;
+          <button id="link"><a href="{% url 'editnote' note.id %}">
+            <div class="link">
+            <span class="glyphicon glyphicon-pencil"></span>
+            </div>
+            </a></button>
         </td>
       </tr>
       {% endfor %}
