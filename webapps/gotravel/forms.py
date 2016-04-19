@@ -3,24 +3,26 @@ from models import *
 from django.contrib.auth.models import User
 from django.core.validators import validate_email, RegexValidator
 from gotravel.choice import *
-#from multiupload.fields import MultiFileField
 
-#class PasswordForgotForm(forms.Form):
-   # email_or_username = forms.CharField(label=("Email Or Username"), max_length=254)
+
+# from multiupload.fields import MultiFileField
+
+# class PasswordForgotForm(forms.Form):
+# email_or_username = forms.CharField(label=("Email Or Username"), max_length=254)
 
 class RegistrationForm(forms.Form):
-    username = forms.CharField(max_length = 30, label = 'Username', 
-        validators = [RegexValidator(r'^[0-9a-zA-Z]*$',
-        message='Please enter only letters and numbers for username')])
-    last_name = forms.CharField(max_length = 30, label = 'Last Name', required = True)
-    first_name = forms.CharField(max_length = 30, label = 'First Name', required = True)
-    email = forms.CharField(max_length = 40, label = 'Email', validators = [validate_email])
-    password1 = forms.CharField(max_length = 200, 
-                                label='Password', 
-                                widget = forms.PasswordInput())
-    password2 = forms.CharField(max_length = 200, 
-                                label='Confirm password',  
-                                widget = forms.PasswordInput())
+    username = forms.CharField(max_length=30, label='Username',
+                               validators=[RegexValidator(r'^[0-9a-zA-Z]*$',
+                                                          message='Please enter only letters and numbers for username')])
+    last_name = forms.CharField(max_length=30, label='Last Name', required=True)
+    first_name = forms.CharField(max_length=30, label='First Name', required=True)
+    email = forms.CharField(max_length=40, label='Email', validators=[validate_email])
+    password1 = forms.CharField(max_length=200,
+                                label='Password',
+                                widget=forms.PasswordInput())
+    password2 = forms.CharField(max_length=200,
+                                label='Confirm password',
+                                widget=forms.PasswordInput())
 
     # Customizes form validation for properties that apply to more
     # than one field.  Overrides the forms.Form.clean function.
@@ -38,7 +40,6 @@ class RegistrationForm(forms.Form):
 
         # Generally return the cleaned data we got from our parent.
         return cleaned_data
-
 
     # Customizes form validation for the username field.
     def clean_username(self):
@@ -64,18 +65,20 @@ class RegistrationForm(forms.Form):
         # dictionary
         return email
 
+
 class EditProfileForm(forms.ModelForm):
-    #last_name = forms.CharField(max_length = 30, label = 'Last Name', required = True)
-    #first_name = forms.CharField(max_length = 30, label = 'First Name', required = True)
-    #age = forms.CharField(max_length = 30, label = 'Age')
-    #bio = forms.CharField(max_length = 430, label = 'Introduction')
-    
+    # last_name = forms.CharField(max_length = 30, label = 'Last Name', required = True)
+    # first_name = forms.CharField(max_length = 30, label = 'First Name', required = True)
+    # age = forms.CharField(max_length = 30, label = 'Age')
+    # bio = forms.CharField(max_length = 430, label = 'Introduction')
+
     class Meta:
-        model= Profile
-        fields=('last_name','first_name','age','bio',)
-        #widgets = {'image':forms.FileInput()}
-    
-    gender = forms.ChoiceField(choices = GENDER_CHOICES, label="Gender", initial='M', widget=forms.Select(), required=True)
+        model = Profile
+        fields = ('last_name', 'first_name', 'age', 'bio',)
+        # widgets = {'image':forms.FileInput()}
+
+    gender = forms.ChoiceField(choices=GENDER_CHOICES, label="Gender", initial='M', widget=forms.Select(),
+                               required=True)
     image = forms.FileField(label='Change profile image', required=False)
 
     def clean(self):
@@ -86,32 +89,31 @@ class EditProfileForm(forms.ModelForm):
         # Generally return the cleaned data we got from our parent.
         return cleaned_data
 
+
 class EditNoteForm(forms.ModelForm):
-    
     class Meta:
         model = Note
-        fields = ('note_title','total_cost')
-    
-    title_image = forms.FileField(label='Add a title image', required = False)
+        fields = ('note_title', 'total_cost')
+
+    title_image = forms.FileField(label='Add a title image', required=False)
 
     def clean(self):
         cleaned_data = super(EditNoteForm, self).clean()
         print cleaned_data
         return cleaned_data
 
-class EditNoteDetailForm(forms.ModelForm):
 
+class EditNoteDetailForm(forms.ModelForm):
     time = forms.DateField(widget=forms.SelectDateWidget(
         empty_label=("Choose Year", "Choose Month", "Choose Day"),
-    ),)
+    ), )
 
     class Meta:
         model = NoteDetail
-        fields = ('place','content','cost',)
-    
-    
+        fields = ('place', 'content', 'cost',)
+
     picture = forms.FileField(label='Upload Picture', required=False)
-    #multiple = MultiFileField(min_num=1, max_num=3, max_file_size=1024*1024*5)
+    # multiple = MultiFileField(min_num=1, max_num=3, max_file_size=1024*1024*5)
 
     def clean(self):
         # Calls our parent (forms.Form) .clean function, gets a dictionary
@@ -121,19 +123,19 @@ class EditNoteDetailForm(forms.ModelForm):
         # Generally return the cleaned data we got from our parent.
         return cleaned_data
 
+
 class EditPlanForm(forms.ModelForm):
-    
     class Meta:
         model = Plan
         fields = ('plan_title',)
-    
+
     def clean(self):
         cleaned_data = super(EditPlanForm, self).clean()
         print cleaned_data
         return cleaned_data
 
+
 class EditPlanDetailForm(forms.ModelForm):
-    
     class Meta:
         model = PlanDetail
         exclude = (

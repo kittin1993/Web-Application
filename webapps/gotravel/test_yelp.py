@@ -1,6 +1,6 @@
 from yelp.client import Client
 from yelp.oauth1_authenticator import Oauth1Authenticator
-import io,json
+import io, json
 
 with io.open('config_secret.json') as cred:
     creds = json.load(cred)
@@ -23,9 +23,10 @@ params2 = {
 
 
 def get_hotel(location):
-	response = client.search(location, **params1)
-	return response.businesses
+    response = client.search(location, **params1)
+    return response.businesses
+
 
 def get_restaurant(location):
-	response = client.search(location, **params2)
-	return response.businesses
+    response = client.search(location, **params2)
+    return response.businesses

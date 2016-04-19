@@ -1,5 +1,13 @@
 {% extends "base.html" %}
-
+{% block head_src %}
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM"></script>
+    <script type="text/javascript" src="/static/js/USA_State.json"></script>
+    <script type="text/javascript" src="/static/js/USA_County.json"></script>
+    <script type="text/javascript" src="/static/js/mapProcess.js"></script>
+    <script>
+    set_Parameters('{% url 'search_destination' %}')
+    </script>
+{% endblock %}
 {% block navigation %}
 <ul>
   <li><a href="{% url 'home' %}">Home Page</a></li>
@@ -17,7 +25,19 @@
 {% block content %}
 <div class = "row">
   <div class = "col-sm-8 box1">
-    <a href="{% url 'map' %}"><p>Map</p></a>
+      <div id="map_canvas" style="height:350px;"></div>
+      <div class = "col-sm-4 box1">
+          County: <input type="text" id="county">
+          State: <input type="text" id="state">
+          <select name="places" id="destination">
+              <option value="museum">Museum</option>
+              <option value="restaurant">Restaurant</option>
+              <option value="zoo">Zoo</option>
+          </select>
+          <button id="submit" onclick="findPlace()" >Search</button>
+      </div>
+      <div class = "col-sm-8 box1" id="add_plan_search_places">
+      </div>
   </div>
   <div class = "col-sm-4 box1">
     {% for error in form.non_field_errors %}
@@ -42,7 +62,7 @@
      <div id='PlanForm'>
      </div>
      <input type="button" value="Add A Day" onClick="addPlanForm('PlanForm')">
-     <input type="button" value="Delete A Day" onClick="deletePlanForm('PlanForm')">
+     <input type= "button" value="Delete A Day" onClick="deletePlanForm('PlanForm')">
      <input type="submit" value="Save">
    </form>
   </div>

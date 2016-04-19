@@ -1,3 +1,9 @@
+var url_search_destination;
+
+function set_Parameters(search_destination_url) {
+    url_search_destination = search_destination_url;
+}
+
 var map = null;
 var countyPolygons = new Array();
 var State_County = new Array();
@@ -146,7 +152,7 @@ function showBoundaryCounty(County) {
 
   // google.maps.event.addListener(countyPolygon[j], "click", getCountyInfo(USA_County.Counties[i]));
   google.maps.event.addListener(countyPolygon, "click", function() {
-    alert(county_state);
+    //alert(county_state);
     addStateCounty(county_state);
   });
   return countyPolygon;
@@ -160,20 +166,41 @@ function addStateCounty(county_state) {
 }
 
 function findPlace() {
-  var county = document.getElementById("county").value;
-  var state = document.getElementById("state").value;
-  var destination = document.getElementById("destination").value;
-  var req = new XMLHttpRequest();
-  var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+destination+"+in+"+county+"&key=AIzaSyC5DNDex1ZhKPKyZZn2zdrkdGo4aZKgx0Q"
-  alert(url);
-  req.onreadystatechange = function() {
-    if (req.readyState != 4) return;
-    if (req.status != 200) return;
-    alert(req.responseText);
-    // show_message_comments(message_id);
-  }
-  req.open("GET", url, true);
-  req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    var county = document.getElementById("county").value;
+    var state = document.getElementById("state").value;
+    var destination = document.getElementById("destination").value;
+    var req = new XMLHttpRequest();
+    //var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+destination+"+in+"+county+"&key=AIzaSyC5DNDex1ZhKPKyZZn2zdrkdGo4aZKgx0Q"
+    var url = url_search_destination;
+    req.onreadystatechange = function() {
+        if (req.readyState != 4) return;
+        if (req.status != 200) return;
+        var destination_list = document.getElementById("add_plan_search_places");
+        destination_list.innerHTML = "";
+        var result = req.responseText;
+        //alert(result);
+        var items = JSON.parse(result)["results"];
+        var items_length = items.length;
+        for(var i=0; i<items_length; i++) {
+            var address = items[i]["formatted_address"];
+            var lat = items[i]["geometry"]["location"]["lat"];
+            var lng = items[i]["geometry"]["location"]["lng"];
+            var icon = items[i]["icon"];
+            var name = items[i]["name"];
+            var html = "<div class='box1'>" +
+                       "<div>" + name + "</div>" +
+                       "<div>" + address + "</div>" +
+                       "</div>";
+            var newItem = document.createElement("div");
+            newItem.innerHTML = html;
+            destination_list.appendChild(newItem);
+        }
+        //var destination_places = document.getElementById("add_plan_destination");
+    }
+    req.open("GET", url+"/?destination=" + destination + "&county=" + county, true);
+    //req.open("GET", url, true);
+    //req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.send();
 }
 
 // function getCountyInfo(County) {
