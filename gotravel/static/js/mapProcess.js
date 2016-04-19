@@ -192,7 +192,7 @@ function findPlace() {
             var lng = items[i]["geometry"]["location"]["lng"];
             var icon = items[i]["icon"];
             var name = items[i]["name"];
-            var html = "<div class='box1' style='width:100%'>" +
+            var html = "<div class='box1' name='list' style='width:100%' onmouseover='placesOnmouse(\""+name+"\")'>" +
                        "<div>" + name + "</div>" +
                        "<div>" + address + "</div>" +
                        "<button>Add To Plan</button>"
@@ -207,6 +207,10 @@ function findPlace() {
     //req.open("GET", url, true);
     //req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.send();
+}
+
+function placesOnmouse(name) {
+    alert(name);
 }
 
 // function getCountyInfo(County) {
@@ -232,8 +236,11 @@ function getPath(latLngs) {
 
 google.maps.event.addDomListener(window, "load", initializeMap);
 
-$(document).ready(function() {
-    $("#add_plan_search_places").hover(function(){
-        alert("what fuck");
-    });
-});
+//$(document).ready(function() {
+//    $("#add_plan_search_places").hover(function(){
+//        var list = $("#add_plan_search_places").children("div").children("div");
+//        for(var i=0; i<list.length;i++) {
+//            console.log(list[i]);
+//        }
+//    });
+//});
