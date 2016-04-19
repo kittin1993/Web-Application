@@ -26,17 +26,18 @@
 <div class = "row">
   <div class = "col-sm-8 box1">
       <div id="map_canvas" style="height:350px;"></div>
-      <div class = "col-sm-4 box1">
-          County: <input type="text" id="county">
-          State: <input type="text" id="state">
+      <div class = "box1" style="width:100%">
+          County: <input type="text" id="county" style="width:30%;padding-left:10px">
+          State: <input type="text" id="state" style="width:20%;padding-left:10px">
           <select name="places" id="destination">
               <option value="museum">Museum</option>
               <option value="restaurant">Restaurant</option>
               <option value="zoo">Zoo</option>
+              <option value="hotel">Hotel</option>
           </select>
-          <button id="submit" onclick="findPlace()" >Search</button>
+          <button id="submit" onclick="findPlace()">Search</button>
       </div>
-      <div class = "col-sm-8 box1" id="add_plan_search_places">
+      <div id="add_plan_search_places" style="width:100%">
       </div>
   </div>
   <div class = "col-sm-4 box1">
