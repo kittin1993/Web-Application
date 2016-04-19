@@ -947,7 +947,8 @@ def confirm_registration(request, username, token):
 def search_destination(request):
     destination = request.GET["destination"]
     county = request.GET["county"]
-    url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+destination+"+in+"+county+"&key=AIzaSyC5DNDex1ZhKPKyZZn2zdrkdGo4aZKgx0Q"
+    state = request.GET["state"]
+    url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+destination+"+in+"+county+","+state+"&key=AIzaSyC5DNDex1ZhKPKyZZn2zdrkdGo4aZKgx0Q"
     data = urllib2.urlopen(url)
     result_content = data.read()
     print(result_content)
