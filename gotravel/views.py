@@ -10,6 +10,7 @@ from django.core import serializers
 from django.db.models import Q
 import json, random
 from datetime import datetime
+from datetime import timedelta
 from datetime import date
 import datetime as dt
 from django.contrib.auth.views import password_reset, password_reset_confirm
@@ -222,29 +223,6 @@ def add_note(request):
     context['notedetails'] = notedetails
 
     return redirect(reverse('seenote', args=(note.id,)))
-
-
-# return render(request, 'addnote.html', context)
-"""
-@login_required
-def add_title(request, noteid):
-	context={}
-	note = Note.objects.get(id=noteid)
-	note.note_title=request['notetitle']
-	print request
-	return render(request, 'addnote.html', context)
-@login_required
-def add_note(request):
-	context = {}
-	username = request.user
-	context['username']= username
-	new_user = User.objects.get(username=username)
-	creation_time = datetime.now()
-	note = Note(owner=new_user,note_title="Edit Title Here",creation_time=creation_time)
-	note.save()
-	context['note'] = note
-	return render(request,'addnote.html', context)
-"""
 
 
 @login_required
@@ -740,12 +718,51 @@ def search_plan(request):
     username = request.user.username
     new_user = User.objects.get(username=username)
     place = request.POST['place']
+    print place
     time = request.POST['time']
+    print time
+    time_range = request.POST['time_range']
     result = []
-    plans = Plan.objects.all()
-    for plan in plans:
-        if plan.plandetail.filter(place=place, time=time).exists():
-            result.append(plan)
+    plans = Plan.objects.all().order_by("likes")
+    # if time is null
+    if time:
+        time = datetime.strptime(time,'%Y-%m-%d')
+        time = time.date()
+        if time_range == 0:
+            startdate = time - timedelta(days=0)
+            enddate = time + timedelta(days=0)
+        elif time_range == 1:
+            startdate = time - timedelta(days=2)
+            enddate = time + timedelta(days=2)
+        else:
+            startdate = time - timedelta(days=4)
+            enddate = time + timedelta(days=4)
+    
+        print startdate
+        print enddate
+
+        if not place:
+            print "not place"
+            for plan in plans:
+                if plan.plandetail.filter(time__range=[startdate, enddate]).exists():
+                    print "result"
+                    result.append(plan)
+        else:
+            print "place"
+            for plan in plans:
+                if plan.plandetail.filter(place=place, time__range=[startdate, enddate]).exists():
+                    result.append(plan)
+    else:
+        if not place:
+            print "not place"
+            for plan in plans:
+                result.append(plan)
+        else:
+            print "place"
+            for plan in plans:
+                if plan.plandetail.filter(place=place).exists():
+                    result.append(plan)
+
     # print posts
     context = {'username': username, 'new_user': new_user, 'result': result}
     return render(request, 'plansresult.html', context)
