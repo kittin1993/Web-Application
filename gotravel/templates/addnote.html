@@ -11,13 +11,6 @@
   <ul class="right">
      <div class="btn-group">
     <li><a class="dropdown-toggle" data-toggle="dropdown">{{username}}<span class="caret"></span></a></li>
-    <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
     </div>
   </ul>
 </ul>
@@ -74,8 +67,6 @@ Time: {{notedetail.time}}
   <input type="button" value="Delete A Day" onClick="deleteNoteForm('NoteForm','text_area')">-->
   
 <div class = "row">
-
- 
     <div class = "col-sm-1">
     <div class = "timeline-minus">
      <p class="glyphicon glyphicon-minus" onClick="deleteNoteForm('NoteForm','text_area')"></p>
@@ -143,6 +134,7 @@ Time: {{notedetail.time}}
         </li> 
     </ul>
 <input id="notesubmit" type="submit" value="Save Note">
+<!--<a href="javascript:%20validate_form()" id="submit">Save Note</a>-->
 <!--<button id="submit" onclick="validate_form()"> Save Note</button>-->
 {% csrf_token %}
 </form>

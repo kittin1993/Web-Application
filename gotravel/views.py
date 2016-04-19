@@ -80,9 +80,11 @@ def add_plan(request):
     for index in range(length):
         print index
         plandetail = PlanDetail(plan=plan, creation_time=datetime.now())
+        plandetail.state = request.POST.getlist('state')[index]
+        plandetail.county = request.POST.getlist('county')[index]
         plandetail.place = request.POST.getlist('place')[index]
         plandetail.time = request.POST.getlist('time')[index]
-        plandetail.intro = request.POST.getlist('des')[index]
+        plandetail.description = request.POST.getlist('des')[index]
         plandetail.save()
 
     plandetails = PlanDetail.objects.filter(plan=plan)

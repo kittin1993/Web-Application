@@ -92,7 +92,8 @@ class MyUser(AbstractBaseUser):
 
 class Plan(models.Model):
     owner = models.ForeignKey(User)
-    plan_title = models.CharField(max_length=200)
+    plan_title = models.CharField(max_length=200, blank=True, default="Untitled")
+    intro = models.CharField(max_length = 256, blank=True)
     creation_time = models.DateTimeField()
     likes = models.IntegerField(blank=True, default=0)
     dislikes = models.IntegerField(blank=True, default=0)
@@ -108,10 +109,10 @@ class Plan(models.Model):
 class PlanDetail(models.Model):
     plan = models.ForeignKey(Plan, related_name='plandetail')
     time = models.DateField(blank=True, default=date.today, null=True)
+    state = models.CharField(max_length = 256)
+    county = models.CharField(max_length = 256)
     place = models.CharField(max_length=256)
-    # state = models.CharField(max_length = 256)
-    # county = models.CharField(max_length = 256)
-    intro = models.CharField(max_length=256, blank=True)
+    content = models.CharField(max_length=256, blank=True)
     creation_time = models.DateTimeField()
 
     def __unicode__(self):
@@ -124,7 +125,7 @@ class PlanDetail(models.Model):
 class Note(models.Model):
     owner = models.ForeignKey(User)
     creation_time = models.DateTimeField()
-    note_title = models.CharField(max_length=200, blank=True, default="untitled")
+    note_title = models.CharField(max_length=200, blank=True, default="Untitled")
     title_image = models.CharField(max_length=256, blank=True, default='https://yumengxemr.s3.amazonaws.com/id-None')
     likes = models.IntegerField(blank=True, default=0)
     dislikes = models.IntegerField(blank=True, default=0)

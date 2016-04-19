@@ -702,6 +702,10 @@ button#favorite{
   border-bottom-right-radius: 50%;
   border-bottom-left-radius: 50%;
 }
+.error{
+  text-decoration: none;
+  background-color: #fff;
+}
 .timeline-minus {
   color: #fff;
   width: 50px;
@@ -712,6 +716,42 @@ button#favorite{
   position: fixed;
   bottom:60px;
   left: 50px;
+  margin-left: -25px;
+  background-color: #3f903f;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+.timeline-pplus {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.4em;
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  right: 90px;
+  margin-left: -25px;
+  background-color: #3f903f;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+.timeline-pminus {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.4em;
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  right: 30px;
   margin-left: -25px;
   background-color: #3f903f;
   z-index: 100;

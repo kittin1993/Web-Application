@@ -50,8 +50,9 @@
         {% for field in form.visible_fields %}
         <tr>
          <td>{{field.label_tag}}</td>
-         <td>{{field}}</td>
-         <td style="color: red">{{field.errors}}</td>
+         <td align='right'>&nbsp;{{field}}</td>
+         <td >
+          <div class="error">{{field.errors}}</div></td>
        </tr>
        {% endfor %}
      </table>
@@ -61,23 +62,18 @@
      {% csrf_token %}
      <div id='PlanForm'>
      </div>
-     <input type="button" value="Add A Day" onClick="addPlanForm('PlanForm')">
-     <input type= "button" value="Delete A Day" onClick="deletePlanForm('PlanForm')">
-     <input type="submit" value="Save">
+     <!--<input type="button" value="Add A Day" onClick="addPlanForm('PlanForm')">
+     <input type= "button" value="Delete A Day" onClick="deletePlanForm('PlanForm')">-->
+     <input id='submit' type="submit" value="Save Plan">
    </form>
   </div>
 </div>
-<div class = "row">
-  <div class = "col-sm-6 box1">
-    <h4> Restaurant </h4>
-    <div id ="restaurant">
+<div class = "timeline-pminus">
+     <p class="glyphicon glyphicon-minus" onClick="deletePlanForm('PlanForm')"></p>
+   </div>
+       <hr>
+       <div class = "timeline-pplus">
+      <p class="glyphicon glyphicon-plus" onClick="addPlanForm('PlanForm')"></p>
     </div>
-  </div>
-  <div class = "col-sm-6 box1">
-    <h4> Hotel </h4>
-    <div id ="hotel">
-    </div>
-  </div>
-</div>
 
 {% endblock %}

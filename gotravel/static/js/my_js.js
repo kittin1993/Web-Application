@@ -39,3 +39,22 @@ function validate_form() {
     }
 
 }
+function validate_pform() {
+    var list = $( "#timeline" ).find( "li" );
+    var num = list.length-7;
+    console.log(num);
+    var i = 0;
+    for (i=0;i<num;i++){
+        if (document.getElementById('new_date'+i).value == "") {
+            alert("Please input a valid date");
+            return;
+        }
+    }
+    console.log("i");
+    console.log(i);
+    if (i===num){
+            document.getElementById('nform').submit();
+            alert("Form Submitted Successfully...");
+    }
+
+}

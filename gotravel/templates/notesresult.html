@@ -2,7 +2,6 @@
 
 {% block navigation %}
 <ul>
-  <li><a href="{% url 'editprofile' %}">Edit Profile</a></li>
   <li><a href="{% url 'home' %}">Home Page</a></li>
   <li><a href="{% url 'addplan' %}">Add Plan</a></li>
   <li><a href="{% url 'addnote' %}">Add Note</a></li>
@@ -12,7 +11,8 @@
   <ul class="right">
     <li><a href="{% url 'editprofile' %}">{{username}}</a></li>
     {% if username == 'Visitor' %}
-    <li><a href="{% url 'login' %}">Login</a></li>
+    <li><a href="{% url 'login' %}">Sign in</a></li>
+    <li><a href="{% url 'register' %}">Sign up</a></li>
     {% endif %}
     {% if username != 'Visitor' %}
     <li><a href="{% url 'logout' %}">Logout</a></li>
@@ -36,22 +36,40 @@
       {% endfor %}
     </table>
     </div>
-    <div class="col-sm-4 sidenav">
+   <div class="col-sm-4 sidenav">
       <h3>Search</h3>
-      <form enctype="multipart/form-data" method="post" action="{% url 'searchnote' %}">
+      <form id="searchform" enctype="multipart/form-data" method="post" action="{% url 'searchnote' %}">
+        <table>
+        <tr>
+          <td valign="bottom">Keyword &nbsp;&nbsp; </td>
+        <td ><input type="text" class="form-control" placeholder="Your keyword" name='keyword'></td>
+      </tr>
       <div class="input-group">
-        <label> Keyword </label>
-        <input type="text" class="form-control" placeholder="Search by a keyword" name='keyword'>
-        <label>Order By</label>
-        <select name="order">
+      <tr>
+        <td valign="bottom">Order By &nbsp;&nbsp;</td>
+        <td>
+        <select id="select" name="order" form="searchform">
+        <!--<option value="0" disabled selected hidden>Please Choose...</option>-->
         <option value="0">Time</option>
         <option value="1">Evaluation</option>
         <option value="2">Cost</option>
         </select>
-          <input type="submit" value = "search" class="btn btn-default" >
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+          <input id = "submit" type="submit" value = "search" >
+        </td>
+      </tr>
+        </table>
       </div>
       {% csrf_token %}
-       </form>
+      </form>
+      
+      <style>
+      select:invalid { color: gray; }
+      </style>
+     
     </div>
   </div>
   

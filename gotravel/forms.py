@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import ModelForm, Textarea
 from models import *
 from django.contrib.auth.models import User
 from django.core.validators import validate_email, RegexValidator
@@ -127,7 +128,10 @@ class EditNoteDetailForm(forms.ModelForm):
 class EditPlanForm(forms.ModelForm):
     class Meta:
         model = Plan
-        fields = ('plan_title',)
+        fields = ('plan_title','intro')
+        widgets = {
+            'intro': Textarea(attrs={'cols': 23, 'rows': 3}),
+        }
 
     def clean(self):
         cleaned_data = super(EditPlanForm, self).clean()

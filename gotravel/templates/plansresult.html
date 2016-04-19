@@ -2,7 +2,6 @@
 
 {% block navigation %}
 <ul>
-  <li><a href="{% url 'editprofile' %}">Edit Profile</a></li>
   <li><a href="{% url 'home' %}">Home Page</a></li>
   <li><a href="{% url 'addplan' %}">Add Plan</a></li>
   <li><a href="{% url 'addnote' %}">Add Note</a></li>
@@ -12,7 +11,8 @@
   <ul class="right">
     <li><a href="{% url 'editprofile' %}">{{username}}</a></li>
     {% if username == 'Visitor' %}
-    <li><a href="{% url 'login' %}">Login</a></li>
+    <li><a href="{% url 'login' %}">Sign in</a></li>
+    <li><a href="{% url 'register' %}">Sign up</a></li>
     {% endif %}
     {% if username != 'Visitor' %}
     <li><a href="{% url 'logout' %}">Logout</a></li>
@@ -24,30 +24,39 @@
 {% block content %}
 <div class="row content">
     <div class="col-sm-8 text-left"> 
-      <h2>Travel Plans</h2>
+      <h1>Travel Plans</h1>
       {% for plan in result %}
       <div class="box1">
           <h4><a href="{% url 'seeplan' plan.id %}"> {{plan.plan_title}}</a></h4>
       </div>
       {% endfor %}
     </div>
-    <div class="col-sm-4 sidenav">
+<div class="col-sm-4 sidenav">
       <h3>Search</h3>
       <form enctype="multipart/form-data" method="post" action="{% url 'searchplan' %}">
       <table>
         <tr>
-        Time:<input type="date" class="form-control" placeholder="Search by a time" name='time'>
+          <td>
+        Time &nbsp;&nbsp;
+      </td>
+      <td><input id="new_date" type="date" class="form-control" placeholder="Search by a time" name='time'>
+      </td>
       </tr>
       <tr>
-        Place: <input type="text" class="form-control" placeholder="Search by a place" name='place'>
+        <td>
+        Place &nbsp;&nbsp;
+      </td>
+      <td><input type="text" class="form-control" placeholder="Search by a place" name='place'>
+      </td>
       </tr>
       <tr>
-        <input type="submit" value = "search" class="btn btn-default" >
+        <td colspan="2">
+        <input id="submit" type="submit" value = "search">
+      </td>
       <tr>
       </table>
       {% csrf_token %}
       </form>
     </div>
-  </div>
   
 {% endblock %}

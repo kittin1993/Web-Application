@@ -11,7 +11,8 @@
   <ul class="right">
     <li><a href="{% url 'editprofile' %}">{{username}}</a></li>
     {% if username == 'Visitor' %}
-    <li><a href="{% url 'login' %}">Login</a></li>
+    <li><a href="{% url 'login' %}">Sign in</a></li>
+    <li><a href="{% url 'register' %}">Sign up</a></li>
     <!--<li><a href="#mypopup" data-rel="popup">Login</a></li>-->
     {% endif %}
     {% if username != 'Visitor' %}
