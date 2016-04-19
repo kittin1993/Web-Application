@@ -1,3 +1,4 @@
+/*
 function reload_rest(){
     $.ajax({
  
@@ -114,3 +115,4 @@ function getCSRFToken() {
     }
     return "unknown";
 }
+*/

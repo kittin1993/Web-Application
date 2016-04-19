@@ -94,6 +94,7 @@ def add_plan(request):
 
 
 # return render(request, 'seeplan.html', context)
+"""
 @login_required
 def get_rests_json(request):
     restaurants = get_restaurant('pittsburgh')
@@ -135,7 +136,7 @@ def get_hotels_json(request):
     return HttpResponse(response_json, content_type='application/json')
 
 
-"""
+
 @login_required
 def add_day(request, noteid):
 	note = Note.objects.get(id=noteid)
