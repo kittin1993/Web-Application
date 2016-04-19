@@ -94,6 +94,7 @@ class Plan(models.Model):
     owner = models.ForeignKey(User)
     plan_title = models.CharField(max_length=200, blank=True, default="Untitled")
     intro = models.CharField(max_length = 256, blank=True)
+    total_day = models.IntegerField(blank=True, default=0)
     creation_time = models.DateTimeField()
     likes = models.IntegerField(blank=True, default=0)
     dislikes = models.IntegerField(blank=True, default=0)

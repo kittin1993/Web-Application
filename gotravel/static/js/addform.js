@@ -73,9 +73,17 @@ function addPlanForm(Name){
      }
      else {
           var newtable = document.createElement('table');
-          newtable.innerHTML = "<table><tr><td>Time: </td><td><input type='date' id='new_date' name='time'></td></tr><tr><td>State: </td><td><input type='text' name='state'></td></tr><tr><td>County: </td><td><input type='text' name='county'></td></tr><tr><td>Place: </td><td><input type='text' name='place'></td></tr><tr><td>Description: </td><td><input type='text' name='des'></td></tr></table>";
+          newtable.innerHTML = "<table><tr><td>Time: </td><td><input type='date' id='new_date"+num+"' name='time'></td></tr><tr><td>State: </td><td><input type='text' name='state'></td></tr><tr><td>County: </td><td><input type='text' name='county'></td></tr><tr><td>Place: </td><td><input type='text' name='place'></td></tr><tr><td>Description: </td><td><input type='text' name='des'></td></tr></table>";
           document.getElementById(Name).appendChild(newtable);
-          num++;
+
+          var date = new Date();
+          var day = date.getDate();
+          var month = date.getMonth() + 1;
+          var year = date.getFullYear();
+          if (month < 10) month = "0" + month;
+          if (day < 10) day = "0" + day;
+          var today = year + "-" + month + "-" + day;       
+          document.getElementById("new_date"+num).value = today;  
 
      }
 }

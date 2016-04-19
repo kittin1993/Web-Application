@@ -53,9 +53,12 @@
       <tr>
         <td>
           <a href="{% url 'seeplan' plan.id %}">
+            <div class='link_black'>
             <h4>{{plan.plan_title}}&nbsp;</h4>
             <h5><span class="glyphicon glyphicon-time"></span> {{plan.creation_time}}</h5>
+          </div>
           </a>
+          <hr>
         </td>
       </tr>
       {% endfor %}

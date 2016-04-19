@@ -53,10 +53,9 @@
 </div>
 
     <div class="col-sm-9">
-      <h4><small>Plan</small></h4>
-      <hr>
       <h1>{{plan.plan_title}}</h1>
       <h5><span class="glyphicon glyphicon-time"></span>{{plan.creation_time}}</h5>
+      <div id='plan_table'>
        <table>
         <tr>
           <td>
@@ -89,8 +88,25 @@
          </td>
        </tr>
      </table>
-      <p>My plan to new york.</p>
-      <br><br>
+   </div>
+    <hr>
+      <p >
+      Total Days: {{plan.total_day}} <br>
+      Brief Introduction: {{plan.intro}}
+      </p>
+        <hr>
+      {% for detail in alldetail %}
+      <p><span class="day"> {{detail.time}} </span></p>
+      <br><br><br>
+      <div id="note_content">
+        <p> <span class="note_place"> Location: &nbsp;{{detail.county}},&nbsp;{{detail.state}} </span><span class="note_cost"> Place: &nbsp;{{detail.place}}</span></p>
+        <br>
+        <p class="note_content"><br>{{detail.content}}
+        </p>
+
+       <hr>
+      {% endfor %}
+    </div>
       
 <div id="abc">
 <!-- Popup Div Starts Here -->
