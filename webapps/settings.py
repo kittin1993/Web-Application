@@ -82,7 +82,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'webapps.wsgi.application'
-
+"""
 MULTIUPLOADER_FILES_FOLDER = 'multiuploader'
 MULTIUPLOADER_FILE_EXPIRATION_TIME = 3600
 MULTIUPLOADER_FORMS_SETTINGS = {
@@ -157,7 +157,7 @@ MULTIUPLOADER_FORMS_SETTINGS = {
     'MAX_FILE_NUMBER':5,
     'AUTO_UPLOAD': True,
 }}
-
+"""
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases

@@ -17,7 +17,6 @@ from django.contrib.auth.views import password_reset, password_reset_confirm
 import urllib2
 import demjson
 
-
 # Decorator to use built-in authentication system
 from django.contrib.auth.decorators import login_required
 
@@ -29,7 +28,7 @@ from django.forms import formset_factory
 from gotravel.models import *
 from gotravel.forms import *
 from gotravel.s3 import *
-from gotravel.test_yelp import *
+#from gotravel.test_yelp import *
 
 
 # Create your views here.
