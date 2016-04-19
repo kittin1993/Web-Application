@@ -63,7 +63,7 @@ def add_plan(request):
         return render(request, 'addplan.html', context)
 
     creation_time = datetime.now()
-    plan = Plan(owner=new_user, creation_time=creation_time)
+    plan = Plan(owner=new_user, creation_time=creation_time, total_day=0)
     form = EditPlanForm(request.POST, instance=plan)
     context['form'] = form
 
@@ -73,10 +73,13 @@ def add_plan(request):
     form.save()
 
     print request.POST
-    print request.POST.getlist('place')
-    length = len(request.POST.getlist('place'))
+    print request.POST.getlist('time')
+    length = len(request.POST.getlist('time'))
     print length
     plan = Plan.objects.get(owner=new_user, creation_time=creation_time)
+    plan.total_day=length
+    plan.save()
+
     for index in range(length):
         print index
         plandetail = PlanDetail(plan=plan, creation_time=datetime.now())
@@ -617,6 +620,12 @@ def see_plan(request, id):
         user_profile = Profile.objects.get(owner=new_user)
         plan = Plan.objects.get(id=id)
         # print posts
+        if PlanDetail.objects.filter(plan=plan).exists():
+            alldetail = PlanDetail.objects.filter(plan=plan)
+            context = {'username': username, 'new_user': new_user, 'user_profile': user_profile, 'plan': plan,
+                       'alldetail': alldetail}
+            return render(request, 'seeplan.html', context)
+
         context = {'username': username, 'new_user': new_user, 'user_profile': user_profile, 'plan': plan}
         return render(request, 'seeplan.html', context)
     except Plan.DoesNotExist:
