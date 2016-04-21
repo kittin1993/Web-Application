@@ -53,8 +53,12 @@
       <h2><span>{{note.note_title}}</span></h2>
        {% endif %}
       </div>
-       <br>
-       <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}</h5>
+       <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}
+        {% if note.tag %}
+        &nbsp;&nbsp;<span class="glyphicon glyphicon-tag"></span> &nbsp;{{note.tag}}
+        {% endif %} 
+        <br></h5>
+        <p> Total Cost: {{note.total_cost}}</p>
         <div id='note_table'>
       <table>
         <tr>

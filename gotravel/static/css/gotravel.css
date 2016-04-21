@@ -806,3 +806,11 @@ font-size:20px;
 cursor:pointer;
 border-radius:5px
 }
+.home_note{
+  margin-bottom:20px;
+  font-size:20px;
+  font-weight:300;
+  line-height:1.4em; 
+  max-height:5.6em;
+  overflow-y: hidden;
+}

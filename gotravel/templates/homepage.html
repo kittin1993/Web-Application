@@ -104,9 +104,10 @@
 
         {% for plan in plans %}
         <div class="col-lg-4">
-          <img class="img-circle" src="/static/images/home1.jpg" width="140" height="140">
+          <img class="img-circle" src="{{plan.owner.profile.image_url}}" width="140" height="140">
           <h1>{{plan.plan_title}}</h1>
-          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+          <p>Total days:&nbsp;{{plan.total_day}}<br>{{plan.intro}}</p>
+          <br>
           <p><a class="btn btn-default" href="{% url 'seeplan' plan.id %}" role="button">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         {% endfor %}
@@ -132,12 +133,12 @@
 
       <div class="row featurette">
         <div class="col-md-7 col-md-push-5">
-          <h1 class="featurette-heading">{{note.note_title}} </h1>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+          <h1 class="featurette-heading">{{note.note.note_title}} </h1>
+          <p class="home_note">{{note.detail}}...</p>
           <p><a class="btn btn-default" href="{% url 'seenote' note.id %}" role="button">View details &raquo;</a></p>
         </div>
         <div class="col-md-5 col-md-pull-7">
-          <img class="featurette-image img-responsive center-block" src="{{note.title_image}}" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive center-block" src="{{note.note.title_image}}" alt="Generic placeholder image">
         </div>
       </div>
 

@@ -23,18 +23,34 @@
 
 {% block content %}
 <div class="row content">
-    <div class="col-sm-8 text-left"> 
-      <h1>Travel Notes</h1>
-      <table>
+    <div class="col-sm-8 note_content">
+      {% if message %}
+      <p style="color: red">
+      {{message}}
+    </p>
+      {% endif %}
+      <br>
       {% for note in result %}
+      <div class="col-sm-6">
+      <table>
       <tr>
           <a href="{% url 'seenote' note.id %}">
-            <h4>{{note.note_title}}&nbsp;</h4>
-            <img src="{{note.title_image}}" width="300px">
+            <div class="imgWrap">
+              <img class="img-rounded" src="{{note.title_image}}" width="380px" height="240px">
+              <p class="imgDescription">
+                <br>
+                &nbsp;&nbsp;<img class="img-circle" src='{{note.owner.profile.image_url}}' width="60px">
+                &nbsp;{{note.note_title}}
+                </p>
+            </div>
           </a>
+          <br>
+          <br>
       </tr>
+       </table>
+     </div>
       {% endfor %}
-    </table>
+   
     </div>
    <div class="col-sm-4 sidenav">
       <h3>Search</h3>
@@ -53,6 +69,20 @@
         <option value="0">Time</option>
         <option value="1">Evaluation</option>
         <option value="2">Cost</option>
+        </select>
+      </td>
+    </tr>
+     <tr>
+        <td valign="bottom">Tag &nbsp;&nbsp;</td>
+        <td>
+        <select id="select" name="tag" form="searchform">
+        <!--<option value="0" disabled selected hidden>Please Choose...</option>-->
+        <option value=""></option>
+        <option value="Shopping">Shopping</option>
+        <option value="Graduation Trip">Graduation Trip</option>
+        <option value="Food">Food</option>
+        <option value="Honeymoon">Honeymoon</option>
+        <option value="Self-driving">Self-driving</option>
         </select>
       </td>
     </tr>

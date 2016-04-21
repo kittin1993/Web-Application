@@ -23,12 +23,12 @@
 
 {% block content %}
 <div class="col-sm-3 side">
-      <hr>
+<br>
  <table class="text-center">
 <tr>
-  <td>
+  <td align='right'>
 {% if user_profile.image_url %}
-<img src="{{user_profile.image_url}}" width="200px">
+<img class="img-circle" src="{{user_profile.image_url}}" width="180px" height="180px">
 {% endif %}
   </td>
 </tr>
@@ -44,7 +44,7 @@
   <td>Age: {{user_profile.age}}</td>
 </tr>
 <tr>
-  <td>Email: {{user_profile.email}}</td>
+  <td>Email: {{new_user.email}}</td>
 </tr>
 <tr>
   <td>Bio: {{user_profile.bio}}</td>

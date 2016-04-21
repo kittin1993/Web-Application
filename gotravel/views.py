@@ -34,6 +34,7 @@ from gotravel.s3 import *
 
 # Create your views here.
 # @login_required
+@transaction.atomic
 def home(request):
     username = request.user.username
     if not username:
@@ -45,12 +46,31 @@ def home(request):
 
     new_user = User.objects.get(username=username)
     notes = Note.objects.all().order_by('-likes')[:6]
+    result=[]
+    for note in notes:
+        if NoteDetail.objects.filter(note=note).exists():
+            alldetail = NoteDetail.objects.filter(note=note)[:1]
+            for detail in alldetail:
+                print 'detail'
+                note_set={}
+                note_set['id']=note.id
+                note_set['note']=note
+                note_set['detail']= detail.content
+                print note_set['detail']
+                result.append(note_set)
+        else:
+            note_set={}
+            note_set['id']=note.id
+            note_set['note']=note
+            note_set['detail']=""
+            result.append(note_set)
+
     plans = Plan.objects.all().order_by('-likes')[:12]
     # print posts
-    context = {'username': username, 'new_user': new_user, 'notes': notes, 'plans': plans}
+    context = {'username': username, 'new_user': new_user, 'notes': result, 'plans': plans}
     return render(request, 'homepage.html', context)
 
-
+@transaction.atomic
 @login_required
 def add_plan(request):
     context = {}
@@ -97,74 +117,7 @@ def add_plan(request):
     context['plandetails'] = plandetails
     return redirect(reverse('seeplan', args=(plan.id,)))
 
-
-# return render(request, 'seeplan.html', context)
-"""
-@login_required
-def get_rests_json(request):
-    restaurants = get_restaurant('pittsburgh')
-
-    # hotels = get_hotel('pittsburgh')
-    res_dic = []
-    # hot_dic = {}
-    for res in restaurants:
-        new_res = {}
-        new_res['url'] = res.url
-        new_res['name'] = res.name
-        new_res['image_url'] = res.image_url
-        new_res['location'] = res.location.address
-        new_res['phone'] = res.phone
-        # print new_res
-        res_dic.append(new_res)
-
-    response_json = json.dumps(res_dic)
-
-    return HttpResponse(response_json, content_type='application/json')
-
-
-@login_required
-def get_hotels_json(request):
-    hotels = get_hotel('pittsburgh')
-
-    hotel_dic = []
-    for hotel in hotels:
-        new_hotel = {}
-        new_hotel['url'] = hotel.url
-        new_hotel['name'] = hotel.name
-        new_hotel['image_url'] = hotel.image_url
-        new_hotel['location'] = hotel.location.address
-        new_hotel['phone'] = hotel.phone
-        hotel_dic.append(new_hotel)
-
-    response_json = json.dumps(hotel_dic)
-
-    return HttpResponse(response_json, content_type='application/json')
-
-
-
-@login_required
-def add_day(request, noteid):
-	note = Note.objects.get(id=noteid)
-	print dt.date.today()
-	notedetail = NoteDetail(note=note,time=dt.date.today())
-	noted_dic = {}
-	noted_dic['id'] = notedetail.id
-	noted_dic['place'] = notedetail.place
-	noted_dic['time'] = notedetail.time.strftime("%b. %d, %Y")
-	noted_dic['cost'] = notedetail.cost
-	noted_dic['content'] = notedetail.content
-	response_json=json.dumps(noted_dic)
-
-	return HttpResponse(response_json, content_type='application/json')
-
-@login_required
-def add_detail(request, noteid):
-	context={}
-	print request
-	return render(request, 'addnote.html', context)
-"""
-
-
+@transaction.atomic
 @login_required
 def add_note(request):
     context = {}
@@ -201,6 +154,9 @@ def add_note(request):
     length = len(request.POST.getlist('place'))
     print length
     note = Note.objects.get(owner=new_user, creation_time=creation_time)
+    if request.POST['tag']:
+        note.tag = request.POST['tag']
+        note.save()
     for index in range(length):
         print index
         notedetail = NoteDetail(note=note, creation_time=datetime.now())
@@ -234,7 +190,7 @@ def map(request):
     context = {'username': username, 'new_user': new_user, 'user_profile': user_profile}
     return render(request, 'googleboundary.html', context)
 
-
+@transaction.atomic
 @login_required
 def see_note(request, id):
     try:
@@ -257,7 +213,7 @@ def see_note(request, id):
         context = {'message': 'Note with id={0} does not exist'.format(id), 'notes': notes, 'new_user': new_user}
         return render(request, 'travelnotes.html', context)
 
-
+@transaction.atomic
 @login_required
 def add_likes(request, id):
     note = Note.objects.get(id=id)
@@ -269,7 +225,7 @@ def add_likes(request, id):
 
     return HttpResponse(response_json, content_type='application/json')
 
-
+@transaction.atomic
 @login_required
 def add_dislikes(request, id):
     note = Note.objects.get(id=id)
@@ -281,7 +237,7 @@ def add_dislikes(request, id):
 
     return HttpResponse(response_json, content_type='application/json')
 
-
+@transaction.atomic
 @login_required
 def add_favorite(request, id):
     context = {}
@@ -301,7 +257,7 @@ def add_favorite(request, id):
 
     return HttpResponse(response_json, content_type='application/json')
 
-
+@transaction.atomic
 @login_required
 def add_pfavorite(request, id):
     context = {}
@@ -321,7 +277,7 @@ def add_pfavorite(request, id):
 
     return HttpResponse(response_json, content_type='application/json')
 
-
+@transaction.atomic
 @login_required
 def add_plikes(request, id):
     plan = Plan.objects.get(id=id)
@@ -333,7 +289,7 @@ def add_plikes(request, id):
 
     return HttpResponse(response_json, content_type='application/json')
 
-
+@transaction.atomic
 @login_required
 def add_pdislikes(request, id):
     plan = Plan.objects.get(id=id)
@@ -345,7 +301,7 @@ def add_pdislikes(request, id):
 
     return HttpResponse(response_json, content_type='application/json')
 
-
+@transaction.atomic
 @login_required
 def delete_note(request, id):
     username = request.user
@@ -368,7 +324,7 @@ def delete_note(request, id):
     context = {'username': username, 'new_user': new_user, 'notes': notes}
     return render(request, 'myschedule_note.html', context)
 
-
+@transaction.atomic
 @login_required
 def edit_note(request, id):
     try:
@@ -469,7 +425,7 @@ def edit_note(request, id):
         context = {'message': 'Note with id={0} does not exist'.format(id), 'notes': notes, 'new_user': new_user}
         return render(request, 'myschedule_note.html', context)
 
-
+@transaction.atomic
 @login_required
 def edit_plan(request, id):
     try:
@@ -570,7 +526,7 @@ def edit_plan(request, id):
         context = {'message': 'Note with id={0} does not exist'.format(id), 'plans': plans, 'new_user': new_user}
         return render(request, 'myschedule_plan.html', context)
 
-
+@transaction.atomic
 @login_required
 def delete_plan(request, id):
     username = request.user
@@ -589,7 +545,7 @@ def delete_plan(request, id):
     context = {'username': username, 'new_user': new_user, 'plans': plans}
     return render(request, 'myschedule_plan.html', context)
 
-
+@transaction.atomic
 @login_required
 def see_plan(request, id):
     try:
@@ -685,7 +641,7 @@ def travelnotes(request):
     context = {'username': username, 'new_user': new_user, 'notes': notes}
     return render(request, 'travelnotes.html', context)
 
-
+@transaction.atomic
 @login_required
 def search_note(request):
     username = request.user.username
@@ -693,6 +649,7 @@ def search_note(request):
     print request.POST
     keyword = request.POST['keyword']
     order = request.POST['order']
+    tag = request.POST['tag']
     result = []
 
     if order == 2:
@@ -701,18 +658,40 @@ def search_note(request):
         notes = Note.objects.all().order_by("total_cost")
     else:
         notes = Note.objects.all().order_by("-creation_time")
-
-    for note in notes:
-        if keyword.lower() in note.note_title.lower():
-            result.append(note)
+    
+    if keyword:
+        if tag: 
+            for note in notes:
+                if keyword.lower() in note.note_title.lower():
+                    if note.tag == tag:
+                        result.append(note)
+                else:
+                    if note.notedetail.filter(Q(content__icontains=keyword) | Q(place__icontains=keyword)).exists():
+                        if note.tag == tag:
+                            result.append(note)
         else:
-            if note.notedetail.filter(Q(content__icontains=keyword) | Q(place__icontains=keyword)).exists():
-                result.append(note)
+            for note in notes:
+                if keyword.lower() in note.note_title.lower():
+                    result.append(note)
+                else:
+                    if note.notedetail.filter(Q(content__icontains=keyword) | Q(place__icontains=keyword)).exists():
+                        result.append(note)
     # print posts
-    context = {'username': username, 'new_user': new_user, 'result': result}
-    return render(request, 'notesresult.html', context)
+        context = {'username': username, 'new_user': new_user, 'result': result}
+        return render(request, 'notesresult.html', context)
+    else:
+        if tag:
+            for note in notes:
+                if note.tag == tag:
+                    result.append(note)
 
+            context = {'username': username, 'new_user': new_user, 'result': result}
+            return render(request, 'notesresult.html', context)
+        else:
+            context = {'username': username, 'new_user': new_user, 'result': notes}
+            return render(request, 'notesresult.html', context)
 
+@transaction.atomic
 @login_required
 def search_plan(request):
     username = request.user.username
@@ -792,7 +771,7 @@ def seenotes(request):
     context = {'username': username, 'new_user': new_user, 'user_profile': user_profile}
     return render(request, 'travelplans.html', context)
 
-
+@transaction.atomic
 @login_required
 def edit_profile(request):
     context = {}
