@@ -27,14 +27,14 @@
       
     </div>
 
-    <div class="col-sm-9">
+    <div class="col-sm-9 note_content">
       {% if message %}
       <p style="color: red">
       {{message}}
     </p>
       {% endif %}
       <hr>
-      <h4><a href="{% url 'addnote' %}"><div class="link_black">Add New Note</div></a></h4>
+      <h4><a href="{% url 'addnote' %}"><div class="link_black">Add A New Note To My Schedule</div></a></h4>
       <hr>
       <table>
       {% for note in notes %}

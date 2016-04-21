@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block navigation %}
+{% block content %}
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div id="navbar">
 <ul>
   <li><a class="active" href="{% url 'home' %}">Home Page</a></li>
   <li><a href="{% url 'addplan' %}">Add Plan</a></li>
@@ -20,9 +22,8 @@
     {% endif %}
   </ul>
 </ul>
-{% endblock %}
-
-{% block content %}
+</div>
+</nav>
     <!-- Carousel
     ================================================== -->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">

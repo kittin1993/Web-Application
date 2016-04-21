@@ -155,7 +155,12 @@ def add_note(request):
     print length
     note = Note.objects.get(owner=new_user, creation_time=creation_time)
     if request.POST['tag']:
-        note.tag = request.POST['tag']
+        tag=""
+        for index in range(len(request.POST.getlist('tag'))):
+            tag = tag+request.POST.getlist('tag')[index]+" "
+
+        print tag
+        note.tag = tag
         note.save()
     for index in range(length):
         print index
@@ -305,24 +310,30 @@ def add_pdislikes(request, id):
 @login_required
 def delete_note(request, id):
     username = request.user
-    new_user = User.objects.get(username=username)
-    user_profile = Profile.objects.get(owner=new_user)
-    note = Note.objects.get(id=id)
+    try:
+        new_user = User.objects.get(username=username)
+        user_profile = Profile.objects.get(owner=new_user)
+        note = Note.objects.get(id=id)
 
-    if NoteDetail.objects.filter(note=note).exists():
-        alldetail = NoteDetail.objects.filter(note=note)
-        for detail in alldetail:
-            if Noteimage.objects.filter(notedetail=detail).exists():
-                allimage = Noteimage.objects.filter(notedetail=detail)
-                for image in allimage:
-                    image.delete()
-            detail.delete()
-    note.delete()
+        if NoteDetail.objects.filter(note=note).exists():
+            alldetail = NoteDetail.objects.filter(note=note)
+            for detail in alldetail:
+                if Noteimage.objects.filter(notedetail=detail).exists():
+                    allimage = Noteimage.objects.filter(notedetail=detail)
+                    for image in allimage:
+                        image.delete()
+                detail.delete()
+        note.delete()
 
-    notes = Note.objects.filter(owner=new_user)
+        notes = Note.objects.filter(owner=new_user)
     # print posts
-    context = {'username': username, 'new_user': new_user, 'notes': notes}
-    return render(request, 'myschedule_note.html', context)
+        context = {'username': username, 'new_user': new_user, 'notes': notes}
+        return render(request, 'myschedule_note.html', context)
+    except Note.DoesNotExist:
+        new_user = User.objects.get(username=request.user)
+        notes = Note.objects.all()
+        context = {'message': 'Note with id={0} does not exist'.format(id), 'username': username, 'notes': notes, 'new_user': new_user}
+        return render(request, 'myschedule_note.html', context)
 
 @transaction.atomic
 @login_required
@@ -663,7 +674,7 @@ def search_note(request):
         if tag: 
             for note in notes:
                 if keyword.lower() in note.note_title.lower():
-                    if note.tag == tag:
+                    if str(tag) in str(note.tag):
                         result.append(note)
                 else:
                     if note.notedetail.filter(Q(content__icontains=keyword) | Q(place__icontains=keyword)).exists():
@@ -682,8 +693,8 @@ def search_note(request):
     else:
         if tag:
             for note in notes:
-                if note.tag == tag:
-                    result.append(note)
+                if str(tag) in str(note.tag):
+                        result.append(note)
 
             context = {'username': username, 'new_user': new_user, 'result': result}
             return render(request, 'notesresult.html', context)
