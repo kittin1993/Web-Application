@@ -1,6 +1,3 @@
-function fuck() {
-    alert("123");
-}
 var url_search_destination;
 
 function set_Parameters(search_destination_url) {
@@ -135,30 +132,61 @@ function stateDetail(state, stateMiddle) {
 }
 
 function showBoundaryCounty(County) {
-  var countyPath = getPath(County.geometry);
-  var countyPolygon = new google.maps.Polygon();
-  countyPolygon.setOptions(polyOptions);
-  countyPolygon.setPaths(countyPath);
-  countyPolygon.setMap(map);
-  var county_state = County.State_County;
-  google.maps.event.addListener(countyPolygon, "mousemove", function () {
-    countyPolygon.setOptions({
-      fillColor: "#FFFF00"
-    });
-  });
+    console.log(County.geometry.length);
+    var county_boundaries = County.geometry;
+    var latLngList = county_boundaries.split(" ");
+    var latMax = -180;
+    var latMin = 180;
+    var lngMax = -180;
+    var lngMin = 180;
+    for(var j = 0; j < latLngList.length; j ++) {
+        var latLng = latLngList[j].split(",");
+        var lat = latLng[1];
+        var lng = latLng[0];
+        if ((isFloatNumber(lat)) && (isFloatNumber(lng))) {
+            if(parseFloat(lat) > latMax) {
+                latMax = parseFloat(lat);
+            }
+            if(parseFloat(lat) < latMin) {
+                latMin = parseFloat(lat);
+            }
+            if(parseFloat(lng) > lngMax) {
+                lngMax = parseFloat(lng);
+            }
+            if(parseFloat(lng) < lngMin) {
+                lngMin = parseFloat(lng);
+            }
+        }
+    }
 
-  google.maps.event.addListener(countyPolygon, "mouseout", function () {
-    countyPolygon.setOptions({
-      fillColor: "#FF8C69"
+    var countyPath = getPath(County.geometry);
+    var countyPolygon = new google.maps.Polygon();
+    countyPolygon.setOptions(polyOptions);
+    countyPolygon.setPaths(countyPath);
+    countyPolygon.setMap(map);
+    var county_state = County.State_County;
+    google.maps.event.addListener(countyPolygon, "mousemove", function () {
+        countyPolygon.setOptions({
+            fillColor: "#FFFF00"
+        });
     });
-  });
+    google.maps.event.addListener(countyPolygon, "mouseout", function () {
+        countyPolygon.setOptions({
+            fillColor: "#FF8C69"
+        });
+    });
 
-  // google.maps.event.addListener(countyPolygon[j], "click", getCountyInfo(USA_County.Counties[i]));
-  google.maps.event.addListener(countyPolygon, "click", function() {
+    // google.maps.event.addListener(countyPolygon[j], "click", getCountyInfo(USA_County.Counties[i]));
+    google.maps.event.addListener(countyPolygon, "click", function() {
     //alert(county_state);
-    addStateCounty(county_state);
-  });
-  return countyPolygon;
+        var countyMiddle = new google.maps.LatLng((latMax+latMin)/2, (lngMax+lngMin)/2);
+        map.setOptions({
+            center:countyMiddle,
+            zoom: 10,
+        })
+        addStateCounty(county_state);
+        });
+    return countyPolygon;
 }
 
 function addStateCounty(county_state) {
@@ -186,20 +214,31 @@ function findPlace() {
         var items = JSON.parse(result)["results"];
         var items_length = items.length;
         var newItem = new Array();
+        var marker = new Array();
         for(var i=0; i<items_length; i++) {
             var address = items[i]["formatted_address"];
             var lat = items[i]["geometry"]["location"]["lat"];
             var lng = items[i]["geometry"]["location"]["lng"];
-            var icon = items[i]["icon"];
+            var icon_url = items[i]["icon"];
             var name = items[i]["name"];
-            var html = "<div class='box1' name='list' style='width:100%' onmouseover='placesOnmouse(\""+name+"\")'>" +
+            var html = "<div class='box1' name='list' style='width:100%' onmouseover='placesOnmouse("+i+")'>" +
                        "<div>" + name + "</div>" +
                        "<div>" + address + "</div>" +
-                       "<button>Add To Plan</button>"
+                       "<button onclick='addPlan()'>Add To Plan</button>"
                        "</div>";
             newItem[i] = document.createElement("div");
             newItem[i].innerHTML = html;
             destination_list.appendChild(newItem[i]);
+            var marker_location=new google.maps.LatLng(lat,lng);
+            var image = {
+                url: icon_url,
+                scaledSize: new google.maps.Size(15, 15)
+            }
+            marker[i]=new google.maps.Marker({
+                position:marker_location,
+                icon: image,
+            });
+            marker[i].setMap(map);
         }
         //var destination_places = document.getElementById("add_plan_destination");
     }
@@ -210,7 +249,12 @@ function findPlace() {
 }
 
 function placesOnmouse(name) {
-    alert(name);
+    console.log(name);
+}
+
+function addPlan() {
+    var num = addPlanForm('PlanForm');
+
 }
 
 // function getCountyInfo(County) {

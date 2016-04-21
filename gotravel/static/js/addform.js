@@ -1,5 +1,6 @@
 function addNoteForm(Name1,Name2){
 	var list = $( "#timeline" ).find( "li" );
+     console.log(list[0]);
      var num = list.length-7;
      console.log(num);
      var limit = 30;
@@ -66,25 +67,41 @@ function deleteNoteForm(Name1,Name2){
 function addPlanForm(Name){
 	var list = $( "#PlanForm" ).find( "table" );
      var num = list.length;
-     console.log(num);
      var limit = 30;
      if ((num) == limit)  {
           alert("You have reached the limit of adding " + limit + "days");
      }
      else {
-          var newtable = document.createElement('table');
-          newtable.innerHTML = "<table><tr><td>Time: </td><td><input type='date' id='new_date"+num+"' name='time'></td></tr><tr><td>State: </td><td><input type='text' name='state'></td></tr><tr><td>County: </td><td><input type='text' name='county'></td></tr><tr><td>Place: </td><td><input type='text' name='place'></td></tr><tr><td>Description: </td><td><input type='text' name='des'></td></tr></table>";
-          document.getElementById(Name).appendChild(newtable);
+         var hasTyped = false;
+         if(num > 0) {
+             var stateID = "new_state" + (num - 1);
+             var countyID = "new_county" + (num - 1);
+             var placeID = "new_place" + (num - 1);
+             var descriptionID = "new_description" + (num - 1);
+             var stateValue = document.getElementById(stateID).value;
+             var countyValue = document.getElementById(countyID).value;
+             var placeValue = document.getElementById(placeID).value;
+             var descriptionID = document.getElementById(descriptionID).value;
+             if(stateValue!="" && countyValue!="" && placeValue!="") {
+                 hasTyped = true;
+                 return num-1;
+             }
+         }
+         if(num == 0 || hasTyped) {
+             var newtable = document.createElement('table');
+             newtable.innerHTML = "<table><tr><td>Time: </td><td><input type='date' id='new_date" + num + "' name='time'></td></tr><tr><td>State: </td><td><input type='text' id='new_state" + num + "' name='state'></td></tr><tr><td>County: </td><td><input type='text' id='new_county" + num + "' name='county'></td></tr><tr><td>Place: </td><td><input type='text' id='new_place" + num + "' name='place'></td></tr><tr><td>Description: </td><td><input type='text' id='new_description" + num + "' name='des'></td></tr></table>";
+             document.getElementById(Name).appendChild(newtable);
 
-          var date = new Date();
-          var day = date.getDate();
-          var month = date.getMonth() + 1;
-          var year = date.getFullYear();
-          if (month < 10) month = "0" + month;
-          if (day < 10) day = "0" + day;
-          var today = year + "-" + month + "-" + day;       
-          document.getElementById("new_date"+num).value = today;  
-
+             var date = new Date();
+             var day = date.getDate();
+             var month = date.getMonth() + 1;
+             var year = date.getFullYear();
+             if (month < 10) month = "0" + month;
+             if (day < 10) day = "0" + day;
+             var today = year + "-" + month + "-" + day;
+             document.getElementById("new_date" + num).value = today;
+         }
+         return num;
      }
 }
 
