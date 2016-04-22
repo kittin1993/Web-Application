@@ -2,10 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59726710-62a5-4e92-b634-b5599c8bcdfb" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gotravel/migrations/0004_note_tag.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/js/addform.js" afterPath="$PROJECT_DIR$/gotravel/static/js/addform.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/addplan.html" afterPath="$PROJECT_DIR$/gotravel/templates/addplan.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/addnote.html" afterPath="$PROJECT_DIR$/gotravel/templates/addnote.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/base.html" afterPath="$PROJECT_DIR$/gotravel/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/gotravel/static/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/edit_note.html" afterPath="$PROJECT_DIR$/gotravel/templates/edit_note.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/editprofile.html" afterPath="$PROJECT_DIR$/gotravel/templates/editprofile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/css/gotravel.css" afterPath="$PROJECT_DIR$/gotravel/static/css/gotravel.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/homepage.html" afterPath="$PROJECT_DIR$/gotravel/templates/homepage.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/js/mapProcess.js" afterPath="$PROJECT_DIR$/gotravel/static/js/mapProcess.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/models.py" afterPath="$PROJECT_DIR$/gotravel/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/myschedule_favorite.html" afterPath="$PROJECT_DIR$/gotravel/templates/myschedule_favorite.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/myschedule_note.html" afterPath="$PROJECT_DIR$/gotravel/templates/myschedule_note.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/myschedule_plan.html" afterPath="$PROJECT_DIR$/gotravel/templates/myschedule_plan.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/notesresult.html" afterPath="$PROJECT_DIR$/gotravel/templates/notesresult.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/plansresult.html" afterPath="$PROJECT_DIR$/gotravel/templates/plansresult.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/seenote.html" afterPath="$PROJECT_DIR$/gotravel/templates/seenote.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/seeplan.html" afterPath="$PROJECT_DIR$/gotravel/templates/seeplan.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/travelnotes.html" afterPath="$PROJECT_DIR$/gotravel/templates/travelnotes.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/travelplans.html" afterPath="$PROJECT_DIR$/gotravel/templates/travelplans.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/untitled" afterPath="$PROJECT_DIR$/gotravel/templates/untitled" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/views.py" afterPath="$PROJECT_DIR$/gotravel/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="team34.iws" />
@@ -28,21 +47,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="mapProcess.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mapProcess.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gotravel/static/js/mapProcess.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37062937">
-              <caret line="213" column="14" selection-start-line="213" selection-start-column="14" selection-end-line="213" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="273" column="35" selection-start-line="273" selection-start-column="35" selection-end-line="273" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="addform.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="addform.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gotravel/static/js/addform.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="66" column="20" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.4755245">
+              <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -74,8 +93,8 @@
       <list>
         <option value="$PROJECT_DIR$/gotravel/views.py" />
         <option value="$PROJECT_DIR$/gotravel/templates/addplan.html" />
-        <option value="$PROJECT_DIR$/gotravel/static/js/addform.js" />
         <option value="$PROJECT_DIR$/gotravel/static/js/mapProcess.js" />
+        <option value="$PROJECT_DIR$/gotravel/static/js/addform.js" />
       </list>
     </option>
   </component>
@@ -565,14 +584,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gotravel/static/js/addform.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="20" selection-start-line="66" selection-start-column="9" selection-end-line="66" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gotravel/templates/addplan.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.875">
@@ -589,8 +600,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gotravel/static/js/mapProcess.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37062937">
-          <caret line="213" column="14" selection-start-line="213" selection-start-column="14" selection-end-line="213" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="273" column="35" selection-start-line="273" selection-start-column="35" selection-end-line="273" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gotravel/static/js/addform.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4755245">
+          <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
           <folding />
         </state>
       </provider>

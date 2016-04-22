@@ -23,7 +23,8 @@
 <tr>
   <td>
     {% if new_user.profile.image_url %}
-    <img src="{{new_user.profile.image_url}}" width="200px">
+    &nbsp;&nbsp;&nbsp;
+    <img class="img-circle" src="{{new_user.profile.image_url}}" width="200px" height="200px">
     {% endif %}
   </td>
 </tr>
@@ -51,7 +52,6 @@
 </tr>
  </table>
 </div>
-
     <div class="col-sm-9">
       <h1>{{plan.plan_title}}</h1>
       <h5><span class="glyphicon glyphicon-time"></span>{{plan.creation_time}}</h5>

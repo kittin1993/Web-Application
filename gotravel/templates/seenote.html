@@ -19,11 +19,12 @@
 <div class="row content">
     <div class="col-sm-3 sidenav">
       <hr>
- <table class="text-center">
-<tr>
+      <table class="text-center">
+        <tr>
   <td>
     {% if new_user.profile.image_url %}
-    <img src="{{new_user.profile.image_url}}" width="200px">
+    &nbsp;&nbsp;&nbsp;
+    <img class="img-circle" src="{{new_user.profile.image_url}}" width="200px" height="200px">
     {% endif %}
   </td>
 </tr>
@@ -53,8 +54,12 @@
       <h2><span>{{note.note_title}}</span></h2>
        {% endif %}
       </div>
-       <br>
-       <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}</h5>
+       <h5><span class="glyphicon glyphicon-time"></span> {{note.creation_time}}
+        {% if note.tag %}
+        &nbsp;&nbsp;<span class="glyphicon glyphicon-tag"></span> &nbsp;{{note.tag}}
+        {% endif %} 
+        <br></h5>
+        <p> Total Cost: {{note.total_cost}}</p>
         <div id='note_table'>
       <table>
         <tr>

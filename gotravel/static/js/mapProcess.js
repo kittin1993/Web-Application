@@ -7,6 +7,9 @@ function set_Parameters(search_destination_url) {
 var map = null;
 var countyPolygons = new Array();
 var State_County = new Array();
+var research_destinations;
+var current_state;
+var current_county;
 var currentStatePolygon = new google.maps.Polygon();
 var polyOptions = {
   strokeColor: "#9B868B",
@@ -193,7 +196,9 @@ function addStateCounty(county_state) {
   var county = county_state.split("-")[1];
   var state = county_state.split("-")[0];
   document.getElementById("county").value = county;
+    current_county = county;
   document.getElementById("state").value = state;
+    current_state = state;
 }
 
 function findPlace() {
@@ -211,20 +216,20 @@ function findPlace() {
         destination_list.innerHTML = "";
         var result = req.responseText;
         //alert(result);
-        var items = JSON.parse(result)["results"];
-        var items_length = items.length;
+        research_destinations = JSON.parse(result)["results"];
+        var items_length = research_destinations.length;
         var newItem = new Array();
         var marker = new Array();
         for(var i=0; i<items_length; i++) {
-            var address = items[i]["formatted_address"];
-            var lat = items[i]["geometry"]["location"]["lat"];
-            var lng = items[i]["geometry"]["location"]["lng"];
-            var icon_url = items[i]["icon"];
-            var name = items[i]["name"];
+            var address = research_destinations[i]["formatted_address"];
+            var lat = research_destinations[i]["geometry"]["location"]["lat"];
+            var lng = research_destinations[i]["geometry"]["location"]["lng"];
+            var icon_url = research_destinations[i]["icon"];
+            var name = research_destinations[i]["name"];
             var html = "<div class='box1' name='list' style='width:100%' onmouseover='placesOnmouse("+i+")'>" +
                        "<div>" + name + "</div>" +
                        "<div>" + address + "</div>" +
-                       "<button onclick='addPlan()'>Add To Plan</button>"
+                       "<button onclick='addPlan("+ i +")'>Add To Plan</button>"
                        "</div>";
             newItem[i] = document.createElement("div");
             newItem[i].innerHTML = html;
@@ -252,9 +257,18 @@ function placesOnmouse(name) {
     console.log(name);
 }
 
-function addPlan() {
+function addPlan(index) {
     var num = addPlanForm('PlanForm');
-
+    alert(num);
+    var address = research_destinations[index]["formatted_address"];
+    var lat = research_destinations[index]["geometry"]["location"]["lat"];
+    var lng = research_destinations[index]["geometry"]["location"]["lng"];
+    var icon_url = research_destinations[index]["icon"];
+    var name = research_destinations[index]["name"];
+    document.getElementById("new_description"+num).value = address;
+    document.getElementById("new_place"+num).value = name;
+    document.getElementById("new_county"+num).value = current_county;
+    document.getElementById("new_state"+num).value = current_state;
 }
 
 // function getCountyInfo(County) {

@@ -25,13 +25,14 @@
 	</head>
 
 	<body class = 'bg'>
-		
-		<p class="navigation">
-		{% block navigation %}
+	    <nav class="navbar navbar-default navbar-fixed-top">
+	    {% block navigation %}
 		{% endblock %}
-	    </p>
-	    <div >
-	    {% block content %}
+		</nav>
+
+	    <div>
+	    <br><br><br>
+ 	    {% block content %}
 	    {% endblock %}
 
 	    {% block message %}

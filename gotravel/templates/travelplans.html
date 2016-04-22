@@ -23,7 +23,7 @@
 
 {% block content %}
 <div class="row content">
-    <div class="col-sm-8 text-left"> 
+    <div class="col-sm-8 note_content"> 
       {% if message %}
       <p style="color: red">
       {{message}}
@@ -45,7 +45,7 @@
     </div>
     <div class="col-sm-4 sidenav">
       <h3>Search</h3>
-      <form enctype="multipart/form-data" method="post" action="{% url 'searchplan' %}">
+      <form id='searchpform' enctype="multipart/form-data" method="post" action="{% url 'searchplan' %}">
       <table>
         <tr>
           <td>
@@ -55,8 +55,19 @@
       </td>
       </tr>
       <tr>
+        <td valign="bottom">Time Range(Days) &nbsp;&nbsp;</td>
         <td>
-        Place &nbsp;&nbsp;
+        <select id="select" name="time_range" form="searchpform">
+        <!--<option value="0" disabled selected hidden>Please Choose...</option>-->
+        <option value="0">0</option>
+        <option value="1">2</option>
+        <option value="2">4</option>
+        </select>
+      </td>
+    </tr>
+      <tr>
+        <td>
+        Location &nbsp;&nbsp;
       </td>
       <td><input type="text" class="form-control" placeholder="Search by a place" name='place'>
       </td>

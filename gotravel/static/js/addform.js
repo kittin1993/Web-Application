@@ -84,7 +84,6 @@ function addPlanForm(Name){
              var descriptionID = document.getElementById(descriptionID).value;
              if(stateValue!="" && countyValue!="" && placeValue!="") {
                  hasTyped = true;
-                 return num-1;
              }
          }
          if(num == 0 || hasTyped) {
@@ -100,8 +99,9 @@ function addPlanForm(Name){
              if (day < 10) day = "0" + day;
              var today = year + "-" + month + "-" + day;
              document.getElementById("new_date" + num).value = today;
+             return num;
          }
-         return num;
+         return num - 1;
      }
 }
 

@@ -128,6 +128,7 @@ class Note(models.Model):
     creation_time = models.DateTimeField()
     note_title = models.CharField(max_length=200, blank=True, default="Untitled")
     title_image = models.CharField(max_length=256, blank=True, default='https://yumengxemr.s3.amazonaws.com/id-None')
+    tag = models.CharField(max_length=256, null=True)
     likes = models.IntegerField(blank=True, default=0)
     dislikes = models.IntegerField(blank=True, default=0)
     total_cost = models.IntegerField(blank=True, default=0)
