@@ -65,7 +65,7 @@ def home(request):
             note_set['detail']=""
             result.append(note_set)
 
-    plans = Plan.objects.all().order_by('-likes')[:12]
+    plans = Plan.objects.all().order_by('-likes')[:3]
     # print posts
     context = {'username': username, 'new_user': new_user, 'notes': result, 'plans': plans}
     return render(request, 'homepage.html', context)
