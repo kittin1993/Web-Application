@@ -24,19 +24,23 @@
 {% endblock %}
 
 {% block content %}
-<div class = "row">
-    <div class = "col-sm-3 box1">
+<div class = "row ">
+    <div class = "col-sm-3">
         {% for error in form.non_field_errors %}
-            <p style="color: red">
+        <p style="color: red">
         {{ error }}
-            </p>
+        </p>
         {% endfor %}
         <form enctype="multipart/form-data" method="post" action="{% url 'addplan' %}">
-            <table>
+            <table class='text-left'>
                 {% for field in form.visible_fields %}
                     <tr>
-                        <td>{{field.label_tag}}</td>
-                        <td align='right'>&nbsp;{{field}}</td>
+                        <td>{{field.label_tag}}</td>   
+                    </tr>
+                    <tr>
+                        <td>&nbsp;{{field}}</td>
+                    </tr>
+                    <tr>
                         <td ><div class="error">{{field.errors}}</div></td>
                     </tr>
                 {% endfor %}
@@ -51,7 +55,7 @@
             <input id='submit' type="submit" value="Save Plan">
         </form>
     </div>
-    <div class = "col-sm-6 box1">
+    <div class = "col-sm-6 ">
         <div id="map_canvas" style="height:500px;"></div>
         <div class = "box1" style="width:100%">
             County: <input type="text" id="county" style="width:30%;padding-left:10px">
@@ -65,12 +69,12 @@
             <button id="submit" onclick="findPlace()">Search</button>
         </div>
     </div>
-    <div class = "col-sm-3 box1" id="add_plan_search_places"></div>
+    <div class = "col-sm-3 " id="add_plan_search_places"></div>
 </div>
 <div class = "timeline-pminus">
     <p class="glyphicon glyphicon-minus" onClick="deletePlanForm('PlanForm')"></p>
 </div>
 <div class = "timeline-pplus">
-    <p class="glyphicon glyphicon-plus" onClick="addPlanForm('PlanForm')"></p>
+    <p class="glyphicon glyphicon-plus" onClick="isFilled('PlanForm')"></p>
 </div>
 {% endblock %}

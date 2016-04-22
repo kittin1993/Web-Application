@@ -78,18 +78,17 @@
 
 
 <div class="row">
-
     <div class="col-lg-4">
-      <img src="/static/images/home1.jpg" width='435px' height='300px' >
+      <img src="/static/images/home1.jpg" class='home_image' height='300px'>
     </div>
   <span>
   <div class="col-lg-4">
-    <img src="/static/images/home2.jpg" width='435px' height='300px'>
+    <img src="/static/images/home2.jpg" class='home_image' height='300px'>
   </div>
   </span>
   <span>
 <div class="col-lg-4">
-<img src="/static/images/schedule_bg.jpg" width='435px' height='300px'>
+<img src="/static/images/schedule_bg.jpg" class='home_image1'height='300px'>
 </div>
 </span>
 
@@ -119,17 +118,6 @@
      
       <hr class="featurette-divider">
       {% for note in notes %}
-      <!--<div class="row featurette">
-        <div class="col-md-7">
-          <h1 class="featurette-heading">{{note.note_title}}</h1>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-          <p><a class="btn btn-default" href="{% url 'seenote' note.id %}" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-5">
-          <img class="featurette-image img-responsive center-block" src="{{note.title_image}}" alt="Generic placeholder image">
-        </div>
-      </div>
-      -->
       <hr class="featurette-divider">
 
       <div class="row featurette">

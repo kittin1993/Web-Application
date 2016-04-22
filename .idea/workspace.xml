@@ -2,9 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59726710-62a5-4e92-b634-b5599c8bcdfb" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gotravel/migrations/0005_auto_20160422_0142.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/js/addform.js" afterPath="$PROJECT_DIR$/gotravel/static/js/addform.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/addnote.html" afterPath="$PROJECT_DIR$/gotravel/templates/addnote.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/addplan.html" afterPath="$PROJECT_DIR$/gotravel/templates/addplan.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/js/mapProcess.js" afterPath="$PROJECT_DIR$/gotravel/static/js/mapProcess.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/gotravel/static/css/bootstrap.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/forms.py" afterPath="$PROJECT_DIR$/gotravel/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/css/gotravel.css" afterPath="$PROJECT_DIR$/gotravel/static/css/gotravel.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/homepage.html" afterPath="$PROJECT_DIR$/gotravel/templates/homepage.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/models.py" afterPath="$PROJECT_DIR$/gotravel/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/js/my_js.js" afterPath="$PROJECT_DIR$/gotravel/static/js/my_js.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/myschedule_plan.html" afterPath="$PROJECT_DIR$/gotravel/templates/myschedule_plan.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/plansresult.html" afterPath="$PROJECT_DIR$/gotravel/templates/plansresult.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/seeplan.html" afterPath="$PROJECT_DIR$/gotravel/templates/seeplan.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/travelplans.html" afterPath="$PROJECT_DIR$/gotravel/templates/travelplans.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/views.py" afterPath="$PROJECT_DIR$/gotravel/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="team34.iws" />
@@ -41,7 +54,7 @@
         <entry file="file://$PROJECT_DIR$/gotravel/static/js/addform.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="125" column="19" selection-start-line="125" selection-start-column="19" selection-end-line="125" selection-end-column="19" />
+              <caret line="155" column="19" selection-start-line="155" selection-start-column="19" selection-end-line="155" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -50,8 +63,8 @@
       <file leaf-file-name="addplan.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gotravel/templates/addplan.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-20.583334">
-              <caret line="73" column="44" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
+            <state vertical-scroll-proportion="-31.208334">
+              <caret line="90" column="44" selection-start-line="90" selection-start-column="44" selection-end-line="90" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -60,8 +73,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gotravel/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.74732006">
-              <caret line="975" column="25" selection-start-line="975" selection-start-column="25" selection-end-line="975" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.770291">
+              <caret line="1039" column="25" selection-start-line="1039" selection-start-column="25" selection-end-line="1039" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -565,23 +578,23 @@
     <entry file="file://$PROJECT_DIR$/gotravel/static/js/addform.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="125" column="19" selection-start-line="125" selection-start-column="19" selection-end-line="125" selection-end-column="19" />
+          <caret line="155" column="19" selection-start-line="155" selection-start-column="19" selection-end-line="155" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gotravel/templates/addplan.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-20.583334">
-          <caret line="73" column="44" selection-start-line="73" selection-start-column="44" selection-end-line="73" selection-end-column="44" />
+        <state vertical-scroll-proportion="-31.208334">
+          <caret line="90" column="44" selection-start-line="90" selection-start-column="44" selection-end-line="90" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gotravel/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74732006">
-          <caret line="975" column="25" selection-start-line="975" selection-start-column="25" selection-end-line="975" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.770291">
+          <caret line="1039" column="25" selection-start-line="1039" selection-start-column="25" selection-end-line="1039" selection-end-column="25" />
           <folding />
         </state>
       </provider>

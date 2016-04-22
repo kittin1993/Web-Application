@@ -212,6 +212,13 @@ li a:hover:not(.active) {
     font-family:raleway;
     /*position:relative;*/
 }
+.plan_content{
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    font-family:raleway;
+    /*position:relative;*/
+}
 .note_image{
     display: block;
     margin-left: auto;
@@ -298,67 +305,67 @@ background-color:#fff
 }
 
 input[type=date] {
-width:92%;
+width:95%;
 padding:10px;
 margin-top:20px;
 border:1px solid #ccc;
-padding-left:40px;
+padding-left:20px;
 font-size:16px;
 font-family:raleway
 }
 input[type=radio] {
-    background-color: #fff;
-    color: #fff;
-width:150%;
+background-color: #fff;
+color: #fff;
+width:95%;
 padding:10px;
 margin-top:20px;
 border:1px solid #ccc;
-padding-left:40px;
+padding-left:20px;
 font-size:16px;
 font-family:raleway
 }
 input[type=file] {
-width:92%;
+width:95%;
 padding:10px;
 margin-top:10px;
-padding-left:40px;
+padding-left:20px;
 font-size:16px;
 font-family:raleway
 }
 
 input[type=text] {
-width:92%;
+width:95%;
 padding:10px;
 margin-top:20px;
 border:1px solid #ccc;
-padding-left:40px;
+padding-left:20px;
 font-size:16px;
 font-family:raleway
 }
 input[type=password] {
-width:92%;
+width:95%;
 padding:10px;
 margin-top:20px;
 border:1px solid #ccc;
-padding-left:40px;
+padding-left:20px;
 font-size:16px;
 font-family:raleway
 }
 input[type=number] {
-width:92%;
+width:95%;
 padding:10px;
 margin-top:20px;
 border:1px solid #ccc;
-padding-left:40px;
+padding-left:20px;
 font-size:16px;
 font-family:raleway
 }
 input[type=email] {
-width:92%;
+width:95%;
 padding:10px;
 margin-top:20px;
 border:1px solid #ccc;
-padding-left:40px;
+padding-left:20px;
 font-size:16px;
 font-family:raleway
 }
@@ -812,5 +819,11 @@ border-radius:5px
   line-height:1.4em; 
   max-height:5.6em;
   overflow-y: hidden;
+}
+.home_image{
+  width: 110%;
+}
+.home_image1{
+  width: 100%;
 }
 
