@@ -815,3 +815,7 @@ border-radius:5px
 .home_title{
   width: 100%;
 }
+.errorlist{
+  color: red;
+  background-color: #fff;
+}

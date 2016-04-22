@@ -22,16 +22,11 @@
   </ul>
 </ul>
 <div id='popupContact'>
-{% for error in form.non_field_errors %}
-<p style="color: red">
-{{ error }}
-</p>
-{% endfor %}
+
 
 <p>
 Create a new account:
 </p>
-<p>
 <form method="post" action="{% url 'register' %}">
 <table>
 {% for field in form.visible_fields %}
@@ -39,17 +34,21 @@ Create a new account:
   <td>{{field.label_tag}}</td>
   <td>{{field}}&nbsp;</td>
   <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-  <td>{{field.errors}} </td>
+  <td><span style="background-color:white;">{{field.errors}}</span> </td>
 </tr>
 {% endfor %}
 </table>
+{% for error in form.non_field_errors %}
+<p style="color: red">
+{{ error }}
+</p>
+{% endfor %}
 {% for field in form.hidden_fields %}
 {{field}}
 {% endfor %}
 {% csrf_token %}
 <input type="submit" id="submit" value="Register" />
 </form>
-</p>
 </div>
 </body>
 </html>

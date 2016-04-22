@@ -31,13 +31,14 @@ class RegistrationForm(forms.Form):
         # Calls our parent (forms.Form) .clean function, gets a dictionary
         # of cleaned data as a result
         cleaned_data = super(RegistrationForm, self).clean()
-        print cleaned_data
 
         # Confirms that the two password fields match
         password1 = cleaned_data.get('password1')
+        print password1
         password2 = cleaned_data.get('password2')
-        if len(str(password1))<6:
-            raise forms.ValidationError("Password is too short.")
+        if password1 != None:
+            if len(str(password1))>0 and len(str(password1))<6 :
+                raise forms.ValidationError("Password is too short.")
         if str(password1).lower()== str(password1) or str(password1).upper()==str(password1) or str(password1).isalnum()==str(password1):
             raise forms.ValidationError("Password should include uppercase letters, lowercase letters and number.")
         if password1 and password2 and password1 != password2:
