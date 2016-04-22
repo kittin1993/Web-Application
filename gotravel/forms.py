@@ -37,9 +37,9 @@ class RegistrationForm(forms.Form):
         password1 = cleaned_data.get('password1')
         password2 = cleaned_data.get('password2')
         if len(str(password1))<6:
-            raise forms.ValidationError("Passwords is too short.")
+            raise forms.ValidationError("Password is too short.")
         if str(password1).lower()== str(password1) or str(password1).upper()==str(password1) or str(password1).isalnum()==str(password1):
-            raise forms.ValidationError("Passwords should include uppercase letters, lowercase letters and number.")
+            raise forms.ValidationError("Password should include uppercase letters, lowercase letters and number.")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords did not match.")
 

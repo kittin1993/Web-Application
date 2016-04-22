@@ -14,6 +14,7 @@ from datetime import timedelta
 from datetime import date
 import datetime as dt
 from django.contrib.auth.views import password_reset, password_reset_confirm
+from django.utils.datastructures import MultiValueDictKeyError
 
 import urllib2
 import demjson
@@ -95,7 +96,7 @@ def add_plan(request):
     length = len(request.POST.getlist('time'))
     print length
     plan = Plan.objects.get(owner=new_user, creation_time=creation_time)
-    plan.total_day=length
+    plan.total_day=len(set(request.POST.getlist('time')))
     plan.save()
 
     for index in range(length):
@@ -669,169 +670,185 @@ def travelnotes(request):
 @transaction.atomic
 @login_required
 def search_note(request):
-    username = request.user.username
-    new_user = User.objects.get(username=username)
-    print request.POST
-    keyword = request.POST['keyword']
-    order = request.POST['order']
-    tag = request.POST['tag']
-    result = []
+    try:
+        username = request.user.username
+        new_user = User.objects.get(username=username)
+        print request.POST
+        keyword = request.POST['keyword']
+        order = request.POST['order']
+        tag = request.POST['tag']
+        result = []
     
-    if int(order) == 0:
-        notes = Note.objects.all().order_by("-creation_time")
-    elif int(order) == 1:
-        notes = Note.objects.all().order_by("-likes")
-    elif int(order) == 2:
-        notes = Note.objects.all().order_by("total_cost")
-    else:
-        notes = Note.objects.all().order_by("-total_cost")
-
-    if keyword:
-        if tag: 
-            for note in notes:
-                if keyword.lower() in note.note_title.lower():
-                    if str(tag) in str(note.tag):
-                        result.append(note)
-                else:
-                    if note.notedetail.filter(Q(content__icontains=keyword) | Q(place__icontains=keyword)).exists():
-                        if note.tag == tag:
-                            result.append(note)
+        if int(order) == 0:
+            notes = Note.objects.all().order_by("-creation_time")
+        elif int(order) == 1:
+            notes = Note.objects.all().order_by("-likes")
+        elif int(order) == 2:
+            notes = Note.objects.all().order_by("total_cost")
         else:
-            for note in notes:
-                if keyword.lower() in note.note_title.lower():
-                    result.append(note)
-                else:
-                    if note.notedetail.filter(Q(content__icontains=keyword) | Q(place__icontains=keyword)).exists():
-                        result.append(note)
-    # print posts
-        context = {'username': username, 'new_user': new_user, 'result': result}
-        return render(request, 'notesresult.html', context)
-    else:
-        if tag:
-            for note in notes:
-                if str(tag) in str(note.tag):
-                        result.append(note)
+            notes = Note.objects.all().order_by("-total_cost")
 
+        if keyword:
+            if tag: 
+                for note in notes:
+                    if keyword.lower() in note.note_title.lower():
+                        if str(tag) in str(note.tag):
+                            result.append(note)
+                    else:
+                        if note.notedetail.filter(Q(content__icontains=keyword) | Q(place__icontains=keyword)).exists():
+                            if note.tag == tag:
+                                result.append(note)
+            else:
+                for note in notes:
+                    if keyword.lower() in note.note_title.lower():
+                        result.append(note)
+                    else:
+                        if note.notedetail.filter(Q(content__icontains=keyword) | Q(place__icontains=keyword)).exists():
+                            result.append(note)
+    # print posts
             context = {'username': username, 'new_user': new_user, 'result': result}
             return render(request, 'notesresult.html', context)
         else:
-            context = {'username': username, 'new_user': new_user, 'result': notes}
-            return render(request, 'notesresult.html', context)
+            if tag:
+                for note in notes:
+                    if str(tag) in str(note.tag):
+                        result.append(note)
+
+                context = {'username': username, 'new_user': new_user, 'result': result}
+                return render(request, 'notesresult.html', context)
+            else:
+                context = {'username': username, 'new_user': new_user, 'result': notes}
+                return render(request, 'notesresult.html', context)
+    except MultiValueDictKeyError:
+        username = request.user.username
+        new_user = User.objects.get(username=username)
+        notes = Note.objects.all().order_by('-creation_time')
+        # print posts
+        context = {'username': username, 'new_user': new_user, 'notes': notes}
+        return render(request, 'travelnotes.html', context)
 
 @transaction.atomic
 @login_required
 def search_plan(request):
-    username = request.user.username
-    new_user = User.objects.get(username=username)
-    keyword = request.POST['keyword']
-    print keyword
-    state = request.POST['state']
-    print state
-    time = request.POST['time']
-    print time
-    time_range = request.POST['time_range']
-    print time_range
-    result = []
-    plans = Plan.objects.all().order_by("likes")
-    # if time is null
-    
-    # have time limit
-    if time:
-        time = datetime.strptime(time,'%Y-%m-%d')
-        time = time.date()
-        if int(time_range) is 0:
-            startdate = time - timedelta(days=0)
-            enddate = time + timedelta(days=0)
-        elif int(time_range) is 2:
-            startdate = time - timedelta(days=2)
-            enddate = time + timedelta(days=2)
-        elif int(time_range) is 4:
-            startdate = time - timedelta(days=4)
-            enddate = time + timedelta(days=4)
-    
-        print startdate
-        print enddate
+    try:
+        username = request.user.username
+        new_user = User.objects.get(username=username)
+        keyword = request.POST['keyword']
+        print keyword
+        state = request.POST['state']
+        print state
+        time = request.POST['time']
+        print time
+        time_range = request.POST['time_range']
+        print time_range
+        result = []
+        plans = Plan.objects.all().order_by("likes")
+        # if time is null
         
-        # have keyword
-        if keyword:
-            if not state:
-                print "time keyword not state "
-                for plan in plans:
-                    if keyword.lower() in plan.plan_title.lower():
-                        if plan.plandetail.filter(time__range=[startdate, enddate]).exists():
+        # have time limit
+        if time:
+            time = datetime.strptime(time,'%Y-%m-%d')
+            time = time.date()
+            if int(time_range) is 0:
+                startdate = time - timedelta(days=0)
+                enddate = time + timedelta(days=0)
+            elif int(time_range) is 2:
+                startdate = time - timedelta(days=2)
+                enddate = time + timedelta(days=2)
+            elif int(time_range) is 4:
+                startdate = time - timedelta(days=4)
+                enddate = time + timedelta(days=4)
+        
+            print startdate
+            print enddate
+            
+            # have keyword
+            if keyword:
+                if not state:
+                    print "time keyword not state "
+                    for plan in plans:
+                        if keyword.lower() in plan.plan_title.lower():
+                            if plan.plandetail.filter(time__range=[startdate, enddate]).exists():
+                                result.append(plan)
+                        elif keyword.lower() in plan.intro.lower():
+                            if plan.plandetail.filter(time__range=[startdate, enddate]).exists():
+                                result.append(plan)
+                        elif plan.plandetail.filter(time__range=[startdate, enddate]).filter(Q(content__icontains=keyword) | Q(address__icontains=keyword)).exists():
                             result.append(plan)
-                    elif keyword.lower() in plan.intro.lower():
-                        if plan.plandetail.filter(time__range=[startdate, enddate]).exists():
-                            result.append(plan)
-                    elif plan.plandetail.filter(time__range=[startdate, enddate]).filter(Q(content__icontains=keyword) | Q(address__icontains=keyword)).exists():
-                        result.append(plan)
+                else:
+                    print "time keyword state"
+                    for plan in plans:
+                        if keyword.lower() in plan.plan_title.lower():
+                            if plan.plandetail.filter(state=state, time__range=[startdate, enddate]).exists():
+                                result.append(plan)
+                        elif keyword.lower() in plan.intro.lower():
+                            if plan.plandetail.filter(state=state, time__range=[startdate, enddate]).exists():
+                                result.append(plan)
+                        else:
+                            if plan.plandetail.filter(Q(state=state)&Q(time__range=[startdate, enddate])&(Q(content__icontains=keyword) | Q(address__icontains=keyword))).exists():
+                                result.append(plan)
+                        #if plan.plandetail.filter(state=state, time__range=[startdate, enddate]).exists():
+                            #result.append(plan)
+            # no keyword
             else:
-                print "time keyword state"
-                for plan in plans:
-                    if keyword.lower() in plan.plan_title.lower():
+                if not state:
+                    print "time not keyword not state"
+                    for plan in plans:
+                        if plan.plandetail.filter(time__range=[startdate, enddate]).exists():
+                            print "result"
+                            result.append(plan)
+                else:
+                    print "time not keyword state"
+                    for plan in plans:
                         if plan.plandetail.filter(state=state, time__range=[startdate, enddate]).exists():
                             result.append(plan)
-                    elif keyword.lower() in plan.intro.lower():
-                        if plan.plandetail.filter(state=state, time__range=[startdate, enddate]).exists():
-                            result.append(plan)
-                    else:
-                        if plan.plandetail.filter(Q(state=state)&Q(time__range=[startdate, enddate])&(Q(content__icontains=keyword) | Q(address__icontains=keyword))).exists():
-                            result.append(plan)
-                    #if plan.plandetail.filter(state=state, time__range=[startdate, enddate]).exists():
-                        #result.append(plan)
-        # no keyword
+        
+        # no time limit
         else:
-            if not state:
-                print "time not keyword not state"
-                for plan in plans:
-                    if plan.plandetail.filter(time__range=[startdate, enddate]).exists():
-                        print "result"
-                        result.append(plan)
+            # have keyword
+            if keyword:
+                if not state:
+                    print "not time keyword not state"
+                    for plan in plans:
+                        if keyword.lower() in plan.plan_title.lower():
+                            result.append(plan)
+                        elif keyword.lower() in plan.intro.lower():
+                            result.append(plan)
+                        elif plan.plandetail.filter(Q(content__icontains=keyword) | Q(address__icontains=keyword)).exists():
+                            result.append(plan)
+                else:
+                    print "not time keyword state"
+                    for plan in plans:
+                        if keyword.lower() in plan.plan_title.lower():
+                            if plan.plandetail.filter(state=state).exists():
+                                result.append(plan)
+                        elif keyword.lower() in plan.intro.lower():
+                            if plan.plandetail.filter(state=state).exists():
+                                result.append(plan)
+                        elif plan.plandetail.filter(Q(state=state)& (Q(content__icontains=keyword) | Q(address__icontains=keyword))).exists():
+                            result.append(plan)
+            # no keyword
             else:
-                print "time not keyword state"
-                for plan in plans:
-                    if plan.plandetail.filter(state=state, time__range=[startdate, enddate]).exists():
+                if not state:
+                    print "no time no keyword no state"
+                    for plan in plans:
                         result.append(plan)
-    
-    # no time limit
-    else:
-        # have keyword
-        if keyword:
-            if not state:
-                print "not time keyword not state"
-                for plan in plans:
-                    if keyword.lower() in plan.plan_title.lower():
-                        result.append(plan)
-                    elif keyword.lower() in plan.intro.lower():
-                        result.append(plan)
-                    elif plan.plandetail.filter(Q(content__icontains=keyword) | Q(address__icontains=keyword)).exists():
-                        result.append(plan)
-            else:
-                print "not time keyword state"
-                for plan in plans:
-                    if keyword.lower() in plan.plan_title.lower():
+                else:
+                    print "no time no keyword state"
+                    for plan in plans:
                         if plan.plandetail.filter(state=state).exists():
                             result.append(plan)
-                    elif keyword.lower() in plan.intro.lower():
-                        if plan.plandetail.filter(state=state).exists():
-                            result.append(plan)
-                    elif plan.plandetail.filter(Q(state=state)& (Q(content__icontains=keyword) | Q(address__icontains=keyword))).exists():
-                        result.append(plan)
-        # no keyword
-        else:
-            if not state:
-                print "no time no keyword no state"
-                for plan in plans:
-                    result.append(plan)
-            else:
-                print "no time no keyword state"
-                for plan in plans:
-                    if plan.plandetail.filter(state=state).exists():
-                        result.append(plan)
 
-    # print posts
-    context = {'username': username, 'new_user': new_user, 'result': result}
-    return render(request, 'plansresult.html', context)
+        # print posts
+        context = {'username': username, 'new_user': new_user, 'result': result}
+        return render(request, 'plansresult.html', context)
+
+    except MultiValueDictKeyError:
+        username = request.user.username
+        new_user = User.objects.get(username=username)
+        plans = Plan.objects.all().order_by('-creation_time')
+        context = {'username': username, 'new_user': new_user, 'plans': plans}
+        return render(request, 'travelplans.html', context)
 
 
 # @login_required
