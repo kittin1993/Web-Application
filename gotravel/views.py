@@ -20,7 +20,6 @@ from django.utils.datastructures import MultiValueDictKeyError
 import urllib2
 import demjson
 
-# Decorator to use built-in authentication system
 from django.contrib.auth.decorators import login_required
 
 # Used to create and manually log in a user
