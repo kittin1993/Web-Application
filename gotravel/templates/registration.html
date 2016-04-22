@@ -21,12 +21,8 @@
     <li><a class="dropdown-toggle" data-toggle="dropdown">{{username}}<span class="caret"></span></a></li>
   </ul>
 </ul>
-	<div id='popupContact'>
-{% for error in form.non_field_errors %}
-<p style="color: red">
-{{ error }}
-</p>
-{% endfor %}
+<div id='popupContact'>
+
 
 <p>
 Create a new account:
@@ -36,11 +32,17 @@ Create a new account:
 {% for field in form.visible_fields %}
 <tr>
   <td>{{field.label_tag}}</td>
-  <td>{{field}}</td>
-  <td style="color: red">{{field.errors}}</td>
+  <td>{{field}}&nbsp;</td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  <td><span style="background-color:white;">{{field.errors}}</span> </td>
 </tr>
 {% endfor %}
 </table>
+{% for error in form.non_field_errors %}
+<p style="color: red">
+{{ error }}
+</p>
+{% endfor %}
 {% for field in form.hidden_fields %}
 {{field}}
 {% endfor %}

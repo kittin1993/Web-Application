@@ -118,7 +118,7 @@ function addPlanForm(Name){
          }
          if(num == 0 || hasTyped) {
              var newtable = document.createElement('table');
-             newtable.innerHTML = "<table><tr><td>Time: </td></tr><tr><td><input type='date' id='new_date" + num + "' name='time'></td></tr><tr><td>State: </td></tr><tr><td><input type='text' id='new_state" + num + "' name='state'></td></tr><tr><td>County: </td></tr><tr><td><input type='text' id='new_county" + num + "' name='county'></td></tr><tr><td>Scenic Spot: </td></tr><tr><td><input type='text' id='new_place" + num + "' name='place'></td></tr><tr><td>Address: </td></tr><tr><td><input type='text' id='new_description" + num + "' name='des'></td></tr><tr><td>Description: </td></tr><tr><td><input type='text' id='new_cont" + num + "' name='content'></td></tr></table>";
+             newtable.innerHTML = "<hr><table><tr><td>Time: </td></tr><tr><td><input type='date' id='new_date" + num + "' name='time'></td></tr><tr><td>State: </td></tr><tr><td><input type='text' id='new_state" + num + "' name='state'></td></tr><tr><td>County: </td></tr><tr><td><input type='text' id='new_county" + num + "' name='county'></td></tr><tr><td>Scenic Spot: </td></tr><tr><td><input type='text' id='new_place" + num + "' name='place'></td></tr><tr><td>Address: </td></tr><tr><td><input type='text' id='new_description" + num + "' name='des'></td></tr><tr><td>Description: </td></tr><tr><td><input type='text' id='new_cont" + num + "' name='content'></td></tr></table>";
              document.getElementById(Name).appendChild(newtable);
 
              var date = new Date();

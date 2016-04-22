@@ -39,9 +39,11 @@
               <img class="img-rounded" src="{{note.title_image}}" width="380px" height="240px">
               <p class="imgDescription">
                 <br>
-                &nbsp;&nbsp;
+                &nbsp;
                 <img class="img-circle" src='{{note.owner.profile.image_url}}' height="60px" width="60px">
-                &nbsp;{{note.note_title}}
+                &nbsp;
+                <font size="3">{{note.note_title}}&nbsp;&nbsp;</font>
+                <br>
                 </p>
             </div>
           </a>
@@ -59,7 +61,7 @@
         <table>
         <tr>
           <td valign="bottom">Keyword &nbsp;&nbsp; </td>
-        <td ><input type="text" class="form-control" placeholder="Your keyword" name='keyword'></td>
+        <td ><input type="text" class="form-control" placeholder="what are you searching" name='keyword'></td>
       </tr>
       <div class="input-group">
       <tr>
@@ -67,9 +69,10 @@
         <td>
         <select id="select" name="order" form="searchform">
         <!--<option value="0" disabled selected hidden>Please Choose...</option>-->
-        <option value="0">Time</option>
-        <option value="1">Evaluation</option>
-        <option value="2">Cost</option>
+        <option value="0">Time(Latest to oldest)</option>
+        <option value="1">Evaluation(Like Most)</option>
+        <option value="2">Cost(Cheap to expensive)</option>
+        <option value="3">Cost(Expensive to cheap)</option>
         </select>
       </td>
     </tr>

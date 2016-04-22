@@ -31,11 +31,16 @@ class RegistrationForm(forms.Form):
         # Calls our parent (forms.Form) .clean function, gets a dictionary
         # of cleaned data as a result
         cleaned_data = super(RegistrationForm, self).clean()
-        print cleaned_data
 
         # Confirms that the two password fields match
         password1 = cleaned_data.get('password1')
+        print password1
         password2 = cleaned_data.get('password2')
+        if password1 != None:
+            if len(str(password1))>0 and len(str(password1))<6 :
+                raise forms.ValidationError("Password is too short.")
+        if str(password1).lower()== str(password1) or str(password1).upper()==str(password1) or str(password1).isalnum()==str(password1):
+            raise forms.ValidationError("Password should include uppercase letters, lowercase letters and number.")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords did not match.")
 
@@ -86,7 +91,11 @@ class EditProfileForm(forms.ModelForm):
         # Calls our parent (forms.Form) .clean function, gets a dictionary
         # of cleaned data as a result
         cleaned_data = super(EditProfileForm, self).clean()
-        print cleaned_data
+        age = cleaned_data.get('age')
+        print age
+        if age:
+            if (int(age) < 1 or int(age) >150):
+                raise forms.ValidationError("Please input a valid age!")
         # Generally return the cleaned data we got from our parent.
         return cleaned_data
 
@@ -101,6 +110,9 @@ class EditNoteForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(EditNoteForm, self).clean()
         print cleaned_data
+        total_cost = cleaned_data.get('total_cost')
+        if total_cost >= 10000000:
+            raise forms.ValidationError("Are you sure the trip is so expensive?")
         return cleaned_data
 
 
