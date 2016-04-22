@@ -331,7 +331,7 @@ def delete_note(request, id):
         return render(request, 'myschedule_note.html', context)
     except Note.DoesNotExist:
         new_user = User.objects.get(username=request.user)
-        notes = Note.objects.all()
+        notes = Note.objects.filter(owner=new_user)
         context = {'message': 'Note with id={0} does not exist'.format(id), 'username': username, 'notes': notes, 'new_user': new_user}
         return render(request, 'myschedule_note.html', context)
 
@@ -541,20 +541,26 @@ def edit_plan(request, id):
 @login_required
 def delete_plan(request, id):
     username = request.user
-    new_user = User.objects.get(username=username)
-    user_profile = Profile.objects.get(owner=new_user)
-    plan = Plan.objects.get(id=id)
+    try:   
+        new_user = User.objects.get(username=username)
+        user_profile = Profile.objects.get(owner=new_user)
+        plan = Plan.objects.get(id=id)
 
-    if PlanDetail.objects.filter(plan=plan).exists():
-        alldetail = PlanDetail.objects.filter(plan=plan)
-        for detail in alldetail:
-            detail.delete()
-    plan.delete()
+        if PlanDetail.objects.filter(plan=plan).exists():
+            alldetail = PlanDetail.objects.filter(plan=plan)
+            for detail in alldetail:
+                detail.delete()
+        plan.delete()
 
-    plans = Plan.objects.filter(owner=new_user)
+        plans = Plan.objects.filter(owner=new_user)
     # print posts
-    context = {'username': username, 'new_user': new_user, 'plans': plans}
-    return render(request, 'myschedule_plan.html', context)
+        context = {'username': username, 'new_user': new_user, 'plans': plans}
+        return render(request, 'myschedule_plan.html', context)
+    except Plan.DoesNotExist:
+        new_user = User.objects.get(username=request.user)
+        plans = Plan.objects.filter(owner=new_user)
+        context = {'message': 'Plan with id={0} does not exist'.format(id), 'username': username, 'plans': plans, 'new_user': new_user}
+        return render(request, 'myschedule_plan.html', context)
 
 @transaction.atomic
 @login_required

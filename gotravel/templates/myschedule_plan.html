@@ -27,6 +27,11 @@
     </div>
 
     <div class="col-sm-9 note_content">
+      {% if message %}
+      <p style="color: red">
+      {{message}}
+    </p>
+      {% endif %}
       <hr>
       <h4><a href="{% url 'addplan' %}"> <div class="link_black">Add A New Plan To My Schedule</div></a></h4>
       <hr>
