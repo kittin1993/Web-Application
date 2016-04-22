@@ -212,9 +212,10 @@ def map(request):
 def see_note(request, id):
     try:
         username = request.user
-        new_user = User.objects.get(username=username)
-        user_profile = Profile.objects.get(owner=new_user)
+        
         note = Note.objects.get(id=id)
+        new_user = User.objects.get(username=note.owner.username)
+        user_profile = Profile.objects.get(owner=new_user)
 
         if NoteDetail.objects.filter(note=note).exists():
             alldetail = NoteDetail.objects.filter(note=note)
@@ -334,7 +335,13 @@ def delete_note(request, id):
         user_profile = Profile.objects.get(owner=new_user)
         note = Note.objects.get(id=id)
 
-        if NoteDetail.objects.filter(note=note).exists():
+        if str(username) != str(note.owner.username):
+            notes = Note.objects.filter(owner=new_user)
+            context = {'message': 'You can only delete your plan', 'username': username, 'notes': notes,
+                   'new_user': new_user}
+            return render(request, 'myschedule_note.html', context)
+
+        elif NoteDetail.objects.filter(note=note).exists():
             alldetail = NoteDetail.objects.filter(note=note)
             for detail in alldetail:
                 if Noteimage.objects.filter(notedetail=detail).exists():
@@ -359,7 +366,15 @@ def delete_note(request, id):
 @transaction.atomic
 @login_required
 def edit_note(request, id):
+    username=request.user
+    note = Note.objects.get(id=id)
     try:
+        if str(username) != str(note.owner.username):
+            notes = Note.objects.filter(owner=new_user)
+            context = {'message': 'You can only edit your plan', 'username': username, 'notes': notes,
+                   'new_user': new_user}
+            return render(request, 'myschedule_note.html', context)
+
         alldetails = []
         if request.method == 'GET':
             print "get"
@@ -574,8 +589,14 @@ def delete_plan(request, id):
         new_user = User.objects.get(username=username)
         user_profile = Profile.objects.get(owner=new_user)
         plan = Plan.objects.get(id=id)
+        if str(username) != str(plan.owner.username):
+            plans = Plan.objects.filter(owner=new_user)
+            context = {'message': 'You can only delete your plan', 'username': username, 'plans': plans,
+                   'new_user': new_user}
+            return render(request, 'myschedule_plan.html', context)
 
-        if PlanDetail.objects.filter(plan=plan).exists():
+
+        elif PlanDetail.objects.filter(plan=plan).exists():
             alldetail = PlanDetail.objects.filter(plan=plan)
             for detail in alldetail:
                 detail.delete()
@@ -598,9 +619,9 @@ def delete_plan(request, id):
 def see_plan(request, id):
     try:
         username = request.user
-        new_user = User.objects.get(username=username)
-        user_profile = Profile.objects.get(owner=new_user)
         plan = Plan.objects.get(id=id)
+        new_user = User.objects.get(username=plan.owner.username)
+        user_profile = Profile.objects.get(owner=new_user)
         # print posts
         if PlanDetail.objects.filter(plan=plan).exists():
             alldetail = PlanDetail.objects.filter(plan=plan)
