@@ -63,9 +63,39 @@ function deleteNoteForm(Name1,Name2){
                
      }
 }
+function isFilled(Name){
+
+    var form_name = Name;
+    console.log(form_name);
+    var list = $( "#PlanForm" ).find( "table" );
+    var num = list.length;
+    if(num==0){
+      addPlanForm(form_name);
+    }
+    if(num>0){
+      //console.log("alert");
+      var stateID = "new_state" + (num - 1);
+      var countyID = "new_county" + (num - 1);
+      var placeID = "new_place" + (num - 1);
+      var descriptionID = "new_description" + (num - 1);
+      var stateValue = document.getElementById(stateID).value;
+      var countyValue = document.getElementById(countyID).value;
+      var placeValue = document.getElementById(placeID).value;
+      var descriptionID = document.getElementById(descriptionID).value;
+
+      if(stateValue==="" && countyValue==="" && placeValue==="") {
+          console.log("alert");
+          alert("Please fill in the columns of current day befor you add a new day!");
+        }
+        else{
+          addPlanForm(form_name);
+        }
+    }
+
+}
 
 function addPlanForm(Name){
-	var list = $( "#PlanForm" ).find( "table" );
+	   var list = $( "#PlanForm" ).find( "table" );
      var num = list.length;
      var limit = 30;
      if ((num) == limit)  {
@@ -82,13 +112,13 @@ function addPlanForm(Name){
              var countyValue = document.getElementById(countyID).value;
              var placeValue = document.getElementById(placeID).value;
              var descriptionID = document.getElementById(descriptionID).value;
-             if(stateValue!="" && countyValue!="" && placeValue!="") {
+             if(stateValue!=""||countyValue!="" || placeValue!="") {
                  hasTyped = true;
              }
          }
          if(num == 0 || hasTyped) {
              var newtable = document.createElement('table');
-             newtable.innerHTML = "<table><tr><td>Time: </td><td><input type='date' id='new_date" + num + "' name='time'></td></tr><tr><td>State: </td><td><input type='text' id='new_state" + num + "' name='state'></td></tr><tr><td>County: </td><td><input type='text' id='new_county" + num + "' name='county'></td></tr><tr><td>Place: </td><td><input type='text' id='new_place" + num + "' name='place'></td></tr><tr><td>Description: </td><td><input type='text' id='new_description" + num + "' name='des'></td></tr></table>";
+             newtable.innerHTML = "<table><tr><td>Time: </td></tr><tr><td><input type='date' id='new_date" + num + "' name='time'></td></tr><tr><td>State: </td></tr><tr><td><input type='text' id='new_state" + num + "' name='state'></td></tr><tr><td>County: </td></tr><tr><td><input type='text' id='new_county" + num + "' name='county'></td></tr><tr><td>Scenic Spot: </td></tr><tr><td><input type='text' id='new_place" + num + "' name='place'></td></tr><tr><td>Address: </td></tr><tr><td><input type='text' id='new_description" + num + "' name='des'></td></tr><tr><td>Description: </td></tr><tr><td><input type='text' id='new_cont" + num + "' name='content'></td></tr></table>";
              document.getElementById(Name).appendChild(newtable);
 
              var date = new Date();

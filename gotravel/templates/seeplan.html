@@ -98,15 +98,15 @@
       {% for detail in alldetail %}
       <p><span class="day"> {{detail.time}} </span></p>
       <br><br><br>
-      <div id="note_content">
-        <p> <span class="note_place"> Location: &nbsp;{{detail.county}},&nbsp;{{detail.state}} </span><span class="note_cost"> Place: &nbsp;{{detail.place}}</span></p>
-        <br>
-        <p class="note_content"><br>{{detail.content}}
+        <p class="plan_content">
+          <br><b>Scenic Spot:</b> &nbsp;&nbsp;{{detail.place}}
+          <br><b>Address:</b> &nbsp;&nbsp;{{detail.address}}
+          <br><b>Plan for Today:</b><br>{{detail.content}}
         </p>
 
        <hr>
       {% endfor %}
-    </div>
+
       
 <div id="abc">
 <!-- Popup Div Starts Here -->

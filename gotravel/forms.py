@@ -130,7 +130,7 @@ class EditPlanForm(forms.ModelForm):
         model = Plan
         fields = ('plan_title','intro')
         widgets = {
-            'intro': Textarea(attrs={'cols': 23, 'rows': 3}),
+            'intro': Textarea(attrs={'cols': 20, 'rows': 3}),
         }
 
     def clean(self):
