@@ -390,6 +390,11 @@ def edit_note(request, id):
             context = {'note': note, 'noteform': noteform, 'alldetails': alldetails}
             return render(request, 'edit_note.html', context)
 
+        if noteform.cleaned_data['title_image']:
+            print "have image"
+            url = s3_upload(noteform.cleaned_data['title_image'], random.random())
+            note.title_image = url
+
         noteform.save()
 
         if NoteDetail.objects.filter(note=note).exists():
