@@ -14,6 +14,14 @@ import os
 #import dj_database_url
 import ConfigParser
 
+# from oauth2client import tools
+# try:
+#     import argparse
+#     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
+#     # flags = None
+# except ImportError:
+#     flags = None
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
