@@ -86,7 +86,10 @@ class EditProfileForm(forms.ModelForm):
         # Calls our parent (forms.Form) .clean function, gets a dictionary
         # of cleaned data as a result
         cleaned_data = super(EditProfileForm, self).clean()
-        print cleaned_data
+        age = cleaned_data.get('age')
+        print age
+        if (int(age) < 1 or int(age) >150):
+            raise forms.ValidationError("Please input a valid age!")
         # Generally return the cleaned data we got from our parent.
         return cleaned_data
 
@@ -101,8 +104,6 @@ class EditNoteForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(EditNoteForm, self).clean()
         print cleaned_data
-
-        # Confirms that the two password fields match
         total_cost = cleaned_data.get('total_cost')
         if total_cost >= 10000000:
             raise forms.ValidationError("Are you sure the trip is so expensive?")

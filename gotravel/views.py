@@ -868,6 +868,8 @@ def edit_profile(request):
 
     form = EditProfileForm(request.POST, request.FILES, instance=user_profile)
     context['form'] = form
+    context['new_user'] = new_user
+    context['user_profile'] = user_profile
 
     if not form.is_valid():
         return render(request, 'editprofile.html', context)
