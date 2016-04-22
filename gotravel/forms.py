@@ -101,6 +101,11 @@ class EditNoteForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(EditNoteForm, self).clean()
         print cleaned_data
+
+        # Confirms that the two password fields match
+        total_cost = cleaned_data.get('total_cost')
+        if total_cost >= 10000000:
+            raise forms.ValidationError("Are you sure the trip is so expensive?")
         return cleaned_data
 
 
