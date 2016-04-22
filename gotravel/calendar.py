@@ -15,6 +15,8 @@ import datetime
 try:
     import argparse
     parser = argparse.ArgumentParser(parents=[tools.argparser])
+    print("123")
+    print(parser)
     parser.add_argument("process")
     #parser.add_argument("port")
     flags = parser.parse_args()
@@ -73,7 +75,7 @@ def add_google_calendar(place, address, time, content):
     service = discovery.build('calendar', 'v3', http=http)
 
     # 'Z' indicates UTC time
-    now = datetime.datetime.utcnow().isoformat() + 'Z'
+    # now = datetime.datetime.utcnow().isoformat() + 'Z'
     event = {
         'summary': 'Travel Go: ' + place,
         'location': address,
@@ -102,3 +104,5 @@ def add_google_calendar(place, address, time, content):
         },
     }
     event = service.events().insert(calendarId='primary', body=event).execute()
+    calendar = service.calendars().get(calendarId='primary').execute()
+    print(calendar['summary'])
