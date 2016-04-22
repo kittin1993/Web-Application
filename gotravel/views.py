@@ -676,14 +676,16 @@ def search_note(request):
     order = request.POST['order']
     tag = request.POST['tag']
     result = []
-
-    if order == 2:
-        notes = Note.objects.all().order_by("likes")
-    elif order == 1:
+    
+    if int(order) == 0:
+        notes = Note.objects.all().order_by("-creation_time")
+    elif int(order) == 1:
+        notes = Note.objects.all().order_by("-likes")
+    elif int(order) == 2:
         notes = Note.objects.all().order_by("total_cost")
     else:
-        notes = Note.objects.all().order_by("-creation_time")
-    
+        notes = Note.objects.all().order_by("-total_cost")
+
     if keyword:
         if tag: 
             for note in notes:
