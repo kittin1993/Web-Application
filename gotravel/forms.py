@@ -88,8 +88,9 @@ class EditProfileForm(forms.ModelForm):
         cleaned_data = super(EditProfileForm, self).clean()
         age = cleaned_data.get('age')
         print age
-        if (int(age) < 1 or int(age) >150):
-            raise forms.ValidationError("Please input a valid age!")
+        if age:
+            if (int(age) < 1 or int(age) >150):
+                raise forms.ValidationError("Please input a valid age!")
         # Generally return the cleaned data we got from our parent.
         return cleaned_data
 
