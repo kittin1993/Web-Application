@@ -36,15 +36,17 @@ from gotravel.s3 import *
 # @login_required
 @transaction.atomic
 def home(request):
-    username = request.user.username
-    if not username:
-        print username
-        notes = Note.objects.all()
-        plans = Plan.objects.all()
-        context = {'username': "Visitor", 'notes': notes, 'plans': plans}
-        return render(request, 'homepage.html', context)
-
-    new_user = User.objects.get(username=username)
+    name = request.user.username
+    print name
+    if not name:
+        username = "Visitor"
+    else:
+        username = name
+        #print username
+        #notes = Note.objects.all().order_by('-likes')[:6]
+        #plans = Plan.objects.all().order_by('-likes')[:3]
+        #context = {'username': "Visitor", 'notes': notes, 'plans': plans}
+        #return render(request, 'homepage.html', context)
     notes = Note.objects.all().order_by('-likes')[:6]
     result=[]
     for note in notes:
@@ -67,7 +69,7 @@ def home(request):
 
     plans = Plan.objects.all().order_by('-likes')[:3]
     # print posts
-    context = {'username': username, 'new_user': new_user, 'notes': result, 'plans': plans}
+    context = {'username': username,'notes': result, 'plans': plans}
     return render(request, 'homepage.html', context)
 
 @transaction.atomic
