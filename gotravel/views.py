@@ -336,7 +336,7 @@ def delete_note(request, id):
 
         if str(username) != str(note.owner.username):
             notes = Note.objects.filter(owner=new_user)
-            context = {'message': 'You can only delete your plan', 'username': username, 'notes': notes,
+            context = {'message': 'You can only delete your note', 'username': username, 'notes': notes,
                    'new_user': new_user}
             return render(request, 'myschedule_note.html', context)
 
@@ -369,8 +369,9 @@ def edit_note(request, id):
     note = Note.objects.get(id=id)
     try:
         if str(username) != str(note.owner.username):
+            new_user = User.objects.get(username=request.user)
             notes = Note.objects.filter(owner=new_user)
-            context = {'message': 'You can only edit your plan', 'username': username, 'notes': notes,
+            context = {'message': 'You can only edit your note', 'username': username, 'notes': notes,
                    'new_user': new_user}
             return render(request, 'myschedule_note.html', context)
 
