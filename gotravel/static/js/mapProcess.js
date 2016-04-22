@@ -259,7 +259,6 @@ function placesOnmouse(name) {
 
 function addPlan(index) {
     var num = addPlanForm('PlanForm');
-    alert(num);
     var address = research_destinations[index]["formatted_address"];
     var lat = research_destinations[index]["geometry"]["location"]["lat"];
     var lng = research_destinations[index]["geometry"]["location"]["lng"];
