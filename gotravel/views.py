@@ -42,11 +42,6 @@ def home(request):
         username = "Visitor"
     else:
         username = name
-        #print username
-        #notes = Note.objects.all().order_by('-likes')[:6]
-        #plans = Plan.objects.all().order_by('-likes')[:3]
-        #context = {'username': "Visitor", 'notes': notes, 'plans': plans}
-        #return render(request, 'homepage.html', context)
     notes = Note.objects.all().order_by('-likes')[:6]
     result=[]
     for note in notes:
@@ -154,14 +149,18 @@ def add_note(request):
     print request.POST
     print request.POST.getlist('place')
     print request.FILES.getlist('picture0')
+    row_tag = request.POST.get('tag', False)
+
     length = len(request.POST.getlist('place'))
     print length
     note = Note.objects.get(owner=new_user, creation_time=creation_time)
-    if request.POST['tag']:
+
+    if row_tag is False:
+        note.save()
+    else:
         tag=""
         for index in range(len(request.POST.getlist('tag'))):
             tag = tag+request.POST.getlist('tag')[index]+" "
-
         print tag
         note.tag = tag
         note.save()
@@ -506,6 +505,7 @@ def edit_plan(request, id):
         print request.POST
         print request.POST.getlist('place')
         print request.FILES.getlist('picture0')
+        print request.POST['tag']
         length = len(request.POST.getlist('place'))
         print length
         for index in range(length):

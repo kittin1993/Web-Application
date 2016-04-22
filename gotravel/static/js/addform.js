@@ -1,7 +1,7 @@
 function addNoteForm(Name1,Name2){
 	var list = $( "#timeline" ).find( "li" );
      console.log(list[0]);
-     var num = list.length-7;
+     var num = list.length-2;
      console.log(num);
      var limit = 30;
      if (num == limit)  {
