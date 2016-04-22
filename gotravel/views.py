@@ -8,7 +8,8 @@ from django.core.mail import send_mail
 from django.contrib.auth.tokens import default_token_generator
 from django.core import serializers
 from django.db.models import Q
-import json, random
+import json
+import random
 from datetime import datetime
 from datetime import timedelta
 from datetime import date
@@ -30,7 +31,11 @@ from django.forms import formset_factory
 from gotravel.models import *
 from gotravel.forms import *
 from gotravel.s3 import *
-#from gotravel.test_yelp import *
+
+import calendar
+
+
+# from gotravel.test_yelp import *
 
 
 # Create your views here.
@@ -44,29 +49,30 @@ def home(request):
     else:
         username = name
     notes = Note.objects.all().order_by('-likes')[:6]
-    result=[]
+    result = []
     for note in notes:
         if NoteDetail.objects.filter(note=note).exists():
             alldetail = NoteDetail.objects.filter(note=note)[:1]
             for detail in alldetail:
                 print 'detail'
-                note_set={}
-                note_set['id']=note.id
-                note_set['note']=note
-                note_set['detail']= detail.content
+                note_set = {}
+                note_set['id'] = note.id
+                note_set['note'] = note
+                note_set['detail'] = detail.content
                 print note_set['detail']
                 result.append(note_set)
         else:
-            note_set={}
-            note_set['id']=note.id
-            note_set['note']=note
-            note_set['detail']=""
+            note_set = {}
+            note_set['id'] = note.id
+            note_set['note'] = note
+            note_set['detail'] = ""
             result.append(note_set)
 
     plans = Plan.objects.all().order_by('-likes')[:3]
     # print posts
-    context = {'username': username,'notes': result, 'plans': plans}
+    context = {'username': username, 'notes': result, 'plans': plans}
     return render(request, 'homepage.html', context)
+
 
 @transaction.atomic
 @login_required
@@ -109,12 +115,14 @@ def add_plan(request):
         plandetail.address = request.POST.getlist('des')[index]
         plandetail.content = request.POST.getlist('content')[index]
         plandetail.save()
+        calendar.add_google_calendar(request.POST.getlist('place')[index], request.POST.getlist('des')[index], request.POST.getlist('time')[index], request.POST.getlist('content')[index])
 
     plandetails = PlanDetail.objects.filter(plan=plan)
     context['new_user'] = new_user
     context['plan'] = plan
     context['plandetails'] = plandetails
     return redirect(reverse('seeplan', args=(plan.id,)))
+
 
 @transaction.atomic
 @login_required
@@ -159,9 +167,9 @@ def add_note(request):
     if row_tag is False:
         note.save()
     else:
-        tag=""
+        tag = ""
         for index in range(len(request.POST.getlist('tag'))):
-            tag = tag+request.POST.getlist('tag')[index]+" "
+            tag = tag + request.POST.getlist('tag')[index] + " "
         print tag
         note.tag = tag
         note.save()
@@ -198,6 +206,7 @@ def map(request):
     context = {'username': username, 'new_user': new_user, 'user_profile': user_profile}
     return render(request, 'googleboundary.html', context)
 
+
 @transaction.atomic
 @login_required
 def see_note(request, id):
@@ -221,6 +230,7 @@ def see_note(request, id):
         context = {'message': 'Note with id={0} does not exist'.format(id), 'notes': notes, 'new_user': new_user}
         return render(request, 'travelnotes.html', context)
 
+
 @transaction.atomic
 @login_required
 def add_likes(request, id):
@@ -233,6 +243,7 @@ def add_likes(request, id):
 
     return HttpResponse(response_json, content_type='application/json')
 
+
 @transaction.atomic
 @login_required
 def add_dislikes(request, id):
@@ -244,6 +255,7 @@ def add_dislikes(request, id):
     response_json = json.dumps(context)
 
     return HttpResponse(response_json, content_type='application/json')
+
 
 @transaction.atomic
 @login_required
@@ -265,6 +277,7 @@ def add_favorite(request, id):
 
     return HttpResponse(response_json, content_type='application/json')
 
+
 @transaction.atomic
 @login_required
 def add_pfavorite(request, id):
@@ -285,6 +298,7 @@ def add_pfavorite(request, id):
 
     return HttpResponse(response_json, content_type='application/json')
 
+
 @transaction.atomic
 @login_required
 def add_plikes(request, id):
@@ -297,6 +311,7 @@ def add_plikes(request, id):
 
     return HttpResponse(response_json, content_type='application/json')
 
+
 @transaction.atomic
 @login_required
 def add_pdislikes(request, id):
@@ -308,6 +323,7 @@ def add_pdislikes(request, id):
     response_json = json.dumps(context)
 
     return HttpResponse(response_json, content_type='application/json')
+
 
 @transaction.atomic
 @login_required
@@ -329,14 +345,16 @@ def delete_note(request, id):
         note.delete()
 
         notes = Note.objects.filter(owner=new_user)
-    # print posts
+        # print posts
         context = {'username': username, 'new_user': new_user, 'notes': notes}
         return render(request, 'myschedule_note.html', context)
     except Note.DoesNotExist:
         new_user = User.objects.get(username=request.user)
         notes = Note.objects.filter(owner=new_user)
-        context = {'message': 'Note with id={0} does not exist'.format(id), 'username': username, 'notes': notes, 'new_user': new_user}
+        context = {'message': 'Note with id={0} does not exist'.format(id), 'username': username, 'notes': notes,
+                   'new_user': new_user}
         return render(request, 'myschedule_note.html', context)
+
 
 @transaction.atomic
 @login_required
@@ -444,6 +462,7 @@ def edit_note(request, id):
         context = {'message': 'Note with id={0} does not exist'.format(id), 'notes': notes, 'new_user': new_user}
         return render(request, 'myschedule_note.html', context)
 
+
 @transaction.atomic
 @login_required
 def edit_plan(request, id):
@@ -546,11 +565,12 @@ def edit_plan(request, id):
         context = {'message': 'Note with id={0} does not exist'.format(id), 'plans': plans, 'new_user': new_user}
         return render(request, 'myschedule_plan.html', context)
 
+
 @transaction.atomic
 @login_required
 def delete_plan(request, id):
     username = request.user
-    try:   
+    try:
         new_user = User.objects.get(username=username)
         user_profile = Profile.objects.get(owner=new_user)
         plan = Plan.objects.get(id=id)
@@ -562,14 +582,16 @@ def delete_plan(request, id):
         plan.delete()
 
         plans = Plan.objects.filter(owner=new_user)
-    # print posts
+        # print posts
         context = {'username': username, 'new_user': new_user, 'plans': plans}
         return render(request, 'myschedule_plan.html', context)
     except Plan.DoesNotExist:
         new_user = User.objects.get(username=request.user)
         plans = Plan.objects.filter(owner=new_user)
-        context = {'message': 'Plan with id={0} does not exist'.format(id), 'username': username, 'plans': plans, 'new_user': new_user}
+        context = {'message': 'Plan with id={0} does not exist'.format(id), 'username': username, 'plans': plans,
+                   'new_user': new_user}
         return render(request, 'myschedule_plan.html', context)
+
 
 @transaction.atomic
 @login_required
@@ -667,6 +689,7 @@ def travelnotes(request):
     context = {'username': username, 'new_user': new_user, 'notes': notes}
     return render(request, 'travelnotes.html', context)
 
+
 @transaction.atomic
 @login_required
 def search_note(request):
@@ -726,6 +749,7 @@ def search_note(request):
         # print posts
         context = {'username': username, 'new_user': new_user, 'notes': notes}
         return render(request, 'travelnotes.html', context)
+
 
 @transaction.atomic
 @login_required
@@ -827,6 +851,7 @@ def search_plan(request):
                                 result.append(plan)
                         elif plan.plandetail.filter(Q(state=state)& (Q(content__icontains=keyword) | Q(address__icontains=keyword))).exists():
                             result.append(plan)
+
             # no keyword
             else:
                 if not state:
@@ -874,6 +899,7 @@ def seenotes(request):
     # print posts
     context = {'username': username, 'new_user': new_user, 'user_profile': user_profile}
     return render(request, 'travelplans.html', context)
+
 
 @transaction.atomic
 @login_required
@@ -1059,10 +1085,10 @@ def search_destination(request):
     destination = request.GET["destination"]
     county = request.GET["county"]
     state = request.GET["state"]
-    url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+destination+"+in+"+county+","+state+"&key=AIzaSyC5DNDex1ZhKPKyZZn2zdrkdGo4aZKgx0Q"
+    url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + destination + "+in+" + county + "," + state + "&key=AIzaSyC5DNDex1ZhKPKyZZn2zdrkdGo4aZKgx0Q"
     data = urllib2.urlopen(url)
     result_content = data.read()
-    print(result_content)
+    # print(result_content)
     # places_json = demjson.encode(result_content)
     # print places_json
     # return HttpResponse(places_json, content_type='application/json')

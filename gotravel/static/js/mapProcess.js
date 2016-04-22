@@ -8,13 +8,16 @@ var map = null;
 var countyPolygons = new Array();
 var State_County = new Array();
 var research_destinations;
+var marker = new Array();
 var current_state;
 var current_county;
+var current_plan = new Array();
+var temp_point = new google.maps.Marker();
 var currentStatePolygon = new google.maps.Polygon();
 var polyOptions = {
   strokeColor: "#9B868B",
   fillColor: "#FF8C69",
-  fillOpacity: 0.5,
+  fillOpacity: 0.2,
   strokeWeight: 1,
   zIndex: 1
 };
@@ -22,7 +25,7 @@ var polyOptions = {
 var stateDetailOptions = {
   strokeColor: "#9B868B",
   fillColor: "#FF8C69",
-  fillOpacity: 0,
+  fillOpacity: 0.2,
   strokeWeight: 3,
   zIndex: 1
 }
@@ -93,45 +96,53 @@ function showBoundaryState(state) {
   polygon.setMap(map);
 
   google.maps.event.addListener(polygon, "mousemove", function () {
-    polygon.setOptions({
-      fillColor: "#FFFF00"
-    });
+      polygon.setOptions({
+          //fillColor: "#FFFF00",
+          fillOpacity: 0
+      });
   });
 
   google.maps.event.addListener(polygon, "mouseout", function () {
-    polygon.setOptions({
-      fillColor: "#FF8C69"
-    });
+      polygon.setOptions({
+          //fillColor: "#FF8C69",
+          fillOpacity: 0.2
+      });
   });
 
   google.maps.event.addListener(polygon, "click", function () {
-    var stateMiddle = new google.maps.LatLng((latMax+latMin)/2, (lngMax+lngMin)/2);
-    stateDetail(state, stateMiddle);
+      var stateMiddle = new google.maps.LatLng((latMax+latMin)/2, (lngMax+lngMin)/2);
+      polygon.setOptions({
+          fillOpacity: 0
+      });
+      stateDetail(state, stateMiddle);
   });
 }
 
 function stateDetail(state, stateMiddle) {
-  clearCountyBoundary();
-  currentStatePolygon.setMap(null);
-  countyPolygon = new Array();
-  map.setOptions({
-    center:stateMiddle,
-    zoom: 7
-  })
-  var latLngs = state.geometry;
-  var statePaths = getPath(latLngs);
-  var polygon = new google.maps.Polygon();
-  polygon.setOptions(stateDetailOptions);
-  polygon.setPaths(statePaths);
-  polygon.setMap(map);
-  currentStatePolygon = polygon;
-  var j=0;
-  for (var i=0; i<USA_County.Counties.length; i ++) {
-    if(USA_County.Counties[i].State == state.id) {
-      countyPolygons[j] = showBoundaryCounty(USA_County.Counties[i]);
-      j++;
+    clearCountyBoundary();
+    currentStatePolygon.setMap(null);
+    countyPolygon = new Array();
+    map.setOptions({
+        center:stateMiddle,
+        zoom: 7
+    })
+    var latLngs = state.geometry;
+    var statePaths = getPath(latLngs);
+    var polygon = new google.maps.Polygon();
+    polygon.setOptions(stateDetailOptions);
+    polygon.setOptions({
+        fillOpacity: 0
+    });
+    polygon.setPaths(statePaths);
+    polygon.setMap(map);
+    currentStatePolygon = polygon;
+    var j=0;
+    for (var i=0; i<USA_County.Counties.length; i ++) {
+        if(USA_County.Counties[i].State == state.id) {
+            countyPolygons[j] = showBoundaryCounty(USA_County.Counties[i]);
+            j++;
+        }
     }
-  }
 }
 
 function showBoundaryCounty(County) {
@@ -170,12 +181,12 @@ function showBoundaryCounty(County) {
     var county_state = County.State_County;
     google.maps.event.addListener(countyPolygon, "mousemove", function () {
         countyPolygon.setOptions({
-            fillColor: "#FFFF00"
+            fillOpacity: 0
         });
     });
     google.maps.event.addListener(countyPolygon, "mouseout", function () {
         countyPolygon.setOptions({
-            fillColor: "#FF8C69"
+            fillOpacity: 0.2
         });
     });
 
@@ -219,7 +230,13 @@ function findPlace() {
         research_destinations = JSON.parse(result)["results"];
         var items_length = research_destinations.length;
         var newItem = new Array();
-        var marker = new Array();
+        for(var i=0; i<marker.length; i++) {
+            marker[i].setMap(null);
+        }
+        marker = new Array();
+        if(items_length == 0) {
+            alert("There is no " + destination + " in " + county + ", " + state);
+        }
         for(var i=0; i<items_length; i++) {
             var address = research_destinations[i]["formatted_address"];
             var lat = research_destinations[i]["geometry"]["location"]["lat"];
@@ -253,8 +270,31 @@ function findPlace() {
     req.send();
 }
 
-function placesOnmouse(name) {
-    console.log(name);
+function placesOnmouse(index) {
+    temp_point.setMap(null);
+    //console.log(index);
+    //console.log(research_destinations[index]["name"])
+    var address = research_destinations[index]["formatted_address"];
+    var lat = research_destinations[index]["geometry"]["location"]["lat"];
+    var lng = research_destinations[index]["geometry"]["location"]["lng"];
+    var icon_url = research_destinations[index]["icon"];
+    var name = research_destinations[index]["name"];
+    var marker_location=new google.maps.LatLng(lat,lng);
+    var image = {
+        url: "http://maps.gstatic.com/intl/en_ALL/mapfiles/ms/micons/green-dot.png",
+        scaledSize: new google.maps.Size(20, 20)
+    }
+    temp_point = new google.maps.Marker({
+        icon: image,
+        position: marker_location
+    });
+    temp_point.setMap(map);
+    var infowindow = new google.maps.InfoWindow({
+        content:"<div style='font-size:9pt;'>Name：<a target='_blank'>"+ name + "</a><br>Address: "+ address + "</></div>"
+    });
+
+    infowindow.open(map,temp_point);
+    //marker[index].openInfoWindow("<div style='font-size:9pt;'>Name：<a target='_blank'>"+ name + "</a><br>Address: "+ address + "</></div>");
 }
 
 function addPlan(index) {
@@ -268,6 +308,12 @@ function addPlan(index) {
     document.getElementById("new_place"+num).value = name;
     document.getElementById("new_county"+num).value = current_county;
     document.getElementById("new_state"+num).value = current_state;
+    var marker_location=new google.maps.LatLng(lat,lng);
+    current_plan[num] = new google.maps.Marker({
+        position:marker_location,
+        icon: "http://maps.gstatic.com/intl/en_ALL/mapfiles/ms/micons/red-dot.png"
+    });
+    current_plan[num].setMap(map);
 }
 
 // function getCountyInfo(County) {

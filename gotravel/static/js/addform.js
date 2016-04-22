@@ -144,6 +144,9 @@ function deletePlanForm(Name){
           alert("You are not allowed to have less than 0 days!");
      }
      else {
+         if(current_plan.length == num) {
+             current_plan[num-1].setMap(null);
+         }
           var lastchild = document.getElementById("PlanForm").lastChild;
           //newtable.innerHTML = "<table><tr><td>Place: </td><td><input type='text' name='place'></td></tr><tr><td>Content: </td><td><input type='text' name='content'></td></tr><tr><td>Cost: </td><td><input type='text' name='cost'></td></tr><tr><td>Time: </td><td><input type=\"date\" name='time'></td></tr><tr><td>Upload Pictures: </td><td><input type='file' name=\"picture"+num+"\" multiple></td></tr></table>";
           document.getElementById("PlanForm").removeChild(lastchild);
