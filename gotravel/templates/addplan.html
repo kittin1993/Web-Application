@@ -31,7 +31,7 @@
         {{ error }}
         </p>
         {% endfor %}
-        <form enctype="multipart/form-data" method="post" action="{% url 'addplan' %}">
+        <form id='pform' enctype="multipart/form-data" method="post" action="{% url 'addplan' %}">
             <table class='text-left'>
                 {% for field in form.visible_fields %}
                     <tr>
@@ -52,7 +52,8 @@
             <div id='PlanForm'></div>
             <!--<input type="button" value="Add A Day" onClick="addPlanForm('PlanForm')">
             <input type= "button" value="Delete A Day" onClick="deletePlanForm('PlanForm')">-->
-            <input id='submit' type="submit" value="Save Plan">
+            <!--<input id='submit' type="submit" value="Save Plan">-->
+            <a href="javascript:%20validate_pform()" id="submit">Save Plan</a>
         </form>
     </div>
     <div class = "col-sm-6 ">

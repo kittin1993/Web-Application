@@ -40,7 +40,29 @@ function validate_form() {
     }
 
 }
+
 function validate_pform() {
+    var datefilter = /^((((19|[2-9]\d)\d{2})\-(0[13578]|1[02])\-(0[1-9]|[12]\d|3[01]))|(((19|[2-9]\d)\d{2})\-(0[13456789]|1[012])\-(0[1-9]|[12]\d|30))|(((19|[2-9]\d)\d{2})\-02\-(0[1-9]|1\d|2[0-8]))|(((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))\-02\-29))$/;
+    var list = $( "#PlanForm" ).find( "table" );
+    var num = list.length;
+    console.log(num);
+    var i = 0;
+    for (i=0;i<num;i++){
+        if (!datefilter.test(document.getElementById('new_date'+i).value)) {
+            alert("The valid time format should be yyyy-mm-dd!");
+            return;
+        }
+    }
+    console.log("i");
+    console.log(i);
+    if (i===num){
+            document.getElementById('pform').submit();
+            alert("Form Submitted Successfully...");
+    }
+
+}
+
+function validate_sform() {
     var datefilter = /^((((19|[2-9]\d)\d{2})\-(0[13578]|1[02])\-(0[1-9]|[12]\d|3[01]))|(((19|[2-9]\d)\d{2})\-(0[13456789]|1[012])\-(0[1-9]|[12]\d|30))|(((19|[2-9]\d)\d{2})\-02\-(0[1-9]|1\d|2[0-8]))|(((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))\-02\-29))$/;
     if (!datefilter.test(document.getElementById('new_date').value)){
        alert("The valid time format should be yyyy-mm-dd!");
