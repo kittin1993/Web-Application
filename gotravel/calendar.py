@@ -16,7 +16,7 @@ try:
     import argparse
     parser = argparse.ArgumentParser(parents=[tools.argparser])
     parser.add_argument("process")
-    parser.add_argument("port")
+    #parser.add_argument("port")
     flags = parser.parse_args()
     # flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
     # flags = None
