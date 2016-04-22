@@ -75,7 +75,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'multiuploader.context_processors.booleans',
             ],
         },
     },
@@ -211,7 +210,8 @@ STATIC_URL = '/static/'
 
 # Send email for authentication
 config = ConfigParser.ConfigParser()
-config.read("config.ini")
+config.read(BASE_DIR + "/config.ini")
+#config.read("config.ini")
 
 EMAIL_HOST = config.get('Email', 'Host')
 EMAIL_PORT = config.get('Email', 'Port')

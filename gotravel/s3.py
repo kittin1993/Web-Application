@@ -3,9 +3,11 @@ import boto
 import io
 import os
 from boto.s3.key import Key
+from webapps.settings import BASE_DIR
 
 config = ConfigParser.ConfigParser()
-config.read("config.ini")
+config.read(BASE_DIR + "/config.ini")
+#config.read("config.ini")
 
 AWS_ACCESS_KEY = config.get('S3', 'AccessKey')
 AWS_SECRET_ACCESS_KEY = config.get('S3', 'SecretKey')
