@@ -722,6 +722,14 @@ def search_note(request):
         order = request.POST['order']
         tag = request.POST['tag']
         result = []
+        if str(order).isdigit() is False:
+            username = request.user.username
+            new_user = User.objects.get(username=username)
+            notes = Note.objects.all().order_by('-creation_time')
+
+            context = {'message': 'No match result', 'username': username, 'new_user': new_user, 'notes': notes}
+            return render(request, 'travelnotes.html', context)
+
     
         if int(order) == 0:
             notes = Note.objects.all().order_by("-creation_time")
