@@ -2,28 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59726710-62a5-4e92-b634-b5599c8bcdfb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gotravel/migrations/0004_note_tag.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gotravel/migrations/0005_auto_20160422_0142.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/js/addform.js" afterPath="$PROJECT_DIR$/gotravel/static/js/addform.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/addnote.html" afterPath="$PROJECT_DIR$/gotravel/templates/addnote.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/base.html" afterPath="$PROJECT_DIR$/gotravel/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/addplan.html" afterPath="$PROJECT_DIR$/gotravel/templates/addplan.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/gotravel/static/css/bootstrap.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/edit_note.html" afterPath="$PROJECT_DIR$/gotravel/templates/edit_note.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/editprofile.html" afterPath="$PROJECT_DIR$/gotravel/templates/editprofile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/forms.py" afterPath="$PROJECT_DIR$/gotravel/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/css/gotravel.css" afterPath="$PROJECT_DIR$/gotravel/static/css/gotravel.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/homepage.html" afterPath="$PROJECT_DIR$/gotravel/templates/homepage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/js/mapProcess.js" afterPath="$PROJECT_DIR$/gotravel/static/js/mapProcess.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/models.py" afterPath="$PROJECT_DIR$/gotravel/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/myschedule_favorite.html" afterPath="$PROJECT_DIR$/gotravel/templates/myschedule_favorite.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/myschedule_note.html" afterPath="$PROJECT_DIR$/gotravel/templates/myschedule_note.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/static/js/my_js.js" afterPath="$PROJECT_DIR$/gotravel/static/js/my_js.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/myschedule_plan.html" afterPath="$PROJECT_DIR$/gotravel/templates/myschedule_plan.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/notesresult.html" afterPath="$PROJECT_DIR$/gotravel/templates/notesresult.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/plansresult.html" afterPath="$PROJECT_DIR$/gotravel/templates/plansresult.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/seenote.html" afterPath="$PROJECT_DIR$/gotravel/templates/seenote.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/seeplan.html" afterPath="$PROJECT_DIR$/gotravel/templates/seeplan.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/travelnotes.html" afterPath="$PROJECT_DIR$/gotravel/templates/travelnotes.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/travelplans.html" afterPath="$PROJECT_DIR$/gotravel/templates/travelplans.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/templates/untitled" afterPath="$PROJECT_DIR$/gotravel/templates/untitled" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gotravel/views.py" afterPath="$PROJECT_DIR$/gotravel/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -51,17 +44,17 @@
         <entry file="file://$PROJECT_DIR$/gotravel/static/js/mapProcess.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="273" column="35" selection-start-line="273" selection-start-column="35" selection-end-line="273" selection-end-column="35" />
+              <caret line="261" column="8" selection-start-line="261" selection-start-column="8" selection-end-line="261" selection-end-column="8" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="addform.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="addform.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gotravel/static/js/addform.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4755245">
-              <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="155" column="19" selection-start-line="155" selection-start-column="19" selection-end-line="155" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -70,15 +63,19 @@
       <file leaf-file-name="addplan.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gotravel/templates/addplan.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.875">
-              <caret line="73" column="61" selection-start-line="73" selection-start-column="61" selection-end-line="73" selection-end-column="71" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-31.208334">
+              <caret line="90" column="44" selection-start-line="90" selection-start-column="44" selection-end-line="90" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gotravel/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.770291">
+              <caret line="1039" column="25" selection-start-line="1039" selection-start-column="25" selection-end-line="1039" selection-end-column="25" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -91,10 +88,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/gotravel/views.py" />
-        <option value="$PROJECT_DIR$/gotravel/templates/addplan.html" />
-        <option value="$PROJECT_DIR$/gotravel/static/js/mapProcess.js" />
         <option value="$PROJECT_DIR$/gotravel/static/js/addform.js" />
+        <option value="$PROJECT_DIR$/gotravel/static/js/mapProcess.js" />
+        <option value="$PROJECT_DIR$/gotravel/templates/addplan.html" />
+        <option value="$PROJECT_DIR$/gotravel/views.py" />
       </list>
     </option>
   </component>
@@ -133,6 +130,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -225,8 +224,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -235,6 +232,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
+    <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager" selected="Django server.team34">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
@@ -493,25 +491,25 @@
     <frame x="0" y="23" width="1280" height="773" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25767368" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26171243" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32892805" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -542,13 +540,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -564,52 +556,45 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gotravel/views.py">
+    <entry file="file://$PROJECT_DIR$/requirement.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5104895">
-          <caret line="947" column="32" selection-start-line="947" selection-start-column="32" selection-end-line="947" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#64#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gotravel/templates/addplan.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.875">
-          <caret line="73" column="61" selection-start-line="73" selection-start-column="61" selection-end-line="73" selection-end-column="71" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.48951048">
+          <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gotravel/static/js/mapProcess.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="273" column="35" selection-start-line="273" selection-start-column="35" selection-end-line="273" selection-end-column="35" />
+          <caret line="261" column="8" selection-start-line="261" selection-start-column="8" selection-end-line="261" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gotravel/static/js/addform.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4755245">
-          <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="155" column="19" selection-start-line="155" selection-start-column="19" selection-end-line="155" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gotravel/templates/addplan.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-31.208334">
+          <caret line="90" column="44" selection-start-line="90" selection-start-column="44" selection-end-line="90" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gotravel/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.770291">
+          <caret line="1039" column="25" selection-start-line="1039" selection-start-column="25" selection-end-line="1039" selection-end-column="25" />
           <folding />
         </state>
       </provider>
